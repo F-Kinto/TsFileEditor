@@ -21,12 +21,14 @@ private:
     void ReadXBEL();
     void ReadContext();
     void ReadMessage();
+    void RemoveVanishMessages(const QString &strPath);
     void printDomNode(const QDomNode& node);
     QString CheckFormat(const QString &Str);
 
     QXmlStreamReader xml;
     QString m_tsFilePath;
     QMap<QString, QString> m_translateMap;
+    int m_vanishCount;
 };
 
 #endif // XMLRW_H

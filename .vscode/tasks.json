@@ -1,0 +1,25 @@
+{
+    "version": "2.0.0",
+    "options": {
+        "shell": {
+            "executable": "cmd.exe",
+            "args": ["/d", "/c"]
+        }
+    },
+    "tasks": [
+        {
+            "label": "Build TSFileEditor",
+            "type": "shell",
+            "command": "call \"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Auxiliary\\Build\\vcvarsall.bat\" x86 >nul 2>&1 && cd /d c:\\Work\\Kinto\\TsFileEditor\\build\\Desktop_Qt_5_15_2_MSVC2019_32bit-Debug && nmake",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": "$msCompile",
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared"
+            }
+        }
+    ]
+}

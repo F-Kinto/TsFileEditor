@@ -331,6 +331,8 @@ void MainWindow::on_tsUpdateBtn_2_clicked()
     }
 
     for (QFileInfo info : tsdir.entryInfoList()) {
+        qDebug() << "1111111" << info.fileName() << m_tsColumnMap[info.fileName()];
+        QString path = info.fileName();
         if (!m_tsColumnMap.contains(info.fileName())) {
             continue;
         }
@@ -375,14 +377,80 @@ void MainWindow::readConfig()
     settings.endGroup();
 
     m_tsColumnMap.clear();
-    int size = settings.beginReadArray("languages");
-    for (int i = 0; i < size; ++i) {
-        settings.setArrayIndex(i);
-        int column = settings.value("column").toInt();
-        QString fileName = settings.value("tsFile").toString();
-        m_tsColumnMap[fileName] = column;
+    QString tsDir = ui->tsDirEdit->text();
+    if (!tsDir.isEmpty()) {
+        QDir dir(tsDir);
+        QStringList filters;
+        filters << "*.ts";
+        dir.setNameFilters(filters);
+        dir.setFilter(QDir::Files | QDir::NoSymLinks);
+        int column = 3; // 翻译列从第3列开始
+        for (const QFileInfo &info : dir.entryInfoList()) {
+            qDebug() << "222222" << info.fileName() << getColumnIndex(info.fileName());
+            m_tsColumnMap[info.fileName()] = getColumnIndex(info.fileName());
+        }
     }
-    settings.endArray();
+}
+
+int MainWindow::getColumnIndex(const QString &fileName)
+{
+    if(fileName.isEmpty()){
+        return 3;
+    }
+    if(fileName.contains("VmsTranslator_zh_CN")){
+        return 3;
+    }
+    if(fileName.contains("VmsTranslator_ESP")){
+        return 4;
+    }
+    if(fileName.contains("VmsTranslator_FR")){
+        return 5;
+    }
+    if(fileName.contains("VmsTranslator_TH")){
+        return 6;
+    }
+    if(fileName.contains("VmsTranslator_DE")){
+        return 7;
+    }
+    if(fileName.contains("VmsTranslator_JA")){
+        return 8;
+    }
+    if(fileName.contains("VmsTranslator_VN")){
+        return 9;
+    }
+    if(fileName.contains("VmsTranslator_RU")){
+        return 10;
+    }
+    if(fileName.contains("VmsTranslator_PT")){
+        return 11;
+    }
+    if(fileName.contains("VmsTranslator_MS")){
+        return 12;
+    }
+    if(fileName.contains("VmsTranslator_IN")){
+        return 13;
+    }
+    if(fileName.contains("VmsTranslator_KR")){
+        return 14;
+    }
+    if(fileName.contains("VmsTranslator_IT")){
+        return 15;
+    }
+    if(fileName.contains("VmsTranslator_ID")){
+        return 16;
+    }
+    if(fileName.contains("VmsTranslator_HE")){
+        return 17;
+    }
+    if(fileName.contains("VmsTranslator_AR")){
+        return 18;
+    }
+    if(fileName.contains("VmsTranslator_PL")){
+        return 19;
+    }
+    if(fileName.contains("VmsTranslator_NL")){
+        return 20;
+    }
 }
 
 void MainWindow::saveConfig()

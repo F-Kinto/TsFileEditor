@@ -121,18 +121,35 @@ bool ExcelRW::ExportToXlsx(QList<TranslateModel>& list, QString strPath)
     QXlsx::Format wrapFormat;
     wrapFormat.setTextWarp(true);
 
+    // Separate rows: translated (non-empty) first, untranslated (empty) last
+    QList<int> translatedRows;
+    QList<int> untranslatedRows;
     for(int i=0; i < list.count(); i++)
     {
+        if(list[i].GetTranslate().trimmed().isEmpty())
+            untranslatedRows.append(i);
+        else
+            translatedRows.append(i);
+    }
+    QList<int> sortedRows = translatedRows + untranslatedRows;
+
+    qDebug() << "ExportToXlsx: total=" << list.count()
+             << "translated=" << translatedRows.count()
+             << "untranslated=" << untranslatedRows.count();
+
+    for(int idx=0; idx < sortedRows.count(); idx++)
+    {
+        int i = sortedRows[idx];
         for(int j=1; j<=3; j++){
-            xlsx.write(i+2, m_KeyColumn, QVariant(list[i].GetKey()));
-            xlsx.write(i+2, m_SourceColumn, QVariant(list[i].GetSource()),wrapFormat);
-            xlsx.write(i+2, m_TransColumn, QVariant(CheckFormat(list[i].GetTranslate())),wrapFormat);
+            xlsx.write(idx+2, m_KeyColumn, QVariant(list[i].GetKey()));
+            xlsx.write(idx+2, m_SourceColumn, QVariant(list[i].GetSource()),wrapFormat);
+            xlsx.write(idx+2, m_TransColumn, QVariant(CheckFormat(list[i].GetTranslate())),wrapFormat);
         }
-        if(!list[i].GetTranslate().isEmpty())
+        if(!list[i].GetTranslate().trimmed().isEmpty())
             m_success_count++;
         else
-            qDebug() << "Execl failure " << list[i].GetKey();
-        xlsx.setRowHeight(i+2, list.count() + 10, calculateRowHeight(QString(list[i].GetSource()), QString(list[i].GetTranslate())));
+            qDebug() << "Excel empty translate row" << idx+2 << "key:" << list[i].GetKey();
+        xlsx.setRowHeight(idx+2, list.count() + 10, calculateRowHeight(QString(list[i].GetSource()), QString(list[i].GetTranslate())));
     }
 
     xlsx.saveAs(strPath);

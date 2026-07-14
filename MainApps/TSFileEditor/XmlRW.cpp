@@ -21,8 +21,8 @@ void XmlRW::UpdateTranslateMap(QList<TranslateModel>& list)
     int i = 0;
     foreach (TranslateModel model, list) {
         m_translateMap[model.GetKey()] = model.GetTranslate();
-        if(model.GetTranslate().isEmpty())
-            qDebug() << "0000000" << i << model.GetKey() <<  model.GetSource() << model.GetTranslate();
+        // if(model.GetTranslate().isEmpty())
+        //     qDebug() << "0000000" << i << model.GetKey() <<  model.GetSource() << model.GetTranslate();
         i++;
     }
 }
@@ -34,6 +34,7 @@ bool XmlRW::ImportFromTS(QList<TranslateModel>& list, QString strPath)
         return false;
     }
     else {
+        m_vanishCount = 0;
         xml.setDevice(&file);
         //        m_translateMap.clear();
 
@@ -47,7 +48,7 @@ bool XmlRW::ImportFromTS(QList<TranslateModel>& list, QString strPath)
                 }
                 if (attributes.hasAttribute("language")) {
                     QString strLanguage = attributes.value("language").toString();
-                    qDebug() << "language : " << strLanguage;
+                    //qDebug() << "language : " << strLanguage;
                 }
 
                 ReadXBEL();
@@ -64,9 +65,14 @@ bool XmlRW::ImportFromTS(QList<TranslateModel>& list, QString strPath)
             model.SetKey(i.key());
             model.SetSource(i.key());
             model.SetTranslate(i.value());
-            if(i.value().isEmpty())
-                qDebug() << "1111111" << list.size() << i.key() << i.value();
+            //  if(i.value().isEmpty())
+            //      qDebug() << "1111111" << list.size() << i.key() << i.value();
             list.append(model);
+        }
+
+        // Remove vanish messages from the source .ts file
+        if (m_vanishCount > 0) {
+            RemoveVanishMessages(strPath);
         }
 
         return true;
@@ -115,7 +121,7 @@ bool XmlRW::ExportToTS(QList<TranslateModel>& list, QString strPath)
             if(strTranslation.isEmpty() && strValue.isEmpty())
             {
                 newElement.setAttribute("type", "unfinished");
-                qDebug() << i << "key:" << strKey;
+                //qDebug() << i << "key:" << strKey;
             }
 
             //QDomText text = doc.createTextNode(strTranslation.isEmpty() ? strValue : strTranslation);  // ???????????ts????????
@@ -178,12 +184,19 @@ void XmlRW::ReadMessage()
     Q_ASSERT(xml.isStartElement() && xml.name().toString() == MESSAGE_ELEMENT);
 
     QString strSource, strTranslation, strLoaction;
+    bool isVanish = false;
 
     while (xml.readNextStartElement()) {
         if (xml.name().toString() == SOURCE_ELEMENT) {
             strSource = xml.readElementText();
         } else if (xml.name().toString() == TRANSLATION_ELEMENT) {
-            strTranslation = CheckFormat(xml.readElementText());
+            QXmlStreamAttributes attributes = xml.attributes();
+            if (attributes.hasAttribute("type") && attributes.value("type").toString() == "vanished") {
+                isVanish = true;
+                xml.skipCurrentElement();
+            } else {
+                strTranslation = CheckFormat(xml.readElementText());
+            }
         } else if (xml.name().toString() == LOCATION_ELEMENT) {
             strLoaction.clear();
 
@@ -203,12 +216,60 @@ void XmlRW::ReadMessage()
         }
     }
 
-    qDebug() << xml.name().toString() << "key:" << strSource << "\ttranslation:" << strTranslation;
+    if (isVanish) {
+        m_vanishCount++;
+        //qDebug() << "Vanish message skipped, key:" << strSource;
+    } else {
+        //qDebug() << xml.name().toString() << "key:" << strSource << "\ttranslation:" << strTranslation;
+        m_translateMap.insert(strSource, strTranslation);
+    }
+}
 
-    /*if(m_translateMap.contains(strSource)) {
-        qDebug() << "repeat key: " << strSource << "translation:" << strLoaction;
-    }*/
-    m_translateMap.insert(strSource, strTranslation);
+void XmlRW::RemoveVanishMessages(const QString &strPath)
+{
+    QFile file(strPath);
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        return;
+    }
+
+    QDomDocument doc;
+    if (!doc.setContent(&file)) {
+        file.close();
+        return;
+    }
+    file.close();
+
+    QDomElement root = doc.documentElement();
+    QDomNodeList contextList = root.elementsByTagName(CONTEXT_ELEMENT);
+
+    int removedCount = 0;
+    for (int i = 0; i < contextList.count(); i++) {
+        QDomElement contextElem = contextList.at(i).toElement();
+        QDomNodeList messageList = contextElem.elementsByTagName(MESSAGE_ELEMENT);
+
+        for (int j = messageList.count() - 1; j >= 0; j--) {
+            QDomElement messageElem = messageList.at(j).toElement();
+            QDomNodeList translationList = messageElem.elementsByTagName(TRANSLATION_ELEMENT);
+
+            if (translationList.count() > 0) {
+                QDomElement transElem = translationList.at(0).toElement();
+                if (transElem.attribute("type") == "vanished") {
+                    contextElem.removeChild(messageElem);
+                    removedCount++;
+                }
+            }
+        }
+    }
+
+    if (removedCount > 0) {
+        if (!file.open(QFile::WriteOnly | QFile::Truncate)) {
+            return;
+        }
+        QTextStream outStream(&file);
+        doc.save(outStream, 4);
+        file.close();
+        qDebug() << "Removed" << removedCount << "vanish messages from" << strPath;
+    }
 }
 
 void XmlRW::printDomNode(const QDomNode& node) {

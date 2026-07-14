@@ -1,0 +1,17 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Build & Launch",
+            "type": "cppvsdbg",
+            "request": "launch",
+            "program": "${workspaceRoot}/bin/TSFileEditor.exe",
+            "args": [],
+            "cwd": "${workspaceRoot}",
+            "environment": [
+                { "name": "PATH", "value": "C:\\Qt\\Qt5.15.2\\5.15.2\\msvc2019\\bin;${env:PATH}" }
+            ],
+            "preLaunchTask": "Build TSFileEditor"
+        }
+    ]
+}

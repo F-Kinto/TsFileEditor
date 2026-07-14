@@ -54,6 +54,6 @@ private:
 
     void readConfig();
     void saveConfig();
+    int getColumnIndex(const QString& columnName);
 };
-
 #endif // MAINWINDOW_H
