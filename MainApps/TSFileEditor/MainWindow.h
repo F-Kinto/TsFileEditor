@@ -4,6 +4,11 @@
 #include <QMainWindow>
 #include <QList>
 #include <QMap>
+#include <QMouseEvent>
+#include <QPainter>
+#include <QLabel>
+#include <QTimer>
+#include <QPushButton>
 
 #include "DataModel/TranslateModel.h"
 
@@ -22,6 +27,12 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+
+protected:
+    void mousePressEvent(QMouseEvent *event) override;
+    void mouseMoveEvent(QMouseEvent *event) override;
+    void mouseReleaseEvent(QMouseEvent *event) override;
+    void paintEvent(QPaintEvent *event) override;
 
 private slots:
     void on_tsLookBtn_clicked();
@@ -52,8 +63,18 @@ private:
 
     QMap<QString, int>      m_tsColumnMap;
 
+    bool                    m_dragging;
+    QPoint                  m_dragPosition;
+
+    QLabel*                 m_toastLabel;
+    QTimer*                 m_toastTimer;
+    QTabWidget*             m_tabWidget;
+    QPushButton*            m_aiTranslateBtn;
+
     void readConfig();
     void saveConfig();
     int getColumnIndex(const QString& columnName);
+    void showToast(const QString& msg, bool success);
+    void applyStyles();
 };
 #endif // MAINWINDOW_H
