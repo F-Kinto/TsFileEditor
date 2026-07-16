@@ -1,4 +1,4 @@
-﻿#pragma execution_character_set("utf-8")
+#pragma execution_character_set("utf-8")
 #include "MainWindow.h"
 #include "ui_MainWindow.h"
 #include "XmlRW.h"
@@ -7,6 +7,8 @@
 
 #include <QStandardPaths>
 #include <QFileDialog>
+#include <QCoreApplication>
+#include <QProcess>
 #include <QListView>
 #include <QSslSocket>
 #include <QScreen>
@@ -14,6 +16,13 @@
 #include <QStandardItemModel>
 #include <QTabWidget>
 #include <QVBoxLayout>
+#include <QHBoxLayout>
+#include <QRegularExpression>
+#include <QSharedPointer>
+#include <QMessageBox>
+#include <QShortcut>
+#include "ScriptErrorDialog.h"
+#include "HelpDialog.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -22,6 +31,15 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
 
     // ========== 创建标题栏控件 ==========
+    QPushButton *helpBtn = new QPushButton("?");
+    helpBtn->setFixedSize(32, 32);
+    helpBtn->setToolTip(tr("帮助"));
+    connect(helpBtn, &QPushButton::clicked, this, [this]() {
+        HelpDialog *dlg = new HelpDialog(this);
+        dlg->show();
+        dlg->move(this->geometry().center() - dlg->rect().center());
+    });
+
     QPushButton *minimizeBtn = new QPushButton("—");
     minimizeBtn->setFixedSize(32, 32);
     minimizeBtn->setToolTip(tr("最小化"));
@@ -32,13 +50,14 @@ MainWindow::MainWindow(QWidget *parent) :
     closeBtn->setToolTip(tr("关闭"));
     connect(closeBtn, &QPushButton::clicked, this, &MainWindow::close);
 
-    QWidget *titleBarWidget = new QWidget();
-    titleBarWidget->setFixedHeight(48);
-    QHBoxLayout *titleBarLayout = new QHBoxLayout(titleBarWidget);
+    m_titleBarWidget = new QWidget();
+    m_titleBarWidget->setFixedHeight(48);
+    QHBoxLayout *titleBarLayout = new QHBoxLayout(m_titleBarWidget);
     titleBarLayout->setContentsMargins(24, 0, 24, 0);
     QLabel *titleLabel = new QLabel(tr("自动翻译Tool"));
     titleBarLayout->addWidget(titleLabel, 0, Qt::AlignVCenter);
     titleBarLayout->addStretch();
+    titleBarLayout->addWidget(helpBtn, 0, Qt::AlignVCenter);
     titleBarLayout->addWidget(minimizeBtn, 0, Qt::AlignVCenter);
     titleBarLayout->addWidget(closeBtn, 0, Qt::AlignVCenter);
 
@@ -53,50 +72,8 @@ MainWindow::MainWindow(QWidget *parent) :
     QVBoxLayout *groupBoxLayout = qobject_cast<QVBoxLayout*>(ui->groupBox->layout());
     ui->groupBox->setTitle(tr("翻译一种语言"));
 
-    // 将输入框行包裹在75%宽度居中布局中
-    auto wrapRowCentered = [](QVBoxLayout *parentLayout, int index) {
-        QLayoutItem *item = parentLayout->itemAt(index);
-        if (!item || !item->layout()) return;
-        QHBoxLayout *rowLayout = qobject_cast<QHBoxLayout*>(item->layout());
-        if (!rowLayout) return;
-
-        QWidget *container = new QWidget();
-        QHBoxLayout *containerLayout = new QHBoxLayout(container);
-        containerLayout->setContentsMargins(0, 0, 0, 0);
-        containerLayout->setSpacing(rowLayout->spacing());
-
-        parentLayout->takeAt(index);
-
-        while (rowLayout->count() > 0) {
-            QLayoutItem *child = rowLayout->takeAt(0);
-            if (child->widget()) {
-                containerLayout->addWidget(child->widget());
-            } else if (child->layout()) {
-                containerLayout->addLayout(child->layout());
-            } else if (child->spacerItem()) {
-                containerLayout->addSpacerItem(child->spacerItem());
-            }
-        }
-        delete rowLayout;
-
-        QHBoxLayout *wrapperLayout = new QHBoxLayout();
-        wrapperLayout->setContentsMargins(0, 0, 0, 0);
-        wrapperLayout->setSpacing(24);
-        wrapperLayout->addStretch(1);
-        wrapperLayout->addWidget(container, 6);
-        wrapperLayout->addStretch(1);
-
-        parentLayout->insertLayout(index, wrapperLayout);
-    };
-
-    wrapRowCentered(groupBoxLayout, 0);
-    wrapRowCentered(groupBoxLayout, 1);
-    wrapRowCentered(groupBoxLayout, 2);
-
     QVBoxLayout *groupBox3Layout = qobject_cast<QVBoxLayout*>(ui->groupBox_3->layout());
     ui->groupBox_3->setTitle(tr("翻译多种语言"));
-    wrapRowCentered(groupBox3Layout, 0);
-    wrapRowCentered(groupBox3Layout, 1);
     groupBox3Layout->addStretch();
 
     // 移除旧的按钮布局
@@ -135,19 +112,10 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->groupBox_2->setVisible(false);
 
     // 底部布局包裹在75%居中布局中
-    QWidget *bottomContainer = new QWidget();
-    QHBoxLayout *bottomContainerLayout = new QHBoxLayout(bottomContainer);
-    bottomContainerLayout->setContentsMargins(0, 0, 0, 0);
-    bottomContainerLayout->setSpacing(0);
-    bottomContainerLayout->addLayout(bottomHLayout);
 
-    QHBoxLayout *bottomWrapper = new QHBoxLayout();
-    bottomWrapper->setContentsMargins(0, 0, 0, 0);
-    bottomWrapper->setSpacing(0);
-    bottomWrapper->addStretch(1);
-    bottomWrapper->addWidget(bottomContainer, 6);
-    bottomWrapper->addStretch(1);
-    groupBoxLayout->addLayout(bottomWrapper);
+
+
+    groupBoxLayout->addLayout(bottomHLayout);
     groupBoxLayout->addStretch();
 
     connect(m_aiTranslateBtn, &QPushButton::toggled, this, [this](bool checked) {
@@ -159,36 +127,154 @@ MainWindow::MainWindow(QWidget *parent) :
     QWidget *pageBatch = new QWidget();
     QVBoxLayout *pageBatchLayout = new QVBoxLayout(pageBatch);
     pageBatchLayout->addWidget(ui->groupBox_3);
+
+    // 底部爱国标语：五颗黄色五角星 + "我爱中国!"
+    QLabel *patriotLabel = new QLabel();
+    patriotLabel->setAlignment(Qt::AlignCenter);
+    patriotLabel->setText(QString(
+        "<span style='font-size:28px; font-weight:bold; color:#FFDE00;'>"
+        "\u2605 \u2605 \u2605 \u2605 \u2605"
+        "</span>"
+        "<span style='font-size:28px; font-weight:bold; color:#DE2910; font-family:\"Microsoft YaHei\";'>"
+        " 我爱中国! "
+        "</span>"
+        "<span style='font-size:28px; font-weight:bold; color:#FFDE00;'>"
+        "\u2605 \u2605 \u2605 \u2605 \u2605"
+        "</span>"
+    ));
+    pageBatchLayout->addWidget(patriotLabel);
     pageBatchLayout->addStretch();
 
-    m_tabWidget->addTab(pageSingle, tr("翻译一种语言"));
     m_tabWidget->addTab(pageBatch, tr("翻译多种语言"));
+    m_tabWidget->addTab(pageSingle, tr("翻译一种语言"));
 
     // 替换中央布局
     QLayout *oldLayout = ui->centralWidget->layout();
-    while (oldLayout->count() > 0) {
-        QLayoutItem *item = oldLayout->takeAt(0);
-        if (item->layout()) {
-            delete item->layout();
+    if (oldLayout) {
+        // 从旧布局中取出所有items，保护widget不被删除
+        QList<QLayoutItem*> items;
+        while (oldLayout->count() > 0) {
+            items.append(oldLayout->takeAt(0));
         }
-        delete item;
+        // 删除旧布局（此时布局已空，不会连带删除widget）
+        delete oldLayout;
+        // 清理残留的layout items（不含widget的子布局）
+        for (QLayoutItem *item : items) {
+            if (item->layout()) {
+                // 子布局中的widget已经被重新添加到新布局，只删除空布局
+                // 注意：不删除QWidgetItem，因为widget已被新layout接管
+            }
+            delete item; // QWidgetItem的delete不会删除widget本身
+        }
     }
-    delete oldLayout;
+
+    // 右侧按钮面板：输入框 + 浏览按钮 + 功能按钮
+    // 扫描Ts脚本路径输入框（不可复制粘贴，只能通过浏览导入）
+    QLabel *scanTsTipLabel = new QLabel(tr("* 如果项目有 新增/删除 需要翻译的字段, 必须先执行此步骤"));
+    scanTsTipLabel->setWordWrap(true);
+    scanTsTipLabel->setContentsMargins(8, 0, 8, 0);
+    scanTsTipLabel->setStyleSheet("QLabel { color: #FF4A4A; font-family: 'Microsoft YaHei'; font-size: 12px; }");
+    QLabel *scanTsTipLabel1 = new QLabel(tr("请先导入扫描Ts脚本路径，再点击下方按钮扫描项目文件并更新Ts内容"));
+    scanTsTipLabel1->setWordWrap(true);
+    scanTsTipLabel1->setContentsMargins(8, 0, 8, 0);
+    scanTsTipLabel1->setStyleSheet("QLabel { color: #6D7682; font-family: 'Microsoft YaHei'; font-size: 12px; }");
+
+    m_scanTsPathEdit = new QTextEdit();
+    m_scanTsPathEdit->setPlaceholderText(tr("请导入更新Ts文件的脚本路径(script.bat)"));
+    m_scanTsPathEdit->setReadOnly(true);
+    m_scanTsPathEdit->setWordWrapMode(QTextOption::WrapAnywhere);
+    m_scanTsPathEdit->setMaximumHeight(60);
+    m_scanTsPathEdit->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    m_scanTsPathEdit->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    m_scanTsLookBtn = new QPushButton(tr("导入Ts脚本路径"));
+    m_scanTsLookBtn->setFixedSize(225, 36);
+    connect(m_scanTsLookBtn, &QPushButton::clicked, this, &MainWindow::on_scanTsLookBtn_clicked);
+
+    QVBoxLayout *scanTsRowLayout = new QVBoxLayout();
+    scanTsRowLayout->setSpacing(8);
+    scanTsRowLayout->addWidget(scanTsTipLabel);
+    scanTsRowLayout->addWidget(m_scanTsPathEdit);
+    scanTsRowLayout->addWidget(m_scanTsLookBtn, 0, Qt::AlignHCenter);
+
+    m_scanTsBtn = new QPushButton(tr("开始扫描项目并更新Ts文件"));
+    m_scanTsBtn->setFixedSize(225, 36);
+    connect(m_scanTsBtn, &QPushButton::clicked, this, &MainWindow::on_scanTsBtn_clicked);
+
+    // 生成Qm脚本路径输入框（不可复制粘贴，只能通过浏览导入）
+    QLabel *genQmTipLabel = new QLabel(tr("* 必须执行完左边步骤之后, 必须执行此步骤才可让翻译生效"));
+    genQmTipLabel->setWordWrap(true);
+    genQmTipLabel->setContentsMargins(8, 0, 8, 0);
+    genQmTipLabel->setStyleSheet("QLabel { color: #FF4A4A; font-family: 'Microsoft YaHei'; font-size: 12px; }");
+    QLabel *genQmTipLabel1 = new QLabel(tr("请先导入生成Qm脚本路径，再点击下方按钮将Ts文件编译为Qm翻译文件"));
+    genQmTipLabel1->setWordWrap(true);
+    genQmTipLabel1->setContentsMargins(8, 0, 8, 0);
+    genQmTipLabel1->setStyleSheet("QLabel { color: #6D7682; font-family: 'Microsoft YaHei'; font-size: 12px; }");
+
+    m_genQmPathEdit = new QTextEdit();
+    m_genQmPathEdit->setPlaceholderText(tr("请导入生成Qm文件的脚本路径(generateQmFile.bat)"));
+    m_genQmPathEdit->setReadOnly(true);
+    m_genQmPathEdit->setWordWrapMode(QTextOption::WrapAnywhere);
+    m_genQmPathEdit->setMaximumHeight(60);
+    m_genQmPathEdit->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    m_genQmPathEdit->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    m_genQmLookBtn = new QPushButton(tr("导入Qm脚本路径"));
+    m_genQmLookBtn->setFixedSize(225, 36);
+    connect(m_genQmLookBtn, &QPushButton::clicked, this, &MainWindow::on_genQmLookBtn_clicked);
+
+    QVBoxLayout *genQmRowLayout = new QVBoxLayout();
+    genQmRowLayout->setSpacing(8);
+    genQmRowLayout->addWidget(genQmTipLabel);
+    genQmRowLayout->addWidget(m_genQmPathEdit);
+    genQmRowLayout->addWidget(m_genQmLookBtn, 0, Qt::AlignHCenter);
+
+    m_genQmBtn = new QPushButton(tr("开始生成Qm翻译文件"));
+    m_genQmBtn->setFixedSize(225, 36);
+    connect(m_genQmBtn, &QPushButton::clicked, this, &MainWindow::on_genQmBtn_clicked);
+
+    // 扫描Ts组：GroupBox封装，垂直布局，间距20px
+    QGroupBox *scanTsGroupBox = new QGroupBox(tr("扫描Ts文件"));
+    QVBoxLayout *scanTsGroupLayout = new QVBoxLayout(scanTsGroupBox);
+    scanTsGroupLayout->setSpacing(10);
+    scanTsGroupLayout->setContentsMargins(10, 8, 10, 8);
+    scanTsGroupLayout->addLayout(scanTsRowLayout);
+    scanTsGroupLayout->addStretch();
+    scanTsGroupLayout->addWidget(scanTsTipLabel1, 0, Qt::AlignHCenter);
+    scanTsGroupLayout->addWidget(m_scanTsBtn, 0, Qt::AlignHCenter);
+
+    // 生成Qm组：GroupBox封装，垂直布局，间距20px
+    QGroupBox *genQmGroupBox = new QGroupBox(tr("生成Qm文件"));
+    QVBoxLayout *genQmGroupLayout = new QVBoxLayout(genQmGroupBox);
+    genQmGroupLayout->setSpacing(10);
+    genQmGroupLayout->setContentsMargins(10, 8, 10, 8);
+    genQmGroupLayout->addLayout(genQmRowLayout);
+    genQmGroupLayout->addStretch();
+    genQmGroupLayout->addWidget(genQmTipLabel1, 0, Qt::AlignHCenter);
+    genQmGroupLayout->addWidget(m_genQmBtn, 0, Qt::AlignHCenter);
+
+    // 两个GroupBox各占一半高度
+    QVBoxLayout *sideBtnLayout = new QVBoxLayout();
+    sideBtnLayout->setSpacing(16);
+    sideBtnLayout->setContentsMargins(0, 0, 16, 0);
+    sideBtnLayout->addWidget(scanTsGroupBox, 1);
+    sideBtnLayout->addWidget(genQmGroupBox, 1);
+
+    // 水平布局：tabWidget占3/4，按钮面板占1/4
+    QHBoxLayout *contentHLayout = new QHBoxLayout();
+    contentHLayout->setSpacing(16);
+    contentHLayout->addWidget(m_tabWidget, 75);
+    contentHLayout->addLayout(sideBtnLayout, 25);
 
     QVBoxLayout *newLayout = new QVBoxLayout(ui->centralWidget);
     newLayout->setContentsMargins(1, 1, 1, 1);
     newLayout->setSpacing(16);
-    newLayout->addWidget(titleBarWidget);
-    newLayout->addWidget(m_tabWidget, 1);
+    newLayout->addWidget(m_titleBarWidget);
+    newLayout->addLayout(contentHLayout, 1);
 
     // 无边框窗口
     setWindowFlags(Qt::Window | Qt::FramelessWindowHint);
     setAttribute(Qt::WA_TranslucentBackground);
 
-    // ========== 应用所有样式 ==========
-    applyStyles();
-
-    // ========== 初始化业务对象 ==========
+    // ========== 初始化UI组件（必须在applyStyles之前） ==========
     m_dragging = false;
 
     m_toastLabel = new QLabel(this);
@@ -199,6 +285,35 @@ MainWindow::MainWindow(QWidget *parent) :
     m_toastTimer->setSingleShot(true);
     connect(m_toastTimer, &QTimer::timeout, this, [this]() { m_toastLabel->hide(); });
 
+    m_progressBar = new QProgressBar(this);
+    m_progressBar->setAlignment(Qt::AlignCenter);
+    m_progressBar->setFixedSize(500, 16);
+    m_progressBar->hide();
+
+    // 进度标签：显示在进度条上方，显示当前步骤信息
+    m_progressLabel = new QLabel(this);
+    m_progressLabel->setAlignment(Qt::AlignLeft | Qt::AlignVCenter);
+    m_progressLabel->setFixedSize(500, 36);
+    m_progressLabel->setStyleSheet(
+        "QLabel {"
+        "  color: #FFFFFF;"
+        "  font-size: 18px;"
+        "  font-weight: bold;"
+        "  font-family: 'Microsoft YaHei';"
+        "  background: transparent;"
+        "}"
+    );
+    m_progressLabel->hide();
+
+    // 遮罩层：进度条显示时覆盖窗口，半透明灰色，阻止点击
+    m_overlayWidget = new QWidget(this);
+    m_overlayWidget->setStyleSheet("background: rgba(0, 0, 0, 120);");
+    m_overlayWidget->hide();
+
+    // ========== 应用所有样式 ==========
+    applyStyles();
+
+    // ========== 初始化业务对象 ==========
     m_toLanguage = "en";
     m_pXmlWorker = new XmlRW(this);
     m_pExcelWorker = new ExcelRW(1, 2, 3, this);
@@ -207,8 +322,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->youdaoTipLabel->setVisible(false);
 
     QStandardItemModel *comboModel = new QStandardItemModel(ui->comboBox);
-    QStringList comboItems = {"??", "??", "??", "??", "??", "??", "????", "????", "??"};
-    QStringList comboData = {"en", "zh-CHS", "ja", "ko", "fr", "ru", "pt", "es", "other"};
+    QStringList comboItems = {"英文", "中文", "日语", "韩语", "法语", "俄语", "葡萄牙语", "西班牙语", "其他"};
+    QStringList comboData = {"en", "zh-CN", "ja", "ko", "fr", "ru", "pt", "es", "other"};
     for (int i = 0; i < comboItems.size(); ++i) {
         QStandardItem *item = new QStandardItem(comboItems[i]);
         item->setData(comboData[i], Qt::UserRole);
@@ -447,11 +562,11 @@ void MainWindow::showToast(const QString &msg, bool success)
     if (success) {
         style =
             "QLabel {"
-            "  border: 1px solid #0099FF;"
+            "  border: 1px solid #00BA00;"
             "  border-radius: 4px;"
             "  padding: 8px 16px;"
-            "  background: #E6F4FF;"
-            "  color: #0099FF;"
+            "  background: #E5FAE1;"
+            "  color: #00BA00;"
             "  font-size: 14px;"
             "  font-weight: bold;"
             "}";
@@ -542,28 +657,27 @@ void MainWindow::on_generateBtn_2_clicked()
         return;
     }
 
-    for (QFileInfo info : tsdir.entryInfoList()) {
+    // 显示遮罩层和进度条
+    QFileInfoList fileList = tsdir.entryInfoList();
+    int total = fileList.size();
+    showProgress(true, tr("正在批量生成Excel表格..."), total);
+
+    int current = 0;
+    for (QFileInfo info : fileList) {
         //import ts file
         m_transList.clear();
         re = m_pXmlWorker->ImportFromTS(m_transList, info.absoluteFilePath());
-
-        if(re) {
-            onReceiveMsg("文件导入成功 " + info.fileName());
-        } else {
-            onReceiveMsg("文件导入失败 " + info.fileName());
-        }
-
         //generate excel file
         m_pExcelWorker->SetTransColumn(ui->transSpinBox->value());
         QString excelFileName = excelinfo.absoluteDir().path() + "/" + info.baseName() + ".xlsx";
         re = m_pExcelWorker->ExportToXlsx(m_transList, excelFileName);
-        if(re) {
-            onReceiveMsg("文件生成成功 " + excelFileName);
-            ui->youdaoTipLabel->setVisible(false);
-        } else {
-            onReceiveMsg("文件生成失败  " + excelFileName);
-        }
+
+        current++;
+        m_progressBar->setValue(current);
+        QCoreApplication::processEvents(); // 刷新UI
     }
+
+    showProgress(false, "所有Ts文件已成功生成对应Excel文件");
 }
 
 void MainWindow::on_tsUpdateBtn_2_clicked()
@@ -593,10 +707,19 @@ void MainWindow::on_tsUpdateBtn_2_clicked()
         return;
     }
 
-    for (QFileInfo info : tsdir.entryInfoList()) {
+    // 显示进度条
+    QFileInfoList fileList = tsdir.entryInfoList();
+    int total = fileList.size();
+    showProgress(true, tr("正在批量译文写入Ts文件..."), total);
+
+    int current = 0;
+    for (QFileInfo info : fileList) {
         qDebug() << "1111111" << info.fileName() << m_tsColumnMap[info.fileName()];
         QString path = info.fileName();
         if (!m_tsColumnMap.contains(info.fileName())) {
+            current++;
+            m_progressBar->setValue(current);
+            QCoreApplication::processEvents();
             continue;
         }
 
@@ -605,23 +728,244 @@ void MainWindow::on_tsUpdateBtn_2_clicked()
         re = m_pXmlWorker->ImportFromTS(m_transList, info.absoluteFilePath());
 
         if(!re) {
+            current++;
+            m_progressBar->setValue(current);
+            QCoreApplication::processEvents();
             continue;
         }
 
         m_pExcelWorker->SetTransColumn(m_tsColumnMap[info.fileName()]);
         re = m_pExcelWorker->ImportFromXlsx(m_transList, ui->excelDirEdit->text());
         if(!re) {
+            current++;
+            m_progressBar->setValue(current);
+            QCoreApplication::processEvents();
             continue;
         }
 
         re = m_pXmlWorker->ExportToTS(m_transList, info.absoluteFilePath());
 
         if(!re) {
+            current++;
+            m_progressBar->setValue(current);
+            QCoreApplication::processEvents();
             continue;
         }
+
+        current++;
+        m_progressBar->setValue(current);
+        QCoreApplication::processEvents(); // 刷新UI
     }
 
-    onReceiveMsg("所有Ts文件已翻译完成");
+    showProgress(false, "所有Ts文件已翻译完成");
+}
+
+void MainWindow::on_scanTsLookBtn_clicked()
+{
+    const QString documentLocation = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
+    QString fileName = QFileDialog::getOpenFileName(this, tr("请选择扫描Ts脚本"), documentLocation, "Batch Files (*.bat)");
+    if (fileName.isEmpty()) {
+        return;
+    }
+    m_scanTsPathEdit->setPlainText(fileName);
+}
+
+void MainWindow::on_genQmLookBtn_clicked()
+{
+    const QString documentLocation = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
+    QString fileName = QFileDialog::getOpenFileName(this, tr("请选择生成Qm脚本"), documentLocation, "Batch Files (*.bat)");
+    if (fileName.isEmpty()) {
+        return;
+    }
+    m_genQmPathEdit->setPlainText(fileName);
+}
+
+void MainWindow::on_scanTsBtn_clicked()
+{
+    QString scriptPath = m_scanTsPathEdit->toPlainText();
+    if (scriptPath.isEmpty()) {
+        onReceiveMsg("请先导入扫描Ts脚本路径");
+        return;
+    }
+    QFileInfo scriptInfo(scriptPath);
+    if (!scriptInfo.exists()) {
+        onReceiveMsg("脚本文件不存在: " + scriptPath);
+        return;
+    }
+
+    m_scanTsBtn->setEnabled(false);
+    m_genQmBtn->setEnabled(false);
+
+    // 显示进度条和进度标签
+    showProgress(true, tr("正在开始扫描项目并更新Ts文件..."), 3);
+
+    QProcess *process = new QProcess(this);
+    process->setProcessChannelMode(QProcess::MergedChannels);
+
+    QSharedPointer<int> currentStep = QSharedPointer<int>::create(0);
+    QSharedPointer<bool> finished = QSharedPointer<bool>::create(false);
+    QSharedPointer<QString> allOutput = QSharedPointer<QString>::create();
+
+    connect(process, &QProcess::readyReadStandardOutput, this, [this, process, currentStep, finished, allOutput]() {
+        if (*finished) return;
+        QString output = QString::fromLocal8Bit(process->readAllStandardOutput());
+        allOutput->append(output);
+        QStringList lines = output.split('\n', QString::SkipEmptyParts);
+        for (const QString &line : lines) {
+            QString trimmed = line.trimmed();
+            if (trimmed.isEmpty()) continue;
+
+            QRegularExpression re("\\[(\\d+)/(\\d+)\\]");
+            QRegularExpressionMatch match = re.match(trimmed);
+            if (match.hasMatch()) {
+                *currentStep = match.captured(1).toInt();
+                int total = match.captured(2).toInt();
+                m_progressBar->setMaximum(total);
+                m_progressBar->setValue(*currentStep - 1);
+            }
+
+            if (trimmed.contains("[Success]")) {
+                m_progressBar->setValue(*currentStep);
+            } else if (trimmed.contains("Error occurs")) {
+                *finished = true;
+                showProgress(false);
+                m_scanTsBtn->setEnabled(true);
+                m_genQmBtn->setEnabled(true);
+                // 弹出错误详情对话框，方便查错
+                showScriptError(tr("脚本执行失败"), *allOutput);
+                process->kill();
+                process->deleteLater();
+                return;
+            } else if (trimmed.contains("Bat Finish") || trimmed.contains("All Steps Complete")) {
+                *finished = true;
+                showProgress(false, "扫描项目文件更新Ts内容完成");
+                m_scanTsBtn->setEnabled(true);
+                m_genQmBtn->setEnabled(true);
+                process->kill();
+                process->deleteLater();
+                return;
+            }
+        }
+    });
+
+    connect(process, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished), this, [this, process, currentStep, finished, allOutput](int exitCode, QProcess::ExitStatus) {
+        if (!*finished) {
+            m_scanTsBtn->setEnabled(true);
+            m_genQmBtn->setEnabled(true);
+            if (exitCode == 0) {
+                showProgress(false, "扫描项目文件更新Ts内容完成");
+            } else {
+                showProgress(false, "扫描项目文件更新Ts内容失败");
+                showScriptError(tr("脚本执行失败"), *allOutput);
+            }
+        }
+        process->deleteLater();
+    });
+
+    process->setWorkingDirectory(scriptInfo.absolutePath());
+    process->start("cmd.exe", QStringList() << "/c" << scriptPath);
+
+    if (!process->waitForStarted()) {
+        showProgress(false, "无法启动脚本");
+        m_scanTsBtn->setEnabled(true);
+        m_genQmBtn->setEnabled(true);
+        process->deleteLater();
+        return;
+    }
+}
+
+void MainWindow::on_genQmBtn_clicked()
+{
+    QString scriptPath = m_genQmPathEdit->toPlainText();
+    if (scriptPath.isEmpty()) {
+        onReceiveMsg("请先导入生成Qm脚本路径");
+        return;
+    }
+    QFileInfo scriptInfo(scriptPath);
+    if (!scriptInfo.exists()) {
+        onReceiveMsg("脚本文件不存在: " + scriptPath);
+        return;
+    }
+
+    m_scanTsBtn->setEnabled(false);
+    m_genQmBtn->setEnabled(false);
+
+    // 显示进度条和进度标签
+    showProgress(true, tr("正在开始生成Qm翻译文件..."), 10);
+
+    QProcess *process = new QProcess(this);
+    process->setProcessChannelMode(QProcess::MergedChannels);
+
+    QSharedPointer<int> currentStep = QSharedPointer<int>::create(0);
+    QSharedPointer<bool> finished = QSharedPointer<bool>::create(false);
+    QSharedPointer<QString> allOutput = QSharedPointer<QString>::create();
+
+    connect(process, &QProcess::readyReadStandardOutput, this, [this, process, currentStep, finished, allOutput]() {
+        if (*finished) return;
+        QString output = QString::fromLocal8Bit(process->readAllStandardOutput());
+        allOutput->append(output);
+        QStringList lines = output.split('\n', QString::SkipEmptyParts);
+        for (const QString &line : lines) {
+            QString trimmed = line.trimmed();
+            if (trimmed.isEmpty()) continue;
+
+            QRegularExpression re("\\[(\\d+)/(\\d+)\\]");
+            QRegularExpressionMatch match = re.match(trimmed);
+            if (match.hasMatch()) {
+                *currentStep = match.captured(1).toInt();
+                int total = match.captured(2).toInt();
+                m_progressBar->setMaximum(total);
+                m_progressBar->setValue(*currentStep - 1);
+            }
+
+            if (trimmed.contains("[Success]")) {
+                m_progressBar->setValue(*currentStep);
+            } else if (trimmed.contains("Error occurs")) {
+                *finished = true;
+                showProgress(false);
+                m_scanTsBtn->setEnabled(true);
+                m_genQmBtn->setEnabled(true);
+                showScriptError(tr("脚本执行失败"), *allOutput);
+                process->kill();
+                process->deleteLater();
+                return;
+            } else if (trimmed.contains("Bat Finish") || trimmed.contains("All Steps Complete")) {
+                *finished = true;
+                showProgress(false,"生成Qm文件完成");
+                m_scanTsBtn->setEnabled(true);
+                m_genQmBtn->setEnabled(true);
+                process->kill();
+                process->deleteLater();
+                return;
+            }
+        }
+    });
+
+    connect(process, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished), this, [this, process, currentStep, finished, allOutput](int exitCode, QProcess::ExitStatus) {
+        if (!*finished) {
+            
+            m_scanTsBtn->setEnabled(true);
+            m_genQmBtn->setEnabled(true);
+            if (exitCode == 0) {
+                showProgress(false, "生成Qm文件完成");
+            } else {
+                showProgress(false, "生成Qm文件失败");
+                showScriptError(tr("脚本执行失败"), *allOutput);
+            }
+        }
+        process->deleteLater();
+    });
+
+    process->setWorkingDirectory(scriptInfo.absolutePath());
+    process->start("cmd.exe", QStringList() << "/c" << scriptPath);
+
+    if (!process->waitForStarted()) {
+        showProgress(false, "无法启动脚本");
+        m_scanTsBtn->setEnabled(true);
+        m_genQmBtn->setEnabled(true);
+        process->deleteLater();
+        return;
+    }
 }
 
 void MainWindow::readConfig()
@@ -765,74 +1109,79 @@ void MainWindow::paintEvent(QPaintEvent *event)
 }
 
 // ========== 样式初始化函数 ==========
-void MainWindow::applyStyles()
+void MainWindow::showScriptError(const QString& title, const QString& output)
 {
-    // ---- 标题栏按钮样式 ----
-    // 最小化按钮：透明背景，灰色文字，悬浮灰色背景
-    QPushButton *minimizeBtn = findChild<QPushButton*>(); // 通过布局获取
-    // 由于标题栏按钮是动态创建的，需要通过遍历标题栏获取
-    QWidget *titleBarWidget = nullptr;
-    for (int i = 0; i < ui->centralWidget->layout()->count(); ++i) {
-        QWidget *w = ui->centralWidget->layout()->itemAt(i)->widget();
-        if (w && w->height() == 48) { // titleBarWidget高度为48
-            titleBarWidget = w;
-            break;
+    ScriptErrorDialog *dlg = new ScriptErrorDialog(title, output, this);
+    dlg->show();
+    dlg->move(this->geometry().center() - dlg->rect().center());
+}
+
+void MainWindow::showProgress(bool show, const QString& labelText, int maximum)
+{
+    if (show) {
+        m_overlayWidget->setGeometry(0, 0, width(), height());
+        m_overlayWidget->raise();
+        m_overlayWidget->show();
+        m_progressBar->setMaximum(maximum);
+        m_progressBar->setValue(0);
+        int x = (width() - m_progressBar->width()) / 2;
+        int y = (height() - m_progressBar->height()) / 2;
+        m_progressBar->move(x, y);
+        m_progressBar->raise();
+        m_progressBar->show();
+        m_progressLabel->move(x, y - 60);
+        m_progressLabel->raise();
+        m_progressLabel->show();
+        m_progressLabel->setText(labelText);
+    } else {
+        m_overlayWidget->hide();
+        m_progressBar->hide();
+        m_progressLabel->hide();
+        if (!labelText.isEmpty()) {
+            onReceiveMsg(labelText);
         }
     }
+}
 
-    if (titleBarWidget) {
-        // 标题栏背景样式：浅蓝色背景，顶部圆角12px
-        titleBarWidget->setStyleSheet(
-            "QWidget {"
-            "  background: #E5F5FF;"
+void MainWindow::applyStyles()
+{
+    // ---- 标题栏样式 ----
+    // 标题栏背景样式：浅蓝色背景，顶部圆角12px
+    m_titleBarWidget->setStyleSheet(
+        "QWidget {"
+        "  background: #E5F5FF;"
+        "  border: none;"
+        "  border-top-left-radius: 12px;"
+        "  border-top-right-radius: 12px;"
+        "  border-bottom-left-radius: 0px;"
+        "  border-bottom-right-radius: 0px;"
+        "}"
+    );
+
+    // 标题文本样式：16px粗体深灰色
+    QLabel *titleLabel = m_titleBarWidget->findChild<QLabel*>();
+    if (titleLabel) {
+        titleLabel->setStyleSheet("font-size: 16px; font-weight: bold; color: #333333; background: transparent;");
+    }
+    QString titleStyle = QString(
+        "QPushButton {"
             "  border: none;"
-            "  border-top-left-radius: 12px;"
-            "  border-top-right-radius: 12px;"
-            "  border-bottom-left-radius: 0px;"
-            "  border-bottom-right-radius: 0px;"
+            "  border-radius: 4px;"
+            "  background: transparent;"
+            "  color: #666666;"
+            "  font-size: 20px;"
+            "  padding: 4px;"
             "}"
-        );
+            "QPushButton:hover {"
+            "  background: #e0e0e0;"
+            "  color: #333333;"
+            "}"
+    );
 
-        // 标题文本样式：16px粗体深灰色
-        QLabel *titleLabel = titleBarWidget->findChild<QLabel*>();
-        if (titleLabel) {
-            titleLabel->setStyleSheet("font-size: 16px; font-weight: bold; color: #333333; background: transparent;");
-        }
-
-        // 最小化按钮样式：透明背景，灰色文字，悬浮灰色背景
-        QList<QPushButton*> btns = titleBarWidget->findChildren<QPushButton*>();
-        if (btns.size() >= 2) {
-            btns[0]->setStyleSheet(
-                "QPushButton {"
-                "  border: none;"
-                "  border-radius: 4px;"
-                "  background: transparent;"
-                "  color: #666666;"
-                "  font-size: 20px;"
-                "  padding: 4px;"
-                "}"
-                "QPushButton:hover {"
-                "  background: #e0e0e0;"
-                "  color: #333333;"
-                "}"
-            );
-
-            // 关闭按钮样式：透明背景，灰色文字，悬浮红色背景白色文字
-            btns[1]->setStyleSheet(
-                "QPushButton {"
-                "  border: none;"
-                "  border-radius: 4px;"
-                "  background: transparent;"
-                "  color: #666666;"
-                "  font-size: 24px;"
-                "  padding: 4px 8px 4px 8px;"
-                "}"
-                "QPushButton:hover {"
-                "  background: #e81123;"
-                "  color: #ffffff;"
-                "}"
-            );
-        }
+    // 标题栏按钮样式
+    QList<QPushButton*> titleBtns = m_titleBarWidget->findChildren<QPushButton*>();
+    for(auto &btn : titleBtns){
+        btn->setStyleSheet(titleStyle);
     }
 
     // ---- AI翻译按钮样式 ----
@@ -929,6 +1278,75 @@ void MainWindow::applyStyles()
         "  color: #ffffff;"
         "}"
     );
+
+    // ---- 右侧面板按钮样式 ----
+    m_scanTsPathEdit->setReadOnly(true);
+    m_genQmPathEdit->setReadOnly(true);
+
+    // 路径输入框样式：圆角4px，边框#DCDCDC，微软雅黑11px
+    QString pathEditStyle =
+        "QTextEdit {"
+        "  border: 1px solid #DCDCDC;"
+        "  border-radius: 4px;"
+        "  padding: 2px 2px;"
+        "  background: #fafafa;"
+        "  font-family: 'Microsoft YaHei';"
+        "  font-size: 11px;"
+        "  color: #333333;"
+        "}"
+        "QTextEdit:focus {"
+        "  border: 1px solid #4a90d9;"
+        "  background: #ffffff;"
+        "}"
+        ;
+    m_scanTsPathEdit->setStyleSheet(pathEditStyle);
+    m_genQmPathEdit->setStyleSheet(pathEditStyle);
+
+    // 导入路径按钮样式：与生成Excel表格按钮（蓝色主题）一样
+    QString importPathBtnStyle =
+        "QPushButton {"
+        "  border: 1px solid #0099FF;"
+        "  border-radius: 4px;"
+        "  padding: 5px 16px;"
+        "  min-height: 26px;"
+        "  background: #E6F4FF;"
+        "  color: #0099FF;"
+        "  font-weight: bold;"
+        "}"
+        "QPushButton:hover {"
+        "  background: #0099FF;"
+        "  color: #ffffff;"
+        "}"
+        "QPushButton:pressed {"
+        "  background: #0077CC;"
+        "  color: #ffffff;"
+        "}"
+        ;
+    m_scanTsLookBtn->setStyleSheet(importPathBtnStyle);
+    m_genQmLookBtn->setStyleSheet(importPathBtnStyle);
+
+    // 扫描项目文件按钮：与译文写入Ts文件按钮（红色主题）一样
+    QString actionBtnStyle =
+        "QPushButton {"
+        "  border: 1px solid #FF4A4A;"
+        "  border-radius: 4px;"
+        "  padding: 5px 16px;"
+        "  min-height: 26px;"
+        "  background: #FFF0F0;"
+        "  color: #FF4A4A;"
+        "  font-weight: bold;"
+        "}"
+        "QPushButton:hover {"
+        "  background: #FF4A4A;"
+        "  color: #ffffff;"
+        "}"
+        "QPushButton:pressed {"
+        "  background: #CC3333;"
+        "  color: #ffffff;"
+        "}"
+        ;
+    m_scanTsBtn->setStyleSheet(actionBtnStyle);
+    m_genQmBtn->setStyleSheet(actionBtnStyle);
 
     // ---- 有道翻译按钮样式 ----
     // 与生成Excel表格按钮相同的蓝色主题
@@ -1207,6 +1625,22 @@ void MainWindow::applyStyles()
         "  image: url(%1/spinbox_minus.png);"
         "}"
         ).arg(tempDir.replace("\\", "/"))
+    );
+
+    // ---- 进度条样式 ----
+    // 蓝色主题进度条，固定500x16，圆角8px
+    m_progressBar->setStyleSheet(
+        "QProgressBar {"
+        "  border: none;"
+        "  border-radius: 8px;"
+        "  background: #e0e0e0;"
+        "  color: #333333;"
+        "  font-weight: bold;"
+        "}"
+        "QProgressBar::chunk {"
+        "  background: #0099FF;"
+        "  border-radius: 8px;"
+        "}"
     );
 
     // ---- ComboBox样式 ----

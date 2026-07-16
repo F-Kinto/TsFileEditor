@@ -10,6 +10,9 @@ QT       += core gui
 QT       += core gui xml
 QT       += network
 
+# MSVC: 强制以UTF-8读取源文件和执行字符集
+msvc: QMAKE_CXXFLAGS += /utf-8
+
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = TSFileEditor
 TEMPLATE = app
@@ -26,14 +29,18 @@ SOURCES += main.cpp\
     ExcelRW.cpp \
     DataModel/TranslateModel.cpp \
     NetWorker.cpp \
-    TranslateWorker.cpp
+    TranslateWorker.cpp \
+    ScriptErrorDialog.cpp \
+    HelpDialog.cpp
 
 HEADERS  += MainWindow.h \
     XmlRW.h \
     ExcelRW.h \
     DataModel/TranslateModel.h \
     NetWorker.h \
-    TranslateWorker.h
+    TranslateWorker.h \
+    ScriptErrorDialog.h \
+    HelpDialog.h
 
 FORMS    += MainWindow.ui
 

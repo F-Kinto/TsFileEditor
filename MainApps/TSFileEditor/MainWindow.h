@@ -1,4 +1,4 @@
-﻿#ifndef MAINWINDOW_H
+#ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
 #include <QMainWindow>
@@ -7,8 +7,10 @@
 #include <QMouseEvent>
 #include <QPainter>
 #include <QLabel>
+#include <QTextEdit>
 #include <QTimer>
 #include <QPushButton>
+#include <QProgressBar>
 
 #include "DataModel/TranslateModel.h"
 
@@ -49,6 +51,10 @@ private slots:
     void on_excelDirBtn_clicked();
     void on_generateBtn_2_clicked();
     void on_tsUpdateBtn_2_clicked();
+    void on_scanTsBtn_clicked();
+    void on_genQmBtn_clicked();
+    void on_scanTsLookBtn_clicked();
+    void on_genQmLookBtn_clicked();
 
 private:
     Ui::MainWindow*         ui;
@@ -70,11 +76,23 @@ private:
     QTimer*                 m_toastTimer;
     QTabWidget*             m_tabWidget;
     QPushButton*            m_aiTranslateBtn;
+    QProgressBar*           m_progressBar;
+    QLabel*                 m_progressLabel;
+    QWidget*                m_titleBarWidget;
+    QWidget*                m_overlayWidget;
+    QTextEdit*              m_scanTsPathEdit;
+    QTextEdit*              m_genQmPathEdit;
+    QPushButton*            m_scanTsLookBtn;
+    QPushButton*            m_genQmLookBtn;
+    QPushButton*            m_scanTsBtn;
+    QPushButton*            m_genQmBtn;
 
     void readConfig();
     void saveConfig();
     int getColumnIndex(const QString& columnName);
     void showToast(const QString& msg, bool success);
+    void showScriptError(const QString& title, const QString& output);
+    void showProgress(bool show, const QString& labelText = "", int maximum = 0);
     void applyStyles();
 };
 #endif // MAINWINDOW_H
