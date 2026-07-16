@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <!DOCTYPE TS>
-<TS language="zh_CN" version="2.1">
+<TS version="2.1" language="zh_CN">
     <context>
         <name>ALiDeviceTask</name>
         <message>
@@ -698,9 +698,6 @@
         </message>
     </context>
     <context>
-        <name>CloudDeviceMessagePlayBackItem</name>
-    </context>
-    <context>
         <name>CloudDownloadManager</name>
         <message>
             <source>Dome</source>
@@ -927,19 +924,19 @@
             <translation>摄像头 </translation>
         </message>
         <message>
-            <source>您的4G流量加油包已到期，为了不影响您的使用，请尽快购买</source>
+            <source>����4G�������Ͱ��ѵ��ڣ�Ϊ�˲�Ӱ������ʹ�ã��뾡�칺��</source>
             <translation type="unfinished"></translation>
         </message>
         <message>
-            <source>您的4G流量加油包将于%1到期，为了不影响您的使用，请尽快购买</source>
+            <source>����4G�������Ͱ�����%1���ڣ�Ϊ�˲�Ӱ������ʹ�ã��뾡�칺��</source>
             <translation type="unfinished"></translation>
         </message>
         <message>
-            <source>您的4G流量加油包流量已用完，为了不影响您的使用，请尽快购买</source>
+            <source>����4G�������Ͱ����������꣬Ϊ�˲�Ӱ������ʹ�ã��뾡�칺��</source>
             <translation type="unfinished"></translation>
         </message>
         <message>
-            <source>您的4G流量加油包流量已使用了80%，为了不影响您的使用，请尽快购买</source>
+            <source>����4G�������Ͱ�������ʹ����80%��Ϊ�˲�Ӱ������ʹ�ã��뾡�칺��</source>
             <translation type="unfinished"></translation>
         </message>
     </context>
@@ -1485,7 +1482,7 @@
         </message>
         <message>
             <source>After deleting device %1, the device will no longer appear in the list. To view it again, you need to manually re-add it.</source>
-            <translation>删除设备 AAA 后, 设备将不再展示到到列表中, 如需再次查看, 需要手动重新添加</translation>
+            <translation>删除设备 %1 后, 设备将不再展示到到列表中, 如需再次查看, 需要手动重新添加</translation>
         </message>
         <message>
             <source>Add</source>
@@ -1581,6 +1578,14 @@
         <message>
             <source>Fresh</source>
             <translation>刷新</translation>
+        </message>
+        <message>
+            <source>You are not logged in yet, please log in first</source>
+            <translation>您还未登录,请先</translation>
+        </message>
+        <message>
+            <source>Login</source>
+            <translation>登 录</translation>
         </message>
     </context>
     <context>
@@ -1876,23 +1881,19 @@ Note: After joining a team, the devices under your account will be automatically
             <translation>设备UID无效</translation>
         </message>
         <message>
-            <source>正在刷新设备列表...</source>
+            <source>����ˢ���豸�б�...</source>
             <translation type="unfinished"></translation>
         </message>
         <message>
-            <source>Operation failed</source>
-            <translation>操作失败</translation>
-        </message>
-        <message>
-            <source>设备转移成功</source>
+            <source>�豸ת�Ƴɹ�</source>
             <translation type="unfinished"></translation>
         </message>
         <message>
-            <source>设备转移失败</source>
+            <source>�豸ת��ʧ��</source>
             <translation type="unfinished"></translation>
         </message>
         <message>
-            <source>设备分享失败</source>
+            <source>�豸����ʧ��</source>
             <translation type="unfinished"></translation>
         </message>
     </context>
@@ -1931,9 +1932,6 @@ Note: After joining a team, the devices under your account will be automatically
             <source>New version detected:</source>
             <translation>检测到新版本:</translation>
         </message>
-    </context>
-    <context>
-        <name>DisbandTeamPopup</name>
     </context>
     <context>
         <name>DispatchObj</name>
@@ -2743,24 +2741,8 @@ Note: After joining a team, the devices under your account will be automatically
             <translation type="unfinished"></translation>
         </message>
         <message>
-            <source>电子围栏设置:</source>
-            <translation type="unfinished"></translation>
-        </message>
-        <message>
             <source>%1个区域</source>
-            <translation type="unfinished"></translation>
-        </message>
-        <message>
-            <source>自动追踪:</source>
-            <translation type="unfinished"></translation>
-        </message>
-        <message>
-            <source>为延长产品寿命, 请不必要时关闭</source>
-            <translation type="unfinished"></translation>
-        </message>
-        <message>
-            <source>人形追踪:</source>
-            <translation type="unfinished"></translation>
+            <translation>123区域我</translation>
         </message>
         <message>
             <source>Disable</source>
@@ -2930,6 +2912,14 @@ Note: After joining a team, the devices under your account will be automatically
         <message>
             <source>分享设备</source>
             <translation type="unfinished"></translation>
+        </message>
+        <message>
+            <source>After deleting device %1, the device will no longer appear in the list. To view it again, you need to manually re-add it.</source>
+            <translation>删除设备 %1 后, 设备将不再展示到到列表中, 如需再次查看, 需要手动重新添加</translation>
+        </message>
+        <message>
+            <source>Delete</source>
+            <translation>删除</translation>
         </message>
     </context>
     <context>
@@ -4070,10 +4060,6 @@ Note: After joining a team, the devices under your account will be automatically
             <translation type="unfinished"></translation>
         </message>
         <message>
-            <source>OK</source>
-            <translation>确 定</translation>
-        </message>
-        <message>
             <source>正在格式化SD卡，请勿断开设备电源...</source>
             <translation type="unfinished"></translation>
         </message>
@@ -4331,135 +4317,135 @@ Note: After joining a team, the devices under your account will be automatically
         </message>
         <message>
             <source>International date line west</source>
-            <translation type="unfinished"></translation>
+            <translation>国际日期线西</translation>
         </message>
         <message>
             <source>Wake island Samoa</source>
-            <translation type="unfinished"></translation>
+            <translation>威克岛萨摩亚</translation>
         </message>
         <message>
             <source>Hawaii</source>
-            <translation type="unfinished"></translation>
+            <translation>夏威夷</translation>
         </message>
         <message>
             <source>Alaska</source>
-            <translation type="unfinished"></translation>
+            <translation>阿拉斯加</translation>
         </message>
         <message>
             <source>Pacific time/USA/Canada/Tijuana</source>
-            <translation type="unfinished"></translation>
+            <translation>太平洋时间/美国/加拿大/蒂华纳</translation>
         </message>
         <message>
             <source>Mountain standard time/USA/Canada/Arizona</source>
-            <translation type="unfinished"></translation>
+            <translation>山地标准时间/美国/加拿大/亚利桑那州</translation>
         </message>
         <message>
             <source>Central standard time/Mexico/monterrey/guadalaha</source>
-            <translation type="unfinished"></translation>
+            <translation>中部标准时间/墨西哥/蒙特雷/瓜达拉哈</translation>
         </message>
         <message>
             <source>Eastern standard time/indiana (e)/ Bogota/Lima/Quito</source>
-            <translation type="unfinished"></translation>
+            <translation>东部标准时间/印第安那(东)/波哥大/立马/基多</translation>
         </message>
         <message>
             <source>USA/San Diego</source>
-            <translation type="unfinished"></translation>
+            <translation>美国/圣地亚哥</translation>
         </message>
         <message>
             <source>Pacific time/Canada/Caracas/la paz</source>
-            <translation type="unfinished"></translation>
+            <translation>太平洋时间/加拿大/加拉加斯/拉巴斯</translation>
         </message>
         <message>
             <source>Newfoundland/Islands off the east coast of Canada</source>
-            <translation type="unfinished"></translation>
+            <translation>纽芬兰/加拿大东海岸岛屿</translation>
         </message>
         <message>
             <source>Central Pacific</source>
-            <translation type="unfinished"></translation>
+            <translation>中太平洋</translation>
         </message>
         <message>
             <source>Cape Verde/Azores</source>
-            <translation type="unfinished"></translation>
+            <translation>佛得角/亚速尔群岛</translation>
         </message>
         <message>
             <source>GMT/London/Edinburgh/Lisbon</source>
-            <translation type="unfinished"></translation>
+            <translation>格林尼治时间/伦敦/爱丁堡/里斯本</translation>
         </message>
         <message>
             <source>Casablanca/Monrovia</source>
-            <translation type="unfinished"></translation>
+            <translation>卡萨布兰卡/蒙罗维亚</translation>
         </message>
         <message>
             <source>Amsterdam/Berlin/Rome/Vienna/Paris/Copenhagen/Midwest Africa</source>
-            <translation type="unfinished"></translation>
+            <translation>阿姆斯特丹/柏林/罗马/维也纳/巴黎/哥本哈根/非洲中西部</translation>
         </message>
         <message>
             <source>Athens/Cairo/Jerusalem/Istanbul/Minsk/Bulgaria/harare</source>
-            <translation type="unfinished"></translation>
+            <translation>雅典/开罗/耶路撒冷/伊斯坦布尔/明斯克/保加利亚/哈拉雷</translation>
         </message>
         <message>
             <source>Baghdad/Kuwait/Riyadh/Moscow/st. Petersburg/nerohua/volgograd</source>
-            <translation type="unfinished"></translation>
+            <translation>巴格达/科威特/利雅得/莫斯科/圣彼得堡/内罗华/伏尔加格勒</translation>
         </message>
         <message>
             <source>Teheran</source>
-            <translation type="unfinished"></translation>
+            <translation>德黑兰</translation>
         </message>
         <message>
             <source>Baku/yerevan tbilisi/ABU dhabi/Muscat</source>
-            <translation type="unfinished"></translation>
+            <translation>巴库/埃里温第比利斯/阿布扎比/马斯喀特</translation>
         </message>
         <message>
             <source>Kabul</source>
-            <translation type="unfinished"></translation>
+            <translation>喀布尔</translation>
         </message>
         <message>
             <source>Yekaterinburg/Islamabad/Kara/Tashkent</source>
-            <translation type="unfinished"></translation>
+            <translation>叶卡捷琳堡/伊斯兰堡/卡拉/塔什干</translation>
         </message>
         <message>
             <source>Chennai/Kolkata/Mumbai/New Delhi</source>
-            <translation type="unfinished"></translation>
+            <translation>钦奈/加尔各答/孟买/新德里</translation>
         </message>
         <message>
             <source>Kathmandu</source>
-            <translation type="unfinished"></translation>
+            <translation>加德满都</translation>
         </message>
         <message>
             <source>Almaty/Novosibirsk/Sri Lanka/Astana/Dhaka</source>
-            <translation type="unfinished"></translation>
+            <translation>阿拉木图/新西伯利亚/斯里兰卡/阿斯塔纳/达卡</translation>
         </message>
         <message>
             <source>Yangon</source>
-            <translation type="unfinished"></translation>
+            <translation>仰光</translation>
         </message>
         <message>
             <source>Bangkok/Hanoi/Jakarta/Krasnoyarsk</source>
-            <translation type="unfinished"></translation>
+            <translation>曼谷/河内/雅加达/克拉斯诺亚尔斯克</translation>
         </message>
         <message>
             <source>Beijing/Hong Kong/Macau/Taipei/Singapore/Kuala Lumpur/Irkutsk/Ulan Bator</source>
-            <translation type="unfinished"></translation>
+            <translation>北京/香港/澳门/台北/新加坡/吉隆坡/伊尔库茨克/乌兰巴托</translation>
         </message>
         <message>
             <source>Tokyo/Seoul/Yakutsk/Sapporo/Osaka</source>
-            <translation type="unfinished"></translation>
+            <translation>东京/汉城/雅库茨克/札幌/大阪</translation>
         </message>
         <message>
             <source>Pyongyang</source>
-            <translation type="unfinished"></translation>
+            <translation>平壤</translation>
         </message>
         <message>
             <source>Vladivostok/Canberra/Sydney/Brisbane/Guam/port moresby/hobart</source>
-            <translation type="unfinished"></translation>
+            <translation>海参崴/堪培拉/悉尼/布里斯班市/关岛/莫尔兹比港/霍巴特</translation>
         </message>
         <message>
             <source>Magadan/Solomon/new caledonia</source>
-            <translation type="unfinished"></translation>
+            <translation>马加丹/所罗门/新喀里多尼亚</translation>
         </message>
         <message>
             <source>Auckland/Wellington/Fiji/Marshall/Kamchatka/nukualofa</source>
-            <translation type="unfinished"></translation>
+            <translation>奥克兰/惠灵顿/斐济/马绍尔/勘察加半岛/努库阿洛法</translation>
         </message>
         <message>
             <source>正在切换时区...</source>
@@ -4476,6 +4462,10 @@ Note: After joining a team, the devices under your account will be automatically
         <message>
             <source>Setting timed out. Please try again later</source>
             <translation>设置超时,请稍后重试</translation>
+        </message>
+        <message>
+            <source>Greenland/Buenos Aires/Brasilia</source>
+            <translation>格陵兰岛/布宜诺斯艾利/巴西利亚</translation>
         </message>
     </context>
     <context>
@@ -5534,9 +5524,6 @@ Note: After joining a team, the devices under your account will be automatically
         </message>
     </context>
     <context>
-        <name>StoreEquipmentList</name>
-    </context>
-    <context>
         <name>SystemMessage</name>
         <message>
             <source>No system messages~</source>
@@ -5741,9 +5728,6 @@ Note: After joining a team, the devices under your account will be automatically
             <source>Your application to join the XXXX team has been withdrawn. You can resubmit if necessary!</source>
             <translation>加入XXXX团队申请已撤销,如有需要您可以重新申请!</translation>
         </message>
-    </context>
-    <context>
-        <name>TeamListView</name>
     </context>
     <context>
         <name>TeamManageMainPage</name>

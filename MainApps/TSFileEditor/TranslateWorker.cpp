@@ -40,7 +40,6 @@ bool TranslateWorker::YoudaoTranslate(const QString &from, const QString &to)
         else
             m_already_count++;
     }
-    qDebug() << "Translator Complete!!!!!!!!!!!!";
     return true;
 }
 
@@ -65,7 +64,6 @@ void TranslateWorker::YoudaoTranslate(int index, const QString &_source)
 
     QUrlQuery query;
     //query.addQueryItem("q", source.toUtf8().toPercentEncoding());//QUrl::toPercentEncoding(source)
-    //qDebug() << QUrl::toPercentEncoding(source.toUtf8()) << "--" << source.toUtf8() << "---" << source;
     query.addQueryItem("q", QUrl::toPercentEncoding(source.toUtf8()));
     query.addQueryItem("from", m_fromLang.trimmed());
     query.addQueryItem("to", m_toLang.trimmed());

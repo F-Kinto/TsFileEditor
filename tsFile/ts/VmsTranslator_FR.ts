@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <!DOCTYPE TS>
-<TS language="fr_FR" version="2.1">
+<TS version="2.1" language="fr_FR">
     <context>
         <name>ALiDeviceTask</name>
         <message>
@@ -698,9 +698,6 @@
         </message>
     </context>
     <context>
-        <name>CloudDeviceMessagePlayBackItem</name>
-    </context>
-    <context>
         <name>CloudDownloadManager</name>
         <message>
             <source>Dome</source>
@@ -927,19 +924,19 @@
             <translation>Caméra </translation>
         </message>
         <message>
-            <source>您的4G流量加油包已到期，为了不影响您的使用，请尽快购买</source>
+            <source>����4G�������Ͱ��ѵ��ڣ�Ϊ�˲�Ӱ������ʹ�ã��뾡�칺��</source>
             <translation type="unfinished"></translation>
         </message>
         <message>
-            <source>您的4G流量加油包将于%1到期，为了不影响您的使用，请尽快购买</source>
+            <source>����4G�������Ͱ�����%1���ڣ�Ϊ�˲�Ӱ������ʹ�ã��뾡�칺��</source>
             <translation type="unfinished"></translation>
         </message>
         <message>
-            <source>您的4G流量加油包流量已用完，为了不影响您的使用，请尽快购买</source>
+            <source>����4G�������Ͱ����������꣬Ϊ�˲�Ӱ������ʹ�ã��뾡�칺��</source>
             <translation type="unfinished"></translation>
         </message>
         <message>
-            <source>您的4G流量加油包流量已使用了80%，为了不影响您的使用，请尽快购买</source>
+            <source>����4G�������Ͱ�������ʹ����80%��Ϊ�˲�Ӱ������ʹ�ã��뾡�칺��</source>
             <translation type="unfinished"></translation>
         </message>
     </context>
@@ -1582,6 +1579,14 @@
             <source>Fresh</source>
             <translation>Nouveau</translation>
         </message>
+        <message>
+            <source>You are not logged in yet, please log in first</source>
+            <translation>Vous n'êtes pas encore connecté, veuillez d'abord vous connecter.</translation>
+        </message>
+        <message>
+            <source>Login</source>
+            <translation>Connexion</translation>
+        </message>
     </context>
     <context>
         <name>DeviceManagerModel</name>
@@ -1876,23 +1881,19 @@ Remarque : Après avoir rejoint une équipe, les appareils de votre compte seron
             <translation>UID de périphérique invalide.</translation>
         </message>
         <message>
-            <source>正在刷新设备列表...</source>
+            <source>����ˢ���豸�б�...</source>
             <translation type="unfinished"></translation>
         </message>
         <message>
-            <source>Operation failed</source>
-            <translation>Échec de l'opération</translation>
-        </message>
-        <message>
-            <source>设备转移成功</source>
+            <source>�豸ת�Ƴɹ�</source>
             <translation type="unfinished"></translation>
         </message>
         <message>
-            <source>设备转移失败</source>
+            <source>�豸ת��ʧ��</source>
             <translation type="unfinished"></translation>
         </message>
         <message>
-            <source>设备分享失败</source>
+            <source>�豸����ʧ��</source>
             <translation type="unfinished"></translation>
         </message>
     </context>
@@ -1930,9 +1931,6 @@ Remarque : Après avoir rejoint une équipe, les appareils de votre compte seron
             <source>New version detected:</source>
             <translation>Nouvelle version détectée :</translation>
         </message>
-    </context>
-    <context>
-        <name>DisbandTeamPopup</name>
     </context>
     <context>
         <name>DispatchObj</name>
@@ -2929,6 +2927,14 @@ Remarque : Après avoir rejoint une équipe, les appareils de votre compte seron
         <message>
             <source>分享设备</source>
             <translation type="unfinished"></translation>
+        </message>
+        <message>
+            <source>After deleting device %1, the device will no longer appear in the list. To view it again, you need to manually re-add it.</source>
+            <translation>Après la suppression de l'appareil %1, celui-ci n'apparaîtra plus dans la liste. Pour le visualiser à nouveau, vous devez l'ajouter manuellement.</translation>
+        </message>
+        <message>
+            <source>Delete</source>
+            <translation>Supprimer</translation>
         </message>
     </context>
     <context>
@@ -4069,14 +4075,6 @@ Remarque : Après avoir rejoint une équipe, les appareils de votre compte seron
             <translation type="unfinished"></translation>
         </message>
         <message>
-            <source>OK</source>
-            <translation>OK</translation>
-        </message>
-        <message>
-            <source>Cancel</source>
-            <translation>Annuler</translation>
-        </message>
-        <message>
             <source>正在格式化SD卡，请勿断开设备电源...</source>
             <translation type="unfinished"></translation>
         </message>
@@ -4334,135 +4332,135 @@ Remarque : Après avoir rejoint une équipe, les appareils de votre compte seron
         </message>
         <message>
             <source>International date line west</source>
-            <translation type="unfinished"></translation>
+            <translation>Ligne de changement de date internationale ouest</translation>
         </message>
         <message>
             <source>Wake island Samoa</source>
-            <translation type="unfinished"></translation>
+            <translation>Wake île Samoa</translation>
         </message>
         <message>
             <source>Hawaii</source>
-            <translation type="unfinished"></translation>
+            <translation>Hawaii</translation>
         </message>
         <message>
             <source>Alaska</source>
-            <translation type="unfinished"></translation>
+            <translation>Alaska</translation>
         </message>
         <message>
             <source>Pacific time/USA/Canada/Tijuana</source>
-            <translation type="unfinished"></translation>
+            <translation>Heure du Pacifique/États-Unis/Canada/Tijuana</translation>
         </message>
         <message>
             <source>Mountain standard time/USA/Canada/Arizona</source>
-            <translation type="unfinished"></translation>
+            <translation>Heure normale des Rocheuses/États-Unis/Canada/Arizona</translation>
         </message>
         <message>
             <source>Central standard time/Mexico/monterrey/guadalaha</source>
-            <translation type="unfinished"></translation>
+            <translation>Heure normale du Centre/Mexique/monterrey/guadalaha</translation>
         </message>
         <message>
             <source>Eastern standard time/indiana (e)/ Bogota/Lima/Quito</source>
-            <translation type="unfinished"></translation>
+            <translation>Heure standard de l'Est/Indiana (e)/Bogota/Lima/Quito</translation>
         </message>
         <message>
             <source>USA/San Diego</source>
-            <translation type="unfinished"></translation>
+            <translation>États-Unis/San Diego</translation>
         </message>
         <message>
             <source>Pacific time/Canada/Caracas/la paz</source>
-            <translation type="unfinished"></translation>
+            <translation>Heure du Pacifique/Canada/Caracas/la paz</translation>
         </message>
         <message>
             <source>Newfoundland/Islands off the east coast of Canada</source>
-            <translation type="unfinished"></translation>
+            <translation>Terre-Neuve/Îles au large de la côte est du Canada</translation>
         </message>
         <message>
             <source>Central Pacific</source>
-            <translation type="unfinished"></translation>
+            <translation>Pacifique central</translation>
         </message>
         <message>
             <source>Cape Verde/Azores</source>
-            <translation type="unfinished"></translation>
+            <translation>Cap Vert/Açores</translation>
         </message>
         <message>
             <source>GMT/London/Edinburgh/Lisbon</source>
-            <translation type="unfinished"></translation>
+            <translation>GMT/Londres/Édimbourg/Lisbonne</translation>
         </message>
         <message>
             <source>Casablanca/Monrovia</source>
-            <translation type="unfinished"></translation>
+            <translation>Casablanca/Monrovia</translation>
         </message>
         <message>
             <source>Amsterdam/Berlin/Rome/Vienna/Paris/Copenhagen/Midwest Africa</source>
-            <translation type="unfinished"></translation>
+            <translation>Amsterdam/Berlin/Rome/Vienne/Paris/Copenhague/Midwest Africa</translation>
         </message>
         <message>
             <source>Athens/Cairo/Jerusalem/Istanbul/Minsk/Bulgaria/harare</source>
-            <translation type="unfinished"></translation>
+            <translation>Athènes/Le Caire/Jérusalem/Istanbul/Minsk/Bulgarie/Harare</translation>
         </message>
         <message>
             <source>Baghdad/Kuwait/Riyadh/Moscow/st. Petersburg/nerohua/volgograd</source>
-            <translation type="unfinished"></translation>
+            <translation>Bagdad/Koweït/Riyad/Moscou/st. Saint-Pétersbourg\nerohua/volgograd</translation>
         </message>
         <message>
             <source>Teheran</source>
-            <translation type="unfinished"></translation>
+            <translation>Téhéran</translation>
         </message>
         <message>
             <source>Baku/yerevan tbilisi/ABU dhabi/Muscat</source>
-            <translation type="unfinished"></translation>
+            <translation>Bakou/erevan tbilissi/ABU dhabi/Mascate</translation>
         </message>
         <message>
             <source>Kabul</source>
-            <translation type="unfinished"></translation>
+            <translation>Kaboul</translation>
         </message>
         <message>
             <source>Yekaterinburg/Islamabad/Kara/Tashkent</source>
-            <translation type="unfinished"></translation>
+            <translation>Iekaterinbourg/Islamabad/kara/tachkent</translation>
         </message>
         <message>
             <source>Chennai/Kolkata/Mumbai/New Delhi</source>
-            <translation type="unfinished"></translation>
+            <translation>Chennai/Kolkata/Mumbai\new Delhi</translation>
         </message>
         <message>
             <source>Kathmandu</source>
-            <translation type="unfinished"></translation>
+            <translation>Katmandou</translation>
         </message>
         <message>
             <source>Almaty/Novosibirsk/Sri Lanka/Astana/Dhaka</source>
-            <translation type="unfinished"></translation>
+            <translation>Almaty\novosibirsk/Sri Lanka/astana/dhaka</translation>
         </message>
         <message>
             <source>Yangon</source>
-            <translation type="unfinished"></translation>
+            <translation>Rangoon</translation>
         </message>
         <message>
             <source>Bangkok/Hanoi/Jakarta/Krasnoyarsk</source>
-            <translation type="unfinished"></translation>
+            <translation>Bangkok/Hanoï/Jakarta/krasnoïarsk</translation>
         </message>
         <message>
             <source>Beijing/Hong Kong/Macau/Taipei/Singapore/Kuala Lumpur/Irkutsk/Ulan Bator</source>
-            <translation type="unfinished"></translation>
+            <translation>Pékin/Hong Kong/macao/Taipei/Singapour/Kuala Lumpur/irkutsk/ulan bator</translation>
         </message>
         <message>
             <source>Tokyo/Seoul/Yakutsk/Sapporo/Osaka</source>
-            <translation type="unfinished"></translation>
+            <translation>Tokyo/Séoul/yakutsk/Sapporo/Osaka</translation>
         </message>
         <message>
             <source>Pyongyang</source>
-            <translation type="unfinished"></translation>
+            <translation>Pyongyang</translation>
         </message>
         <message>
             <source>Vladivostok/Canberra/Sydney/Brisbane/Guam/port moresby/hobart</source>
-            <translation type="unfinished"></translation>
+            <translation>Vladivostok/Canberra/Sydney/Brisbane/Guam/port moresby/hobart</translation>
         </message>
         <message>
             <source>Magadan/Solomon/new caledonia</source>
-            <translation type="unfinished"></translation>
+            <translation>Magadan/Salomon\nouvelle Calédonie</translation>
         </message>
         <message>
             <source>Auckland/Wellington/Fiji/Marshall/Kamchatka/nukualofa</source>
-            <translation type="unfinished"></translation>
+            <translation>Auckland/Wellington/Fidji/Marshall/Kamchatka\nukualofa</translation>
         </message>
         <message>
             <source>正在切换时区...</source>
@@ -4479,6 +4477,10 @@ Remarque : Après avoir rejoint une équipe, les appareils de votre compte seron
         <message>
             <source>Setting timed out. Please try again later</source>
             <translation>Délai d'attente expiré. Veuillez réessayer ultérieurement.</translation>
+        </message>
+        <message>
+            <source>Greenland/Buenos Aires/Brasilia</source>
+            <translation>Groenland/Buenos Aires/Brasilia</translation>
         </message>
     </context>
     <context>
@@ -5537,9 +5539,6 @@ Remarque : Après avoir rejoint une équipe, les appareils de votre compte seron
         </message>
     </context>
     <context>
-        <name>StoreEquipmentList</name>
-    </context>
-    <context>
         <name>SystemMessage</name>
         <message>
             <source>No system messages~</source>
@@ -5744,9 +5743,6 @@ Remarque : Après avoir rejoint une équipe, les appareils de votre compte seron
             <source>Your application to join the XXXX team has been withdrawn. You can resubmit if necessary!</source>
             <translation>Votre candidature pour rejoindre l'équipe XXXX a été retirée. Vous pouvez la soumettre à nouveau si nécessaire.</translation>
         </message>
-    </context>
-    <context>
-        <name>TeamListView</name>
     </context>
     <context>
         <name>TeamManageMainPage</name>

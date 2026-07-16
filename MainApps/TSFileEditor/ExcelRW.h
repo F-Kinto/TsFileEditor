@@ -22,6 +22,7 @@ public:
 
     bool  ImportFromXlsx(QList<TranslateModel>& list, QString strPath);
     bool  ExportToXlsx(QList<TranslateModel>& list, QString strPath);
+    bool  ExportToXlsxMultiColumn(const QMap<QString, QList<TranslateModel>>& tsDataMap, const QMap<QString, int>& tsColumnMap, QString strPath);
     void  SetTransColumn(int column);
 
 signals:

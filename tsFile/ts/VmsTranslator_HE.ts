@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <!DOCTYPE TS>
-<TS language="he_IL" version="2.1">
+<TS version="2.1" language="he_IL">
     <context>
         <name>ALiDeviceTask</name>
         <message>
@@ -1035,144 +1035,144 @@
     <context>
         <name>CloudPlayBackPage</name>
         <message>
-            <location line="115" filename="../../Component/VideoPage/CloudPlayBackPage.qml"/>
+            <location line="113" filename="../../Component/VideoPage/CloudPlayBackPage.qml"/>
             <source>Delete successful</source>
             <translation>המחיקה הצליחה</translation>
         </message>
         <message>
-            <location line="118" filename="../../Component/VideoPage/CloudPlayBackPage.qml"/>
+            <location line="116" filename="../../Component/VideoPage/CloudPlayBackPage.qml"/>
             <source>Delete failed</source>
             <translation>המחיקה נכשלה</translation>
         </message>
         <message>
-            <location line="123" filename="../../Component/VideoPage/CloudPlayBackPage.qml"/>
-            <location line="130" filename="../../Component/VideoPage/CloudPlayBackPage.qml"/>
+            <location line="121" filename="../../Component/VideoPage/CloudPlayBackPage.qml"/>
+            <location line="128" filename="../../Component/VideoPage/CloudPlayBackPage.qml"/>
             <source>Failed to open folder</source>
             <translation>פתיחת תיקייה נכשלה</translation>
         </message>
         <message>
-            <location line="580" filename="../../Component/VideoPage/CloudPlayBackPage.qml"/>
+            <location line="578" filename="../../Component/VideoPage/CloudPlayBackPage.qml"/>
             <source>Network signal abnormal, please retry</source>
             <translation>אות רשת חריג, נסה שוב</translation>
         </message>
         <message>
-            <location line="623" filename="../../Component/VideoPage/CloudPlayBackPage.qml"/>
+            <location line="622" filename="../../Component/VideoPage/CloudPlayBackPage.qml"/>
             <source>Play/Pause</source>
             <translation>הפעלה/השהיה</translation>
         </message>
         <message>
-            <location line="650" filename="../../Component/VideoPage/CloudPlayBackPage.qml"/>
+            <location line="649" filename="../../Component/VideoPage/CloudPlayBackPage.qml"/>
             <source>Turn sound on/off</source>
             <translation>הפעל/כבה את הצליל</translation>
         </message>
         <message>
-            <location line="668" filename="../../Component/VideoPage/CloudPlayBackPage.qml"/>
+            <location line="667" filename="../../Component/VideoPage/CloudPlayBackPage.qml"/>
             <source>Screenshot</source>
             <translation>צילום מסך</translation>
         </message>
         <message>
-            <location line="688" filename="../../Component/VideoPage/CloudPlayBackPage.qml"/>
+            <location line="687" filename="../../Component/VideoPage/CloudPlayBackPage.qml"/>
             <source>Electronic Amplification</source>
             <translation>הגברה אלקטרונית</translation>
         </message>
         <message>
-            <location line="708" filename="../../Component/VideoPage/CloudPlayBackPage.qml"/>
+            <location line="707" filename="../../Component/VideoPage/CloudPlayBackPage.qml"/>
             <source>Full screen</source>
             <translation>מסך מלא</translation>
         </message>
         <message>
-            <location line="830" filename="../../Component/VideoPage/CloudPlayBackPage.qml"/>
+            <location line="829" filename="../../Component/VideoPage/CloudPlayBackPage.qml"/>
             <source>Date</source>
             <translation>תַאֲרִיך</translation>
         </message>
         <message>
-            <location line="541" filename="../../Component/VideoPage/CloudPlayBackPage.qml"/>
+            <location line="539" filename="../../Component/VideoPage/CloudPlayBackPage.qml"/>
             <source>No recording files</source>
             <translation>אין קבצי הקלטה</translation>
         </message>
         <message>
-            <location line="858" filename="../../Component/VideoPage/CloudPlayBackPage.qml"/>
+            <location line="857" filename="../../Component/VideoPage/CloudPlayBackPage.qml"/>
             <source>Select Time</source>
             <translation>בחר זמן</translation>
         </message>
         <message>
-            <location line="1093" filename="../../Component/VideoPage/CloudPlayBackPage.qml"/>
+            <location line="1092" filename="../../Component/VideoPage/CloudPlayBackPage.qml"/>
             <source>Fresh</source>
             <translation>טָרִי</translation>
         </message>
         <message>
-            <location line="1094" filename="../../Component/VideoPage/CloudPlayBackPage.qml"/>
+            <location line="1093" filename="../../Component/VideoPage/CloudPlayBackPage.qml"/>
             <source>Refreshing</source>
             <translation>מְרַעֲנֵן</translation>
         </message>
         <message>
-            <location line="1135" filename="../../Component/VideoPage/CloudPlayBackPage.qml"/>
+            <location line="1134" filename="../../Component/VideoPage/CloudPlayBackPage.qml"/>
             <source>Loading</source>
             <translation>טְעִינָה</translation>
         </message>
         <message>
-            <location line="1136" filename="../../Component/VideoPage/CloudPlayBackPage.qml"/>
+            <location line="1135" filename="../../Component/VideoPage/CloudPlayBackPage.qml"/>
             <source>Loading More</source>
             <translation>טוען עוד</translation>
         </message>
         <message>
-            <location line="1203" filename="../../Component/VideoPage/CloudPlayBackPage.qml"/>
+            <location line="1202" filename="../../Component/VideoPage/CloudPlayBackPage.qml"/>
             <source>Expand</source>
             <translation>לְהַרְחִיב</translation>
         </message>
         <message>
-            <location line="1203" filename="../../Component/VideoPage/CloudPlayBackPage.qml"/>
+            <location line="1202" filename="../../Component/VideoPage/CloudPlayBackPage.qml"/>
             <source>Collapse</source>
             <translation>הִתמוֹטְטוּת</translation>
         </message>
         <message>
-            <location line="1230" filename="../../Component/VideoPage/CloudPlayBackPage.qml"/>
+            <location line="1229" filename="../../Component/VideoPage/CloudPlayBackPage.qml"/>
             <source>Batch management</source>
             <translation>ניהול קבוצות</translation>
         </message>
         <message>
-            <location line="1262" filename="../../Component/VideoPage/CloudPlayBackPage.qml"/>
-            <location line="1982" filename="../../Component/VideoPage/CloudPlayBackPage.qml"/>
-            <location line="1989" filename="../../Component/VideoPage/CloudPlayBackPage.qml"/>
+            <location line="1261" filename="../../Component/VideoPage/CloudPlayBackPage.qml"/>
+            <location line="1981" filename="../../Component/VideoPage/CloudPlayBackPage.qml"/>
+            <location line="1988" filename="../../Component/VideoPage/CloudPlayBackPage.qml"/>
             <source>Deselect All</source>
             <translation>ההקלטה נשמרה.</translation>
         </message>
         <message>
-            <location line="1262" filename="../../Component/VideoPage/CloudPlayBackPage.qml"/>
-            <location line="1629" filename="../../Component/VideoPage/CloudPlayBackPage.qml"/>
+            <location line="1261" filename="../../Component/VideoPage/CloudPlayBackPage.qml"/>
+            <location line="1628" filename="../../Component/VideoPage/CloudPlayBackPage.qml"/>
             <source>All</source>
             <translation>כֹּל</translation>
         </message>
         <message>
-            <location line="1291" filename="../../Component/VideoPage/CloudPlayBackPage.qml"/>
+            <location line="1290" filename="../../Component/VideoPage/CloudPlayBackPage.qml"/>
             <source>Download</source>
             <translation>הורדה</translation>
         </message>
         <message>
-            <location line="1305" filename="../../Component/VideoPage/CloudPlayBackPage.qml"/>
-            <location line="1617" filename="../../Component/VideoPage/CloudPlayBackPage.qml"/>
-            <location line="1787" filename="../../Component/VideoPage/CloudPlayBackPage.qml"/>
+            <location line="1304" filename="../../Component/VideoPage/CloudPlayBackPage.qml"/>
+            <location line="1616" filename="../../Component/VideoPage/CloudPlayBackPage.qml"/>
+            <location line="1786" filename="../../Component/VideoPage/CloudPlayBackPage.qml"/>
             <source>Select up to 30 cloud recordings.</source>
             <translation>בחר עד 30 הקלטות בענן.</translation>
         </message>
         <message>
-            <location line="1317" filename="../../Component/VideoPage/CloudPlayBackPage.qml"/>
-            <location line="1345" filename="../../Component/VideoPage/CloudPlayBackPage.qml"/>
+            <location line="1316" filename="../../Component/VideoPage/CloudPlayBackPage.qml"/>
+            <location line="1344" filename="../../Component/VideoPage/CloudPlayBackPage.qml"/>
             <source>Select at least one cloud recording</source>
             <translation>בחר לפחות הקלטת ענן אחת</translation>
         </message>
         <message>
-            <location line="1332" filename="../../Component/VideoPage/CloudPlayBackPage.qml"/>
+            <location line="1331" filename="../../Component/VideoPage/CloudPlayBackPage.qml"/>
             <source>Delete</source>
             <translation>לִמְחוֹק</translation>
         </message>
         <message>
-            <location line="1361" filename="../../Component/VideoPage/CloudPlayBackPage.qml"/>
+            <location line="1360" filename="../../Component/VideoPage/CloudPlayBackPage.qml"/>
             <source>Cancel</source>
             <translation>לְבַטֵל</translation>
         </message>
         <message>
-            <location line="1881" filename="../../Component/VideoPage/CloudPlayBackPage.qml"/>
+            <location line="1880" filename="../../Component/VideoPage/CloudPlayBackPage.qml"/>
             <source>Screenshot saved</source>
             <translation>צילום מסך נשמר</translation>
         </message>
@@ -1249,22 +1249,22 @@
         </message>
         <message>
             <location line="1563" filename="../../Public/ConfigureManager.cpp"/>
-            <source>您的4G流量加油包已到期，为了不影响您的使用，请尽快购买</source>
+            <source>����4G�������Ͱ��ѵ��ڣ�Ϊ�˲�Ӱ������ʹ�ã��뾡�칺��</source>
             <translation type="unfinished"></translation>
         </message>
         <message>
             <location line="1570" filename="../../Public/ConfigureManager.cpp"/>
-            <source>您的4G流量加油包将于%1到期，为了不影响您的使用，请尽快购买</source>
+            <source>����4G�������Ͱ�����%1���ڣ�Ϊ�˲�Ӱ������ʹ�ã��뾡�칺��</source>
             <translation type="unfinished"></translation>
         </message>
         <message>
             <location line="1581" filename="../../Public/ConfigureManager.cpp"/>
-            <source>您的4G流量加油包流量已用完，为了不影响您的使用，请尽快购买</source>
+            <source>����4G�������Ͱ����������꣬Ϊ�˲�Ӱ������ʹ�ã��뾡�칺��</source>
             <translation type="unfinished"></translation>
         </message>
         <message>
             <location line="1585" filename="../../Public/ConfigureManager.cpp"/>
-            <source>您的4G流量加油包流量已使用了80%，为了不影响您的使用，请尽快购买</source>
+            <source>����4G�������Ͱ�������ʹ����80%��Ϊ�˲�Ӱ������ʹ�ã��뾡�칺��</source>
             <translation type="unfinished"></translation>
         </message>
     </context>
@@ -2118,9 +2118,19 @@
             <translation>הוסף מכשיר</translation>
         </message>
         <message>
-            <location line="506" filename="../../Component/Page/DeviceMamagerView.qml"/>
+            <location line="507" filename="../../Component/Page/DeviceMamagerView.qml"/>
             <source>No devices added yet~</source>
             <translation>עדיין לא נוספו התקנים~</translation>
+        </message>
+        <message>
+            <location line="527" filename="../../Component/Page/DeviceMamagerView.qml"/>
+            <source>You are not logged in yet, please log in first</source>
+            <translation>אינך מחובר עדיין, אנא התחבר תחילה.</translation>
+        </message>
+        <message>
+            <location line="539" filename="../../Component/Page/DeviceMamagerView.qml"/>
+            <source>Login</source>
+            <translation>כְּנִיסָה לַמַעֲרֶכֶת</translation>
         </message>
     </context>
     <context>
@@ -2490,7 +2500,22 @@
         </message>
         <message>
             <location line="1501" filename="../../Functional/DeviceModule/deviceobject.cpp"/>
-            <source>正在刷新设备列表...</source>
+            <source>����ˢ���豸�б�...</source>
+            <translation type="unfinished"></translation>
+        </message>
+        <message>
+            <location line="2009" filename="../../Functional/DeviceModule/deviceobject.cpp"/>
+            <source>�豸ת�Ƴɹ�</source>
+            <translation type="unfinished"></translation>
+        </message>
+        <message>
+            <location line="2021" filename="../../Functional/DeviceModule/deviceobject.cpp"/>
+            <source>�豸ת��ʧ��</source>
+            <translation type="unfinished"></translation>
+        </message>
+        <message>
+            <location line="2067" filename="../../Functional/DeviceModule/deviceobject.cpp"/>
+            <source>�豸����ʧ��</source>
             <translation type="unfinished"></translation>
         </message>
         <message>
@@ -2512,21 +2537,6 @@
             <location line="1774" filename="../../Functional/DeviceModule/deviceobject.cpp"/>
             <source>Operation successful</source>
             <translation>הפעולה הצליחה</translation>
-        </message>
-        <message>
-            <location line="2009" filename="../../Functional/DeviceModule/deviceobject.cpp"/>
-            <source>设备转移成功</source>
-            <translation type="unfinished"></translation>
-        </message>
-        <message>
-            <location line="2021" filename="../../Functional/DeviceModule/deviceobject.cpp"/>
-            <source>设备转移失败</source>
-            <translation type="unfinished"></translation>
-        </message>
-        <message>
-            <location line="2067" filename="../../Functional/DeviceModule/deviceobject.cpp"/>
-            <source>设备分享失败</source>
-            <translation type="unfinished"></translation>
         </message>
         <message>
             <location line="877" filename="../../Functional/DeviceModule/deviceobject_request.cpp"/>
@@ -3185,7 +3195,7 @@ Note: After joining a team, the devices under your account will be automatically
             <translation>בְּסֵדֶר</translation>
         </message>
         <message>
-            <location line="920" filename="../../Component/FluComponent/FluCustomAppBar.qml"/>
+            <location line="921" filename="../../Component/FluComponent/FluCustomAppBar.qml"/>
             <source>Failed to open the client settings window.</source>
             <translation>נכשל לפתוח את חלון הגדרות הלקוח.</translation>
         </message>
@@ -3802,109 +3812,120 @@ Note: After joining a team, the devices under your account will be automatically
     <context>
         <name>FluDeviceBasicInformation</name>
         <message>
-            <location line="49" filename="../../Component/FluDeviceManager/FluDeviceBasicInformation.qml"/>
+            <location line="51" filename="../../Component/FluDeviceManager/FluDeviceBasicInformation.qml"/>
             <source>Device Basic infor</source>
             <translation>מידע בסיסי על המכשיר</translation>
         </message>
         <message>
-            <location line="71" filename="../../Component/FluDeviceManager/FluDeviceBasicInformation.qml"/>
+            <location line="73" filename="../../Component/FluDeviceManager/FluDeviceBasicInformation.qml"/>
             <source>Device Name:</source>
             <translation>שם המכשיר:</translation>
         </message>
         <message>
-            <location line="158" filename="../../Component/FluDeviceManager/FluDeviceBasicInformation.qml"/>
+            <location line="160" filename="../../Component/FluDeviceManager/FluDeviceBasicInformation.qml"/>
             <source>Device UID:</source>
             <translation>מזהה משתמש של המכשיר:</translation>
         </message>
         <message>
-            <location line="98" filename="../../Component/FluDeviceManager/FluDeviceBasicInformation.qml"/>
+            <location line="100" filename="../../Component/FluDeviceManager/FluDeviceBasicInformation.qml"/>
             <source>Edit</source>
             <translation>לַעֲרוֹך</translation>
         </message>
         <message>
-            <location line="180" filename="../../Component/FluDeviceManager/FluDeviceBasicInformation.qml"/>
+            <location line="182" filename="../../Component/FluDeviceManager/FluDeviceBasicInformation.qml"/>
             <source>Copy</source>
             <translation>לְהַעְתִיק</translation>
         </message>
         <message>
-            <location line="188" filename="../../Component/FluDeviceManager/FluDeviceBasicInformation.qml"/>
+            <location line="190" filename="../../Component/FluDeviceManager/FluDeviceBasicInformation.qml"/>
             <source>Copy Successful</source>
             <translation>ההעתקה הצליחה</translation>
         </message>
         <message>
-            <location line="214" filename="../../Component/FluDeviceManager/FluDeviceBasicInformation.qml"/>
+            <location line="216" filename="../../Component/FluDeviceManager/FluDeviceBasicInformation.qml"/>
             <source>Device Status:</source>
             <translation>סטטוס המכשיר:</translation>
         </message>
         <message>
-            <location line="237" filename="../../Component/FluDeviceManager/FluDeviceBasicInformation.qml"/>
+            <location line="239" filename="../../Component/FluDeviceManager/FluDeviceBasicInformation.qml"/>
             <source>Online</source>
             <translation>באינטרנט</translation>
         </message>
         <message>
-            <location line="237" filename="../../Component/FluDeviceManager/FluDeviceBasicInformation.qml"/>
+            <location line="239" filename="../../Component/FluDeviceManager/FluDeviceBasicInformation.qml"/>
             <source>Offline</source>
             <translation>לא מקוון</translation>
         </message>
         <message>
-            <location line="266" filename="../../Component/FluDeviceManager/FluDeviceBasicInformation.qml"/>
+            <location line="268" filename="../../Component/FluDeviceManager/FluDeviceBasicInformation.qml"/>
             <source>IP address:</source>
             <translation>כתובת IP:</translation>
         </message>
         <message>
-            <location line="304" filename="../../Component/FluDeviceManager/FluDeviceBasicInformation.qml"/>
+            <location line="306" filename="../../Component/FluDeviceManager/FluDeviceBasicInformation.qml"/>
             <source>MAC address:</source>
             <translation>כתובת MAC:</translation>
         </message>
         <message>
-            <location line="343" filename="../../Component/FluDeviceManager/FluDeviceBasicInformation.qml"/>
+            <location line="345" filename="../../Component/FluDeviceManager/FluDeviceBasicInformation.qml"/>
             <source>System Time:</source>
             <translation>זמן מערכת:</translation>
         </message>
         <message>
-            <location line="383" filename="../../Component/FluDeviceManager/FluDeviceBasicInformation.qml"/>
+            <location line="385" filename="../../Component/FluDeviceManager/FluDeviceBasicInformation.qml"/>
             <source>时区:</source>
             <translation type="unfinished"></translation>
         </message>
         <message>
-            <location line="414" filename="../../Component/FluDeviceManager/FluDeviceBasicInformation.qml"/>
+            <location line="416" filename="../../Component/FluDeviceManager/FluDeviceBasicInformation.qml"/>
             <source>切换时区</source>
             <translation type="unfinished"></translation>
         </message>
         <message>
-            <location line="449" filename="../../Component/FluDeviceManager/FluDeviceBasicInformation.qml"/>
+            <location line="451" filename="../../Component/FluDeviceManager/FluDeviceBasicInformation.qml"/>
             <source>分享设备</source>
             <translation type="unfinished"></translation>
         </message>
         <message>
-            <location line="466" filename="../../Component/FluDeviceManager/FluDeviceBasicInformation.qml"/>
+            <location line="469" filename="../../Component/FluDeviceManager/FluDeviceBasicInformation.qml"/>
             <source>转移设备</source>
             <translation type="unfinished"></translation>
         </message>
         <message>
-            <location line="482" filename="../../Component/FluDeviceManager/FluDeviceBasicInformation.qml"/>
+            <location line="485" filename="../../Component/FluDeviceManager/FluDeviceBasicInformation.qml"/>
             <source>删除设备</source>
             <translation type="unfinished"></translation>
         </message>
         <message>
-            <location line="528" filename="../../Component/FluDeviceManager/FluDeviceBasicInformation.qml"/>
+            <location line="535" filename="../../Component/FluDeviceManager/FluDeviceBasicInformation.qml"/>
+            <location line="592" filename="../../Component/FluDeviceManager/FluDeviceBasicInformation.qml"/>
             <source>Cancel</source>
             <translation>לְבַטֵל</translation>
         </message>
         <message>
-            <location line="544" filename="../../Component/FluDeviceManager/FluDeviceBasicInformation.qml"/>
+            <location line="551" filename="../../Component/FluDeviceManager/FluDeviceBasicInformation.qml"/>
             <source>Save</source>
             <translation>לְהַצִיל</translation>
         </message>
         <message>
-            <location line="555" filename="../../Component/FluDeviceManager/FluDeviceBasicInformation.qml"/>
+            <location line="562" filename="../../Component/FluDeviceManager/FluDeviceBasicInformation.qml"/>
             <source>Device Name Modification Failed</source>
             <translation>שינוי שם המכשיר נכשל</translation>
         </message>
         <message>
-            <location line="557" filename="../../Component/FluDeviceManager/FluDeviceBasicInformation.qml"/>
+            <location line="564" filename="../../Component/FluDeviceManager/FluDeviceBasicInformation.qml"/>
             <source>Device Name Modification Successful</source>
             <translation>שינוי שם המכשיר הצליח</translation>
+        </message>
+        <message>
+            <location line="591" filename="../../Component/FluDeviceManager/FluDeviceBasicInformation.qml"/>
+            <source>After deleting device %1, the device will no longer appear in the list. To view it again, you need to manually re-add it.</source>
+            <translation>לאחר מחיקת המכשיר %1, המכשיר לא יופיע עוד ברשימה. כדי לצפות בו שוב, יש להוסיף אותו ידנית.</translation>
+        </message>
+        <message>
+            <location line="593" filename="../../Component/FluDeviceManager/FluDeviceBasicInformation.qml"/>
+            <source>Delete</source>
+            <translation>לִמְחוֹק</translation>
         </message>
     </context>
     <context>
@@ -3912,44 +3933,44 @@ Note: After joining a team, the devices under your account will be automatically
         <message>
             <location line="34" filename="../../Component/FluDeviceManager/FluDeviceSetting.qml"/>
             <location line="104" filename="../../Component/FluDeviceManager/FluDeviceSetting.qml"/>
-            <location line="335" filename="../../Component/FluDeviceManager/FluDeviceSetting.qml"/>
-            <location line="558" filename="../../Component/FluDeviceManager/FluDeviceSetting.qml"/>
-            <location line="567" filename="../../Component/FluDeviceManager/FluDeviceSetting.qml"/>
+            <location line="338" filename="../../Component/FluDeviceManager/FluDeviceSetting.qml"/>
+            <location line="561" filename="../../Component/FluDeviceManager/FluDeviceSetting.qml"/>
+            <location line="570" filename="../../Component/FluDeviceManager/FluDeviceSetting.qml"/>
             <source>Device Basic infor</source>
             <translation>מידע בסיסי על המכשיר</translation>
         </message>
         <message>
             <location line="34" filename="../../Component/FluDeviceManager/FluDeviceSetting.qml"/>
-            <location line="351" filename="../../Component/FluDeviceManager/FluDeviceSetting.qml"/>
-            <location line="570" filename="../../Component/FluDeviceManager/FluDeviceSetting.qml"/>
+            <location line="354" filename="../../Component/FluDeviceManager/FluDeviceSetting.qml"/>
+            <location line="573" filename="../../Component/FluDeviceManager/FluDeviceSetting.qml"/>
             <source>Device Maintenance</source>
             <translation>תחזוקת מכשירים</translation>
         </message>
         <message>
             <location line="34" filename="../../Component/FluDeviceManager/FluDeviceSetting.qml"/>
-            <location line="396" filename="../../Component/FluDeviceManager/FluDeviceSetting.qml"/>
-            <location line="573" filename="../../Component/FluDeviceManager/FluDeviceSetting.qml"/>
+            <location line="399" filename="../../Component/FluDeviceManager/FluDeviceSetting.qml"/>
+            <location line="576" filename="../../Component/FluDeviceManager/FluDeviceSetting.qml"/>
             <source>Network infor</source>
             <translation>מידע רשת</translation>
         </message>
         <message>
             <location line="34" filename="../../Component/FluDeviceManager/FluDeviceSetting.qml"/>
-            <location line="416" filename="../../Component/FluDeviceManager/FluDeviceSetting.qml"/>
-            <location line="577" filename="../../Component/FluDeviceManager/FluDeviceSetting.qml"/>
+            <location line="419" filename="../../Component/FluDeviceManager/FluDeviceSetting.qml"/>
+            <location line="580" filename="../../Component/FluDeviceManager/FluDeviceSetting.qml"/>
             <source>Image Settings</source>
             <translation>הגדרות תמונה</translation>
         </message>
         <message>
             <location line="34" filename="../../Component/FluDeviceManager/FluDeviceSetting.qml"/>
-            <location line="438" filename="../../Component/FluDeviceManager/FluDeviceSetting.qml"/>
-            <location line="585" filename="../../Component/FluDeviceManager/FluDeviceSetting.qml"/>
+            <location line="441" filename="../../Component/FluDeviceManager/FluDeviceSetting.qml"/>
+            <location line="588" filename="../../Component/FluDeviceManager/FluDeviceSetting.qml"/>
             <source>Detection alarm</source>
             <translation>אזעקת גילוי</translation>
         </message>
         <message>
             <location line="34" filename="../../Component/FluDeviceManager/FluDeviceSetting.qml"/>
-            <location line="458" filename="../../Component/FluDeviceManager/FluDeviceSetting.qml"/>
-            <location line="589" filename="../../Component/FluDeviceManager/FluDeviceSetting.qml"/>
+            <location line="461" filename="../../Component/FluDeviceManager/FluDeviceSetting.qml"/>
+            <location line="592" filename="../../Component/FluDeviceManager/FluDeviceSetting.qml"/>
             <source>Power Management</source>
             <translation>ניהול צריכת חשמל</translation>
         </message>
@@ -3986,19 +4007,19 @@ Note: After joining a team, the devices under your account will be automatically
         <message>
             <location line="167" filename="../../Component/FluDeviceManager/FluDeviceSetting.qml"/>
             <location line="204" filename="../../Component/FluDeviceManager/FluDeviceSetting.qml"/>
-            <location line="750" filename="../../Component/FluDeviceManager/FluDeviceSetting.qml"/>
+            <location line="753" filename="../../Component/FluDeviceManager/FluDeviceSetting.qml"/>
             <source>正在设置,请稍候...</source>
             <translation type="unfinished"></translation>
         </message>
         <message>
-            <location line="310" filename="../../Component/FluDeviceManager/FluDeviceSetting.qml"/>
+            <location line="313" filename="../../Component/FluDeviceManager/FluDeviceSetting.qml"/>
             <source>Basic info</source>
             <translation>מידע בסיסי</translation>
         </message>
         <message>
             <location line="34" filename="../../Component/FluDeviceManager/FluDeviceSetting.qml"/>
-            <location line="374" filename="../../Component/FluDeviceManager/FluDeviceSetting.qml"/>
-            <location line="581" filename="../../Component/FluDeviceManager/FluDeviceSetting.qml"/>
+            <location line="377" filename="../../Component/FluDeviceManager/FluDeviceSetting.qml"/>
+            <location line="584" filename="../../Component/FluDeviceManager/FluDeviceSetting.qml"/>
             <source>录像设置</source>
             <translation type="unfinished"></translation>
         </message>
@@ -4008,18 +4029,18 @@ Note: After joining a team, the devices under your account will be automatically
             <translation>ההגדרה הצליחה</translation>
         </message>
         <message>
-            <location line="478" filename="../../Component/FluDeviceManager/FluDeviceSetting.qml"/>
-            <location line="593" filename="../../Component/FluDeviceManager/FluDeviceSetting.qml"/>
+            <location line="481" filename="../../Component/FluDeviceManager/FluDeviceSetting.qml"/>
+            <location line="596" filename="../../Component/FluDeviceManager/FluDeviceSetting.qml"/>
             <source>灯光设置</source>
             <translation type="unfinished"></translation>
         </message>
         <message>
-            <location line="738" filename="../../Component/FluDeviceManager/FluDeviceSetting.qml"/>
+            <location line="741" filename="../../Component/FluDeviceManager/FluDeviceSetting.qml"/>
             <source>校准</source>
             <translation type="unfinished"></translation>
         </message>
         <message>
-            <location line="756" filename="../../Component/FluDeviceManager/FluDeviceSetting.qml"/>
+            <location line="759" filename="../../Component/FluDeviceManager/FluDeviceSetting.qml"/>
             <source>Prompt</source>
             <translation>לְעוֹרֵר</translation>
         </message>
@@ -5713,185 +5734,190 @@ Note: After joining a team, the devices under your account will be automatically
         <message>
             <location line="44" filename="../../Component/FluDeviceManager/FluTimeZone.qml"/>
             <source>International date line west</source>
-            <translation type="unfinished"></translation>
+            <translation>קו תאריך בינלאומי מערבה</translation>
         </message>
         <message>
             <location line="45" filename="../../Component/FluDeviceManager/FluTimeZone.qml"/>
             <source>Wake island Samoa</source>
-            <translation type="unfinished"></translation>
+            <translation>Wake Island Samoa</translation>
         </message>
         <message>
             <location line="46" filename="../../Component/FluDeviceManager/FluTimeZone.qml"/>
             <source>Hawaii</source>
-            <translation type="unfinished"></translation>
+            <translation>הוואי</translation>
         </message>
         <message>
             <location line="47" filename="../../Component/FluDeviceManager/FluTimeZone.qml"/>
             <source>Alaska</source>
-            <translation type="unfinished"></translation>
+            <translation>אלסקה</translation>
         </message>
         <message>
             <location line="48" filename="../../Component/FluDeviceManager/FluTimeZone.qml"/>
             <source>Pacific time/USA/Canada/Tijuana</source>
-            <translation type="unfinished"></translation>
+            <translation>זמן פסיפיק/ארהב/קנדה/טיחואנה</translation>
         </message>
         <message>
             <location line="49" filename="../../Component/FluDeviceManager/FluTimeZone.qml"/>
             <source>Mountain standard time/USA/Canada/Arizona</source>
-            <translation type="unfinished"></translation>
+            <translation>זמן רגיל הר/ארהב/קנדה/אריזונה</translation>
         </message>
         <message>
             <location line="50" filename="../../Component/FluDeviceManager/FluTimeZone.qml"/>
             <source>Central standard time/Mexico/monterrey/guadalaha</source>
-            <translation type="unfinished"></translation>
+            <translation>זמן סטנדרטי מרכזי/מקסיקו/מונטריי/גוואדאלה</translation>
         </message>
         <message>
             <location line="51" filename="../../Component/FluDeviceManager/FluTimeZone.qml"/>
             <source>Eastern standard time/indiana (e)/ Bogota/Lima/Quito</source>
-            <translation type="unfinished"></translation>
+            <translation>זמן סטנדרטי מזרחי/אינדיאנה (E)/בוגוטה/לימה/קיטו</translation>
         </message>
         <message>
             <location line="52" filename="../../Component/FluDeviceManager/FluTimeZone.qml"/>
             <source>USA/San Diego</source>
-            <translation type="unfinished"></translation>
+            <translation>ארהב/סן דייגו</translation>
         </message>
         <message>
             <location line="53" filename="../../Component/FluDeviceManager/FluTimeZone.qml"/>
             <source>Pacific time/Canada/Caracas/la paz</source>
-            <translation type="unfinished"></translation>
+            <translation>זמן פסיפיק/קנדה/קראקס/לה פז</translation>
         </message>
         <message>
             <location line="54" filename="../../Component/FluDeviceManager/FluTimeZone.qml"/>
             <source>Newfoundland/Islands off the east coast of Canada</source>
-            <translation type="unfinished"></translation>
+            <translation>ניופאונדלנד/איים מול החוף המזרחי של קנדה</translation>
         </message>
         <message>
             <location line="55" filename="../../Component/FluDeviceManager/FluTimeZone.qml"/>
-            <source>Central Pacific</source>
-            <translation type="unfinished"></translation>
+            <source>Greenland/Buenos Aires/Brasilia</source>
+            <translation>גרינלנד/בואנוס איירס/ברזיליה</translation>
         </message>
         <message>
             <location line="56" filename="../../Component/FluDeviceManager/FluTimeZone.qml"/>
-            <source>Cape Verde/Azores</source>
-            <translation type="unfinished"></translation>
+            <source>Central Pacific</source>
+            <translation>מרכז האוקיאנוס השקט</translation>
         </message>
         <message>
             <location line="57" filename="../../Component/FluDeviceManager/FluTimeZone.qml"/>
-            <source>GMT/London/Edinburgh/Lisbon</source>
-            <translation type="unfinished"></translation>
+            <source>Cape Verde/Azores</source>
+            <translation>קייפ ורדה/אוזורים</translation>
         </message>
         <message>
             <location line="58" filename="../../Component/FluDeviceManager/FluTimeZone.qml"/>
-            <source>Casablanca/Monrovia</source>
-            <translation type="unfinished"></translation>
+            <source>GMT/London/Edinburgh/Lisbon</source>
+            <translation>GMT/לונדון/אדינבורו/ליסבון</translation>
         </message>
         <message>
             <location line="59" filename="../../Component/FluDeviceManager/FluTimeZone.qml"/>
-            <source>Amsterdam/Berlin/Rome/Vienna/Paris/Copenhagen/Midwest Africa</source>
-            <translation type="unfinished"></translation>
+            <source>Casablanca/Monrovia</source>
+            <translation>קזבלנקה/מונרוביה</translation>
         </message>
         <message>
             <location line="60" filename="../../Component/FluDeviceManager/FluTimeZone.qml"/>
-            <source>Athens/Cairo/Jerusalem/Istanbul/Minsk/Bulgaria/harare</source>
-            <translation type="unfinished"></translation>
+            <source>Amsterdam/Berlin/Rome/Vienna/Paris/Copenhagen/Midwest Africa</source>
+            <translation>אמסטרדם/ברלין/רומא/וינה/פריז/קופנהגן/מערב התיכון אפריקה</translation>
         </message>
         <message>
             <location line="61" filename="../../Component/FluDeviceManager/FluTimeZone.qml"/>
-            <source>Baghdad/Kuwait/Riyadh/Moscow/st. Petersburg/nerohua/volgograd</source>
-            <translation type="unfinished"></translation>
+            <source>Athens/Cairo/Jerusalem/Istanbul/Minsk/Bulgaria/harare</source>
+            <translation>אתונה/קהיר/ירושלים/איסטנבול/מינסק/בולגריה/הארארה</translation>
         </message>
         <message>
             <location line="62" filename="../../Component/FluDeviceManager/FluTimeZone.qml"/>
-            <source>Teheran</source>
-            <translation type="unfinished"></translation>
+            <source>Baghdad/Kuwait/Riyadh/Moscow/st. Petersburg/nerohua/volgograd</source>
+            <translation>בגדאד/כווית/ריאד/מוסקבה/רחוב. פטרסבורג/נרוהואה/וולוגגרד</translation>
         </message>
         <message>
             <location line="63" filename="../../Component/FluDeviceManager/FluTimeZone.qml"/>
-            <source>Baku/yerevan tbilisi/ABU dhabi/Muscat</source>
-            <translation type="unfinished"></translation>
+            <source>Teheran</source>
+            <translation>Teheran</translation>
         </message>
         <message>
             <location line="64" filename="../../Component/FluDeviceManager/FluTimeZone.qml"/>
-            <source>Kabul</source>
-            <translation type="unfinished"></translation>
+            <source>Baku/yerevan tbilisi/ABU dhabi/Muscat</source>
+            <translation>Baku/Yerevan Tbilisi/Abu Dhabi/Muscat</translation>
         </message>
         <message>
             <location line="65" filename="../../Component/FluDeviceManager/FluTimeZone.qml"/>
-            <source>Yekaterinburg/Islamabad/Kara/Tashkent</source>
-            <translation type="unfinished"></translation>
+            <source>Kabul</source>
+            <translation>קאבול</translation>
         </message>
         <message>
             <location line="66" filename="../../Component/FluDeviceManager/FluTimeZone.qml"/>
-            <source>Chennai/Kolkata/Mumbai/New Delhi</source>
-            <translation type="unfinished"></translation>
+            <source>Yekaterinburg/Islamabad/Kara/Tashkent</source>
+            <translation>Yekaterinburg / Islamabad / Kara / Tashkent</translation>
         </message>
         <message>
             <location line="67" filename="../../Component/FluDeviceManager/FluTimeZone.qml"/>
-            <source>Kathmandu</source>
-            <translation type="unfinished"></translation>
+            <source>Chennai/Kolkata/Mumbai/New Delhi</source>
+            <translation>צ'נאי / קולקטה / מומבאי / ניו דלהי</translation>
         </message>
         <message>
             <location line="68" filename="../../Component/FluDeviceManager/FluTimeZone.qml"/>
-            <source>Almaty/Novosibirsk/Sri Lanka/Astana/Dhaka</source>
-            <translation type="unfinished"></translation>
+            <source>Kathmandu</source>
+            <translation>קטמנדו</translation>
         </message>
         <message>
             <location line="69" filename="../../Component/FluDeviceManager/FluTimeZone.qml"/>
-            <source>Yangon</source>
-            <translation type="unfinished"></translation>
+            <source>Almaty/Novosibirsk/Sri Lanka/Astana/Dhaka</source>
+            <translation>Almaty / Novosibirsk / Sri Lanka / Astana / Dhaka</translation>
         </message>
         <message>
             <location line="70" filename="../../Component/FluDeviceManager/FluTimeZone.qml"/>
-            <source>Bangkok/Hanoi/Jakarta/Krasnoyarsk</source>
-            <translation type="unfinished"></translation>
+            <source>Yangon</source>
+            <translation>יאנגון</translation>
         </message>
         <message>
             <location line="71" filename="../../Component/FluDeviceManager/FluTimeZone.qml"/>
-            <source>Beijing/Hong Kong/Macau/Taipei/Singapore/Kuala Lumpur/Irkutsk/Ulan Bator</source>
-            <translation type="unfinished"></translation>
+            <source>Bangkok/Hanoi/Jakarta/Krasnoyarsk</source>
+            <translation>בנגקוק/האנוי/ג'קרטה/קרסנויארסק</translation>
         </message>
         <message>
             <location line="72" filename="../../Component/FluDeviceManager/FluTimeZone.qml"/>
-            <source>Tokyo/Seoul/Yakutsk/Sapporo/Osaka</source>
-            <translation type="unfinished"></translation>
+            <source>Beijing/Hong Kong/Macau/Taipei/Singapore/Kuala Lumpur/Irkutsk/Ulan Bator</source>
+            <translation>בייג'ינג / הונג קונג / מקאו / טייפיי / סינגפור / קואלה לומפור / אירקוטסק / אולאן באטור</translation>
         </message>
         <message>
             <location line="73" filename="../../Component/FluDeviceManager/FluTimeZone.qml"/>
-            <source>Pyongyang</source>
-            <translation type="unfinished"></translation>
+            <source>Tokyo/Seoul/Yakutsk/Sapporo/Osaka</source>
+            <translation>טוקיו / סיאול / יקוטסק / סאפורו / אוסאקה</translation>
         </message>
         <message>
             <location line="74" filename="../../Component/FluDeviceManager/FluTimeZone.qml"/>
-            <source>Vladivostok/Canberra/Sydney/Brisbane/Guam/port moresby/hobart</source>
-            <translation type="unfinished"></translation>
+            <source>Pyongyang</source>
+            <translation>פיונגיאנג</translation>
         </message>
         <message>
             <location line="75" filename="../../Component/FluDeviceManager/FluTimeZone.qml"/>
-            <source>Magadan/Solomon/new caledonia</source>
-            <translation type="unfinished"></translation>
+            <source>Vladivostok/Canberra/Sydney/Brisbane/Guam/port moresby/hobart</source>
+            <translation>Vladivostok/Canberra/Sydney/Brisbane/Guam/Port Moresby/Hobart</translation>
         </message>
         <message>
             <location line="76" filename="../../Component/FluDeviceManager/FluTimeZone.qml"/>
-            <source>Auckland/Wellington/Fiji/Marshall/Kamchatka/nukualofa</source>
-            <translation type="unfinished"></translation>
+            <source>Magadan/Solomon/new caledonia</source>
+            <translation>מגאדן/סולומון/קלדוניה החדשה</translation>
         </message>
         <message>
-            <location line="82" filename="../../Component/FluDeviceManager/FluTimeZone.qml"/>
+            <location line="77" filename="../../Component/FluDeviceManager/FluTimeZone.qml"/>
+            <source>Auckland/Wellington/Fiji/Marshall/Kamchatka/nukualofa</source>
+            <translation>אוקלנד/וולינגטון/פיג'י/מרשל/קמצ'טקה/נוקואופה</translation>
+        </message>
+        <message>
+            <location line="83" filename="../../Component/FluDeviceManager/FluTimeZone.qml"/>
             <source>正在切换时区...</source>
             <translation type="unfinished"></translation>
         </message>
         <message>
-            <location line="293" filename="../../Component/FluDeviceManager/FluTimeZone.qml"/>
+            <location line="294" filename="../../Component/FluDeviceManager/FluTimeZone.qml"/>
             <source>Cancel</source>
             <translation>לְבַטֵל</translation>
         </message>
         <message>
-            <location line="307" filename="../../Component/FluDeviceManager/FluTimeZone.qml"/>
+            <location line="308" filename="../../Component/FluDeviceManager/FluTimeZone.qml"/>
             <source>Save</source>
             <translation>לְהַצִיל</translation>
         </message>
         <message>
-            <location line="330" filename="../../Component/FluDeviceManager/FluTimeZone.qml"/>
+            <location line="331" filename="../../Component/FluDeviceManager/FluTimeZone.qml"/>
             <source>Setting timed out. Please try again later</source>
             <translation>הזמן הקצוב להגדרה הסתיים. אנא נסה שוב מאוחר יותר.</translation>
         </message>

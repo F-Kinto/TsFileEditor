@@ -417,7 +417,6 @@ void MainWindow::on_generateBtn_clicked()
         const QString documentLocation = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
         QString saveName = documentLocation + "/untitled.xlsx";
         QString fileName = QFileDialog::getSaveFileName(this, "excel file path", saveName, "Files (*.xlsx)");
-        qDebug() << "sace name path" << saveName << "---filename " << fileName;
         if (fileName.isEmpty())
         {
             return;
@@ -631,8 +630,6 @@ void MainWindow::on_excelDirBtn_clicked()
 
 void MainWindow::on_generateBtn_2_clicked()
 {
-    bool re;
-
     QFileInfo tsDirinfo(ui->tsDirEdit->text());
     if (!tsDirinfo.isDir()){
         onReceiveMsg("Ts目录为空");
@@ -644,7 +641,6 @@ void MainWindow::on_generateBtn_2_clicked()
         onReceiveMsg("Excel文件路径不存在");
         return;
     }
-    qDebug() << excelinfo.filePath() << excelinfo.absoluteDir().path();
 
     QStringList filters;
     filters << QString("*.ts");
@@ -660,24 +656,27 @@ void MainWindow::on_generateBtn_2_clicked()
     // 显示遮罩层和进度条
     QFileInfoList fileList = tsdir.entryInfoList();
     int total = fileList.size();
-    showProgress(true, tr("正在批量生成Excel表格..."), total);
+    showProgress(true, tr("正在从Ts文件读取翻译并生成Excel..."), total);
 
+    // Read all ts files into a map: tsFileName -> TranslateModel list
+    QMap<QString, QList<TranslateModel>> tsDataMap;
     int current = 0;
     for (QFileInfo info : fileList) {
-        //import ts file
-        m_transList.clear();
-        re = m_pXmlWorker->ImportFromTS(m_transList, info.absoluteFilePath());
-        //generate excel file
-        m_pExcelWorker->SetTransColumn(ui->transSpinBox->value());
-        QString excelFileName = excelinfo.absoluteDir().path() + "/" + info.baseName() + ".xlsx";
-        re = m_pExcelWorker->ExportToXlsx(m_transList, excelFileName);
+        QList<TranslateModel> transList;
+        bool re = m_pXmlWorker->ImportFromTS(transList, info.absoluteFilePath());
+        if (re) {
+            tsDataMap[info.fileName()] = transList;
+        }
 
         current++;
         m_progressBar->setValue(current);
-        QCoreApplication::processEvents(); // 刷新UI
+        QCoreApplication::processEvents();
     }
 
-    showProgress(false, "所有Ts文件已成功生成对应Excel文件");
+    // Export all translations into one Excel with different columns
+    bool re = m_pExcelWorker->ExportToXlsxMultiColumn(tsDataMap, m_tsColumnMap, ui->excelDirEdit->text());
+
+    showProgress(false, re ? "所有Ts文件翻译已成功写入Excel" : "Excel生成失败");
 }
 
 void MainWindow::on_tsUpdateBtn_2_clicked()
@@ -714,9 +713,10 @@ void MainWindow::on_tsUpdateBtn_2_clicked()
 
     int current = 0;
     for (QFileInfo info : fileList) {
-        qDebug() << "1111111" << info.fileName() << m_tsColumnMap[info.fileName()];
+        qDebug() << "[BatchUpdate] Processing ts file:" << info.fileName() << "column:" << m_tsColumnMap[info.fileName()];
         QString path = info.fileName();
         if (!m_tsColumnMap.contains(info.fileName())) {
+            qDebug() << "[BatchUpdate] Skipped, no column mapping for:" << info.fileName();
             current++;
             m_progressBar->setValue(current);
             QCoreApplication::processEvents();
@@ -726,8 +726,10 @@ void MainWindow::on_tsUpdateBtn_2_clicked()
         //import ts file
         m_transList.clear();
         re = m_pXmlWorker->ImportFromTS(m_transList, info.absoluteFilePath());
+        qDebug() << "[BatchUpdate] ImportFromTS result:" << re << "list size:" << m_transList.size();
 
         if(!re) {
+            qCritical() << "[BatchUpdate] ImportFromTS failed for:" << info.fileName();
             current++;
             m_progressBar->setValue(current);
             QCoreApplication::processEvents();
@@ -736,7 +738,10 @@ void MainWindow::on_tsUpdateBtn_2_clicked()
 
         m_pExcelWorker->SetTransColumn(m_tsColumnMap[info.fileName()]);
         re = m_pExcelWorker->ImportFromXlsx(m_transList, ui->excelDirEdit->text());
+        qDebug() << "[BatchUpdate] ImportFromXlsx result:" << re << "list size:" << m_transList.size();
+
         if(!re) {
+            qCritical() << "[BatchUpdate] ImportFromXlsx failed for:" << info.fileName();
             current++;
             m_progressBar->setValue(current);
             QCoreApplication::processEvents();
@@ -744,8 +749,10 @@ void MainWindow::on_tsUpdateBtn_2_clicked()
         }
 
         re = m_pXmlWorker->ExportToTS(m_transList, info.absoluteFilePath());
+        qDebug() << "[BatchUpdate] ExportToTS result:" << re;
 
         if(!re) {
+            qCritical() << "[BatchUpdate] ExportToTS failed for:" << info.fileName();
             current++;
             m_progressBar->setValue(current);
             QCoreApplication::processEvents();

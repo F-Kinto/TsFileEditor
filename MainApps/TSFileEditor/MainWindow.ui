@@ -235,7 +235,7 @@
 	 <item>
 	  <widget class="QPushButton" name="generateBtn_2">
 	   <property name="text">
-	    <string>批量生成Excel表格</string>
+	    <string>Ts批量导入至Excel</string>
 	   </property>
 	  </widget>
 	 </item>

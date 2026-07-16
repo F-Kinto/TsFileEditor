@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <!DOCTYPE TS>
-<TS language="ko_KR" version="2.1">
+<TS version="2.1" language="ko_KR">
     <context>
         <name>ALiDeviceTask</name>
         <message>
@@ -1035,144 +1035,144 @@
     <context>
         <name>CloudPlayBackPage</name>
         <message>
-            <location line="115" filename="../../Component/VideoPage/CloudPlayBackPage.qml"/>
+            <location line="113" filename="../../Component/VideoPage/CloudPlayBackPage.qml"/>
             <source>Delete successful</source>
             <translation>삭제 성공</translation>
         </message>
         <message>
-            <location line="118" filename="../../Component/VideoPage/CloudPlayBackPage.qml"/>
+            <location line="116" filename="../../Component/VideoPage/CloudPlayBackPage.qml"/>
             <source>Delete failed</source>
             <translation>삭제 실패</translation>
         </message>
         <message>
-            <location line="123" filename="../../Component/VideoPage/CloudPlayBackPage.qml"/>
-            <location line="130" filename="../../Component/VideoPage/CloudPlayBackPage.qml"/>
+            <location line="121" filename="../../Component/VideoPage/CloudPlayBackPage.qml"/>
+            <location line="128" filename="../../Component/VideoPage/CloudPlayBackPage.qml"/>
             <source>Failed to open folder</source>
             <translation>폴더 열기 실패</translation>
         </message>
         <message>
-            <location line="580" filename="../../Component/VideoPage/CloudPlayBackPage.qml"/>
+            <location line="578" filename="../../Component/VideoPage/CloudPlayBackPage.qml"/>
             <source>Network signal abnormal, please retry</source>
             <translation>네트워크 신호 이상, 다시 시도하세요</translation>
         </message>
         <message>
-            <location line="623" filename="../../Component/VideoPage/CloudPlayBackPage.qml"/>
+            <location line="622" filename="../../Component/VideoPage/CloudPlayBackPage.qml"/>
             <source>Play/Pause</source>
             <translation>재생/일시 정지</translation>
         </message>
         <message>
-            <location line="650" filename="../../Component/VideoPage/CloudPlayBackPage.qml"/>
+            <location line="649" filename="../../Component/VideoPage/CloudPlayBackPage.qml"/>
             <source>Turn sound on/off</source>
             <translation>소리 켜기/끄기</translation>
         </message>
         <message>
-            <location line="668" filename="../../Component/VideoPage/CloudPlayBackPage.qml"/>
+            <location line="667" filename="../../Component/VideoPage/CloudPlayBackPage.qml"/>
             <source>Screenshot</source>
             <translation>스크린샷</translation>
         </message>
         <message>
-            <location line="688" filename="../../Component/VideoPage/CloudPlayBackPage.qml"/>
+            <location line="687" filename="../../Component/VideoPage/CloudPlayBackPage.qml"/>
             <source>Electronic Amplification</source>
             <translation>전자 증폭</translation>
         </message>
         <message>
-            <location line="708" filename="../../Component/VideoPage/CloudPlayBackPage.qml"/>
+            <location line="707" filename="../../Component/VideoPage/CloudPlayBackPage.qml"/>
             <source>Full screen</source>
             <translation>전체 화면</translation>
         </message>
         <message>
-            <location line="830" filename="../../Component/VideoPage/CloudPlayBackPage.qml"/>
+            <location line="829" filename="../../Component/VideoPage/CloudPlayBackPage.qml"/>
             <source>Date</source>
             <translation>날짜</translation>
         </message>
         <message>
-            <location line="541" filename="../../Component/VideoPage/CloudPlayBackPage.qml"/>
+            <location line="539" filename="../../Component/VideoPage/CloudPlayBackPage.qml"/>
             <source>No recording files</source>
             <translation>녹화 파일 없음</translation>
         </message>
         <message>
-            <location line="858" filename="../../Component/VideoPage/CloudPlayBackPage.qml"/>
+            <location line="857" filename="../../Component/VideoPage/CloudPlayBackPage.qml"/>
             <source>Select Time</source>
             <translation>시간 선택</translation>
         </message>
         <message>
-            <location line="1093" filename="../../Component/VideoPage/CloudPlayBackPage.qml"/>
+            <location line="1092" filename="../../Component/VideoPage/CloudPlayBackPage.qml"/>
             <source>Fresh</source>
             <translation>신선한</translation>
         </message>
         <message>
-            <location line="1094" filename="../../Component/VideoPage/CloudPlayBackPage.qml"/>
+            <location line="1093" filename="../../Component/VideoPage/CloudPlayBackPage.qml"/>
             <source>Refreshing</source>
             <translation>상쾌함</translation>
         </message>
         <message>
-            <location line="1135" filename="../../Component/VideoPage/CloudPlayBackPage.qml"/>
+            <location line="1134" filename="../../Component/VideoPage/CloudPlayBackPage.qml"/>
             <source>Loading</source>
             <translation>로딩 중</translation>
         </message>
         <message>
-            <location line="1136" filename="../../Component/VideoPage/CloudPlayBackPage.qml"/>
+            <location line="1135" filename="../../Component/VideoPage/CloudPlayBackPage.qml"/>
             <source>Loading More</source>
             <translation>더 많은 것을 로딩 중</translation>
         </message>
         <message>
-            <location line="1203" filename="../../Component/VideoPage/CloudPlayBackPage.qml"/>
+            <location line="1202" filename="../../Component/VideoPage/CloudPlayBackPage.qml"/>
             <source>Expand</source>
             <translation>확장하다</translation>
         </message>
         <message>
-            <location line="1203" filename="../../Component/VideoPage/CloudPlayBackPage.qml"/>
+            <location line="1202" filename="../../Component/VideoPage/CloudPlayBackPage.qml"/>
             <source>Collapse</source>
             <translation>무너지다</translation>
         </message>
         <message>
-            <location line="1230" filename="../../Component/VideoPage/CloudPlayBackPage.qml"/>
+            <location line="1229" filename="../../Component/VideoPage/CloudPlayBackPage.qml"/>
             <source>Batch management</source>
             <translation>배치 관리</translation>
         </message>
         <message>
-            <location line="1262" filename="../../Component/VideoPage/CloudPlayBackPage.qml"/>
-            <location line="1982" filename="../../Component/VideoPage/CloudPlayBackPage.qml"/>
-            <location line="1989" filename="../../Component/VideoPage/CloudPlayBackPage.qml"/>
+            <location line="1261" filename="../../Component/VideoPage/CloudPlayBackPage.qml"/>
+            <location line="1981" filename="../../Component/VideoPage/CloudPlayBackPage.qml"/>
+            <location line="1988" filename="../../Component/VideoPage/CloudPlayBackPage.qml"/>
             <source>Deselect All</source>
             <translation>모두 선택 해제</translation>
         </message>
         <message>
-            <location line="1262" filename="../../Component/VideoPage/CloudPlayBackPage.qml"/>
-            <location line="1629" filename="../../Component/VideoPage/CloudPlayBackPage.qml"/>
+            <location line="1261" filename="../../Component/VideoPage/CloudPlayBackPage.qml"/>
+            <location line="1628" filename="../../Component/VideoPage/CloudPlayBackPage.qml"/>
             <source>All</source>
             <translation>모두</translation>
         </message>
         <message>
-            <location line="1291" filename="../../Component/VideoPage/CloudPlayBackPage.qml"/>
+            <location line="1290" filename="../../Component/VideoPage/CloudPlayBackPage.qml"/>
             <source>Download</source>
             <translation>다운로드</translation>
         </message>
         <message>
-            <location line="1305" filename="../../Component/VideoPage/CloudPlayBackPage.qml"/>
-            <location line="1617" filename="../../Component/VideoPage/CloudPlayBackPage.qml"/>
-            <location line="1787" filename="../../Component/VideoPage/CloudPlayBackPage.qml"/>
+            <location line="1304" filename="../../Component/VideoPage/CloudPlayBackPage.qml"/>
+            <location line="1616" filename="../../Component/VideoPage/CloudPlayBackPage.qml"/>
+            <location line="1786" filename="../../Component/VideoPage/CloudPlayBackPage.qml"/>
             <source>Select up to 30 cloud recordings.</source>
             <translation>최대 30개의 클라우드 녹화 파일을 선택하세요.</translation>
         </message>
         <message>
-            <location line="1317" filename="../../Component/VideoPage/CloudPlayBackPage.qml"/>
-            <location line="1345" filename="../../Component/VideoPage/CloudPlayBackPage.qml"/>
+            <location line="1316" filename="../../Component/VideoPage/CloudPlayBackPage.qml"/>
+            <location line="1344" filename="../../Component/VideoPage/CloudPlayBackPage.qml"/>
             <source>Select at least one cloud recording</source>
             <translation>클라우드 녹화 영상을 하나 이상 선택하세요.</translation>
         </message>
         <message>
-            <location line="1332" filename="../../Component/VideoPage/CloudPlayBackPage.qml"/>
+            <location line="1331" filename="../../Component/VideoPage/CloudPlayBackPage.qml"/>
             <source>Delete</source>
             <translation>삭제</translation>
         </message>
         <message>
-            <location line="1361" filename="../../Component/VideoPage/CloudPlayBackPage.qml"/>
+            <location line="1360" filename="../../Component/VideoPage/CloudPlayBackPage.qml"/>
             <source>Cancel</source>
             <translation>취소</translation>
         </message>
         <message>
-            <location line="1881" filename="../../Component/VideoPage/CloudPlayBackPage.qml"/>
+            <location line="1880" filename="../../Component/VideoPage/CloudPlayBackPage.qml"/>
             <source>Screenshot saved</source>
             <translation>스크린샷 저장됨</translation>
         </message>
@@ -1249,22 +1249,22 @@
         </message>
         <message>
             <location line="1563" filename="../../Public/ConfigureManager.cpp"/>
-            <source>您的4G流量加油包已到期，为了不影响您的使用，请尽快购买</source>
+            <source>����4G�������Ͱ��ѵ��ڣ�Ϊ�˲�Ӱ������ʹ�ã��뾡�칺��</source>
             <translation type="unfinished"></translation>
         </message>
         <message>
             <location line="1570" filename="../../Public/ConfigureManager.cpp"/>
-            <source>您的4G流量加油包将于%1到期，为了不影响您的使用，请尽快购买</source>
+            <source>����4G�������Ͱ�����%1���ڣ�Ϊ�˲�Ӱ������ʹ�ã��뾡�칺��</source>
             <translation type="unfinished"></translation>
         </message>
         <message>
             <location line="1581" filename="../../Public/ConfigureManager.cpp"/>
-            <source>您的4G流量加油包流量已用完，为了不影响您的使用，请尽快购买</source>
+            <source>����4G�������Ͱ����������꣬Ϊ�˲�Ӱ������ʹ�ã��뾡�칺��</source>
             <translation type="unfinished"></translation>
         </message>
         <message>
             <location line="1585" filename="../../Public/ConfigureManager.cpp"/>
-            <source>您的4G流量加油包流量已使用了80%，为了不影响您的使用，请尽快购买</source>
+            <source>����4G�������Ͱ�������ʹ����80%��Ϊ�˲�Ӱ������ʹ�ã��뾡�칺��</source>
             <translation type="unfinished"></translation>
         </message>
     </context>
@@ -2118,9 +2118,19 @@
             <translation>장치 추가</translation>
         </message>
         <message>
-            <location line="506" filename="../../Component/Page/DeviceMamagerView.qml"/>
+            <location line="507" filename="../../Component/Page/DeviceMamagerView.qml"/>
             <source>No devices added yet~</source>
             <translation>아직 추가된 기기가 없습니다~</translation>
+        </message>
+        <message>
+            <location line="527" filename="../../Component/Page/DeviceMamagerView.qml"/>
+            <source>You are not logged in yet, please log in first</source>
+            <translation>아직 로그인하지 않으셨습니다. 먼저 로그인해 주세요.</translation>
+        </message>
+        <message>
+            <location line="539" filename="../../Component/Page/DeviceMamagerView.qml"/>
+            <source>Login</source>
+            <translation>로그인</translation>
         </message>
     </context>
     <context>
@@ -2489,7 +2499,22 @@
         </message>
         <message>
             <location line="1501" filename="../../Functional/DeviceModule/deviceobject.cpp"/>
-            <source>正在刷新设备列表...</source>
+            <source>����ˢ���豸�б�...</source>
+            <translation type="unfinished"></translation>
+        </message>
+        <message>
+            <location line="2009" filename="../../Functional/DeviceModule/deviceobject.cpp"/>
+            <source>�豸ת�Ƴɹ�</source>
+            <translation type="unfinished"></translation>
+        </message>
+        <message>
+            <location line="2021" filename="../../Functional/DeviceModule/deviceobject.cpp"/>
+            <source>�豸ת��ʧ��</source>
+            <translation type="unfinished"></translation>
+        </message>
+        <message>
+            <location line="2067" filename="../../Functional/DeviceModule/deviceobject.cpp"/>
+            <source>�豸����ʧ��</source>
             <translation type="unfinished"></translation>
         </message>
         <message>
@@ -2511,21 +2536,6 @@
             <location line="1774" filename="../../Functional/DeviceModule/deviceobject.cpp"/>
             <source>Operation successful</source>
             <translation>작업 성공</translation>
-        </message>
-        <message>
-            <location line="2009" filename="../../Functional/DeviceModule/deviceobject.cpp"/>
-            <source>设备转移成功</source>
-            <translation type="unfinished"></translation>
-        </message>
-        <message>
-            <location line="2021" filename="../../Functional/DeviceModule/deviceobject.cpp"/>
-            <source>设备转移失败</source>
-            <translation type="unfinished"></translation>
-        </message>
-        <message>
-            <location line="2067" filename="../../Functional/DeviceModule/deviceobject.cpp"/>
-            <source>设备分享失败</source>
-            <translation type="unfinished"></translation>
         </message>
         <message>
             <location line="877" filename="../../Functional/DeviceModule/deviceobject_request.cpp"/>
@@ -3184,7 +3194,7 @@ Note: After joining a team, the devices under your account will be automatically
             <translation>좋아요</translation>
         </message>
         <message>
-            <location line="920" filename="../../Component/FluComponent/FluCustomAppBar.qml"/>
+            <location line="921" filename="../../Component/FluComponent/FluCustomAppBar.qml"/>
             <source>Failed to open the client settings window.</source>
             <translation>클라이언트 설정 창을 열지 못했습니다.</translation>
         </message>
@@ -3801,109 +3811,120 @@ Note: After joining a team, the devices under your account will be automatically
     <context>
         <name>FluDeviceBasicInformation</name>
         <message>
-            <location line="49" filename="../../Component/FluDeviceManager/FluDeviceBasicInformation.qml"/>
+            <location line="51" filename="../../Component/FluDeviceManager/FluDeviceBasicInformation.qml"/>
             <source>Device Basic infor</source>
             <translation>장치 기본 정보</translation>
         </message>
         <message>
-            <location line="71" filename="../../Component/FluDeviceManager/FluDeviceBasicInformation.qml"/>
+            <location line="73" filename="../../Component/FluDeviceManager/FluDeviceBasicInformation.qml"/>
             <source>Device Name:</source>
             <translation>장치 이름:</translation>
         </message>
         <message>
-            <location line="158" filename="../../Component/FluDeviceManager/FluDeviceBasicInformation.qml"/>
+            <location line="160" filename="../../Component/FluDeviceManager/FluDeviceBasicInformation.qml"/>
             <source>Device UID:</source>
             <translation>장치 UID:</translation>
         </message>
         <message>
-            <location line="98" filename="../../Component/FluDeviceManager/FluDeviceBasicInformation.qml"/>
+            <location line="100" filename="../../Component/FluDeviceManager/FluDeviceBasicInformation.qml"/>
             <source>Edit</source>
             <translation>편집하다</translation>
         </message>
         <message>
-            <location line="180" filename="../../Component/FluDeviceManager/FluDeviceBasicInformation.qml"/>
+            <location line="182" filename="../../Component/FluDeviceManager/FluDeviceBasicInformation.qml"/>
             <source>Copy</source>
             <translation>복사</translation>
         </message>
         <message>
-            <location line="188" filename="../../Component/FluDeviceManager/FluDeviceBasicInformation.qml"/>
+            <location line="190" filename="../../Component/FluDeviceManager/FluDeviceBasicInformation.qml"/>
             <source>Copy Successful</source>
             <translation>복사 성공</translation>
         </message>
         <message>
-            <location line="214" filename="../../Component/FluDeviceManager/FluDeviceBasicInformation.qml"/>
+            <location line="216" filename="../../Component/FluDeviceManager/FluDeviceBasicInformation.qml"/>
             <source>Device Status:</source>
             <translation>장치 상태:</translation>
         </message>
         <message>
-            <location line="237" filename="../../Component/FluDeviceManager/FluDeviceBasicInformation.qml"/>
+            <location line="239" filename="../../Component/FluDeviceManager/FluDeviceBasicInformation.qml"/>
             <source>Online</source>
             <translation>온라인</translation>
         </message>
         <message>
-            <location line="237" filename="../../Component/FluDeviceManager/FluDeviceBasicInformation.qml"/>
+            <location line="239" filename="../../Component/FluDeviceManager/FluDeviceBasicInformation.qml"/>
             <source>Offline</source>
             <translation>오프라인</translation>
         </message>
         <message>
-            <location line="266" filename="../../Component/FluDeviceManager/FluDeviceBasicInformation.qml"/>
+            <location line="268" filename="../../Component/FluDeviceManager/FluDeviceBasicInformation.qml"/>
             <source>IP address:</source>
             <translation>IP 주소:</translation>
         </message>
         <message>
-            <location line="304" filename="../../Component/FluDeviceManager/FluDeviceBasicInformation.qml"/>
+            <location line="306" filename="../../Component/FluDeviceManager/FluDeviceBasicInformation.qml"/>
             <source>MAC address:</source>
             <translation>MAC 주소:</translation>
         </message>
         <message>
-            <location line="343" filename="../../Component/FluDeviceManager/FluDeviceBasicInformation.qml"/>
+            <location line="345" filename="../../Component/FluDeviceManager/FluDeviceBasicInformation.qml"/>
             <source>System Time:</source>
             <translation>시스템 시간:</translation>
         </message>
         <message>
-            <location line="383" filename="../../Component/FluDeviceManager/FluDeviceBasicInformation.qml"/>
+            <location line="385" filename="../../Component/FluDeviceManager/FluDeviceBasicInformation.qml"/>
             <source>时区:</source>
             <translation type="unfinished"></translation>
         </message>
         <message>
-            <location line="414" filename="../../Component/FluDeviceManager/FluDeviceBasicInformation.qml"/>
+            <location line="416" filename="../../Component/FluDeviceManager/FluDeviceBasicInformation.qml"/>
             <source>切换时区</source>
             <translation type="unfinished"></translation>
         </message>
         <message>
-            <location line="449" filename="../../Component/FluDeviceManager/FluDeviceBasicInformation.qml"/>
+            <location line="451" filename="../../Component/FluDeviceManager/FluDeviceBasicInformation.qml"/>
             <source>分享设备</source>
             <translation type="unfinished"></translation>
         </message>
         <message>
-            <location line="466" filename="../../Component/FluDeviceManager/FluDeviceBasicInformation.qml"/>
+            <location line="469" filename="../../Component/FluDeviceManager/FluDeviceBasicInformation.qml"/>
             <source>转移设备</source>
             <translation type="unfinished"></translation>
         </message>
         <message>
-            <location line="482" filename="../../Component/FluDeviceManager/FluDeviceBasicInformation.qml"/>
+            <location line="485" filename="../../Component/FluDeviceManager/FluDeviceBasicInformation.qml"/>
             <source>删除设备</source>
             <translation type="unfinished"></translation>
         </message>
         <message>
-            <location line="528" filename="../../Component/FluDeviceManager/FluDeviceBasicInformation.qml"/>
+            <location line="535" filename="../../Component/FluDeviceManager/FluDeviceBasicInformation.qml"/>
+            <location line="592" filename="../../Component/FluDeviceManager/FluDeviceBasicInformation.qml"/>
             <source>Cancel</source>
             <translation>취소</translation>
         </message>
         <message>
-            <location line="544" filename="../../Component/FluDeviceManager/FluDeviceBasicInformation.qml"/>
+            <location line="551" filename="../../Component/FluDeviceManager/FluDeviceBasicInformation.qml"/>
             <source>Save</source>
             <translation>구하다</translation>
         </message>
         <message>
-            <location line="555" filename="../../Component/FluDeviceManager/FluDeviceBasicInformation.qml"/>
+            <location line="562" filename="../../Component/FluDeviceManager/FluDeviceBasicInformation.qml"/>
             <source>Device Name Modification Failed</source>
             <translation>장치 이름 수정 실패</translation>
         </message>
         <message>
-            <location line="557" filename="../../Component/FluDeviceManager/FluDeviceBasicInformation.qml"/>
+            <location line="564" filename="../../Component/FluDeviceManager/FluDeviceBasicInformation.qml"/>
             <source>Device Name Modification Successful</source>
             <translation>장치 이름 수정 성공</translation>
+        </message>
+        <message>
+            <location line="591" filename="../../Component/FluDeviceManager/FluDeviceBasicInformation.qml"/>
+            <source>After deleting device %1, the device will no longer appear in the list. To view it again, you need to manually re-add it.</source>
+            <translation>장치 %1를 삭제하면 장치가 목록에 더 이상 표시되지 않습니다. 다시 보려면 수동으로 장치를 다시 추가해야 합니다.</translation>
+        </message>
+        <message>
+            <location line="593" filename="../../Component/FluDeviceManager/FluDeviceBasicInformation.qml"/>
+            <source>Delete</source>
+            <translation>삭제</translation>
         </message>
     </context>
     <context>
@@ -3911,44 +3932,44 @@ Note: After joining a team, the devices under your account will be automatically
         <message>
             <location line="34" filename="../../Component/FluDeviceManager/FluDeviceSetting.qml"/>
             <location line="104" filename="../../Component/FluDeviceManager/FluDeviceSetting.qml"/>
-            <location line="335" filename="../../Component/FluDeviceManager/FluDeviceSetting.qml"/>
-            <location line="558" filename="../../Component/FluDeviceManager/FluDeviceSetting.qml"/>
-            <location line="567" filename="../../Component/FluDeviceManager/FluDeviceSetting.qml"/>
+            <location line="338" filename="../../Component/FluDeviceManager/FluDeviceSetting.qml"/>
+            <location line="561" filename="../../Component/FluDeviceManager/FluDeviceSetting.qml"/>
+            <location line="570" filename="../../Component/FluDeviceManager/FluDeviceSetting.qml"/>
             <source>Device Basic infor</source>
             <translation>장치 기본 정보</translation>
         </message>
         <message>
             <location line="34" filename="../../Component/FluDeviceManager/FluDeviceSetting.qml"/>
-            <location line="351" filename="../../Component/FluDeviceManager/FluDeviceSetting.qml"/>
-            <location line="570" filename="../../Component/FluDeviceManager/FluDeviceSetting.qml"/>
+            <location line="354" filename="../../Component/FluDeviceManager/FluDeviceSetting.qml"/>
+            <location line="573" filename="../../Component/FluDeviceManager/FluDeviceSetting.qml"/>
             <source>Device Maintenance</source>
             <translation>장치 유지 관리</translation>
         </message>
         <message>
             <location line="34" filename="../../Component/FluDeviceManager/FluDeviceSetting.qml"/>
-            <location line="396" filename="../../Component/FluDeviceManager/FluDeviceSetting.qml"/>
-            <location line="573" filename="../../Component/FluDeviceManager/FluDeviceSetting.qml"/>
+            <location line="399" filename="../../Component/FluDeviceManager/FluDeviceSetting.qml"/>
+            <location line="576" filename="../../Component/FluDeviceManager/FluDeviceSetting.qml"/>
             <source>Network infor</source>
             <translation>네트워크 정보</translation>
         </message>
         <message>
             <location line="34" filename="../../Component/FluDeviceManager/FluDeviceSetting.qml"/>
-            <location line="416" filename="../../Component/FluDeviceManager/FluDeviceSetting.qml"/>
-            <location line="577" filename="../../Component/FluDeviceManager/FluDeviceSetting.qml"/>
+            <location line="419" filename="../../Component/FluDeviceManager/FluDeviceSetting.qml"/>
+            <location line="580" filename="../../Component/FluDeviceManager/FluDeviceSetting.qml"/>
             <source>Image Settings</source>
             <translation>이미지 설정</translation>
         </message>
         <message>
             <location line="34" filename="../../Component/FluDeviceManager/FluDeviceSetting.qml"/>
-            <location line="438" filename="../../Component/FluDeviceManager/FluDeviceSetting.qml"/>
-            <location line="585" filename="../../Component/FluDeviceManager/FluDeviceSetting.qml"/>
+            <location line="441" filename="../../Component/FluDeviceManager/FluDeviceSetting.qml"/>
+            <location line="588" filename="../../Component/FluDeviceManager/FluDeviceSetting.qml"/>
             <source>Detection alarm</source>
             <translation>감지 알람</translation>
         </message>
         <message>
             <location line="34" filename="../../Component/FluDeviceManager/FluDeviceSetting.qml"/>
-            <location line="458" filename="../../Component/FluDeviceManager/FluDeviceSetting.qml"/>
-            <location line="589" filename="../../Component/FluDeviceManager/FluDeviceSetting.qml"/>
+            <location line="461" filename="../../Component/FluDeviceManager/FluDeviceSetting.qml"/>
+            <location line="592" filename="../../Component/FluDeviceManager/FluDeviceSetting.qml"/>
             <source>Power Management</source>
             <translation>전원 관리</translation>
         </message>
@@ -3985,19 +4006,19 @@ Note: After joining a team, the devices under your account will be automatically
         <message>
             <location line="167" filename="../../Component/FluDeviceManager/FluDeviceSetting.qml"/>
             <location line="204" filename="../../Component/FluDeviceManager/FluDeviceSetting.qml"/>
-            <location line="750" filename="../../Component/FluDeviceManager/FluDeviceSetting.qml"/>
+            <location line="753" filename="../../Component/FluDeviceManager/FluDeviceSetting.qml"/>
             <source>正在设置,请稍候...</source>
             <translation type="unfinished"></translation>
         </message>
         <message>
-            <location line="310" filename="../../Component/FluDeviceManager/FluDeviceSetting.qml"/>
+            <location line="313" filename="../../Component/FluDeviceManager/FluDeviceSetting.qml"/>
             <source>Basic info</source>
             <translation>기본 정보</translation>
         </message>
         <message>
             <location line="34" filename="../../Component/FluDeviceManager/FluDeviceSetting.qml"/>
-            <location line="374" filename="../../Component/FluDeviceManager/FluDeviceSetting.qml"/>
-            <location line="581" filename="../../Component/FluDeviceManager/FluDeviceSetting.qml"/>
+            <location line="377" filename="../../Component/FluDeviceManager/FluDeviceSetting.qml"/>
+            <location line="584" filename="../../Component/FluDeviceManager/FluDeviceSetting.qml"/>
             <source>录像设置</source>
             <translation type="unfinished"></translation>
         </message>
@@ -4007,18 +4028,18 @@ Note: After joining a team, the devices under your account will be automatically
             <translation>설정 성공</translation>
         </message>
         <message>
-            <location line="478" filename="../../Component/FluDeviceManager/FluDeviceSetting.qml"/>
-            <location line="593" filename="../../Component/FluDeviceManager/FluDeviceSetting.qml"/>
+            <location line="481" filename="../../Component/FluDeviceManager/FluDeviceSetting.qml"/>
+            <location line="596" filename="../../Component/FluDeviceManager/FluDeviceSetting.qml"/>
             <source>灯光设置</source>
             <translation type="unfinished"></translation>
         </message>
         <message>
-            <location line="738" filename="../../Component/FluDeviceManager/FluDeviceSetting.qml"/>
+            <location line="741" filename="../../Component/FluDeviceManager/FluDeviceSetting.qml"/>
             <source>校准</source>
             <translation type="unfinished"></translation>
         </message>
         <message>
-            <location line="756" filename="../../Component/FluDeviceManager/FluDeviceSetting.qml"/>
+            <location line="759" filename="../../Component/FluDeviceManager/FluDeviceSetting.qml"/>
             <source>Prompt</source>
             <translation>즉각적인</translation>
         </message>
@@ -5712,185 +5733,190 @@ Note: After joining a team, the devices under your account will be automatically
         <message>
             <location line="44" filename="../../Component/FluDeviceManager/FluTimeZone.qml"/>
             <source>International date line west</source>
-            <translation type="unfinished"></translation>
+            <translation>서쪽 국제 날짜 변경선</translation>
         </message>
         <message>
             <location line="45" filename="../../Component/FluDeviceManager/FluTimeZone.qml"/>
             <source>Wake island Samoa</source>
-            <translation type="unfinished"></translation>
+            <translation>웨이크 섬 사모아</translation>
         </message>
         <message>
             <location line="46" filename="../../Component/FluDeviceManager/FluTimeZone.qml"/>
             <source>Hawaii</source>
-            <translation type="unfinished"></translation>
+            <translation>하와이</translation>
         </message>
         <message>
             <location line="47" filename="../../Component/FluDeviceManager/FluTimeZone.qml"/>
             <source>Alaska</source>
-            <translation type="unfinished"></translation>
+            <translation>알래스카</translation>
         </message>
         <message>
             <location line="48" filename="../../Component/FluDeviceManager/FluTimeZone.qml"/>
             <source>Pacific time/USA/Canada/Tijuana</source>
-            <translation type="unfinished"></translation>
+            <translation>태평양 표준시/미국/캐나다/티후아나</translation>
         </message>
         <message>
             <location line="49" filename="../../Component/FluDeviceManager/FluTimeZone.qml"/>
             <source>Mountain standard time/USA/Canada/Arizona</source>
-            <translation type="unfinished"></translation>
+            <translation>산악 표준시/미국/캐나다/애리조나</translation>
         </message>
         <message>
             <location line="50" filename="../../Component/FluDeviceManager/FluTimeZone.qml"/>
             <source>Central standard time/Mexico/monterrey/guadalaha</source>
-            <translation type="unfinished"></translation>
+            <translation>중부 표준시/멕시코/몬테레이/과달라하</translation>
         </message>
         <message>
             <location line="51" filename="../../Component/FluDeviceManager/FluTimeZone.qml"/>
             <source>Eastern standard time/indiana (e)/ Bogota/Lima/Quito</source>
-            <translation type="unfinished"></translation>
+            <translation>동부 표준시/ 인디애나 (동부) / 보고타 / 즉시 / 키토</translation>
         </message>
         <message>
             <location line="52" filename="../../Component/FluDeviceManager/FluTimeZone.qml"/>
             <source>USA/San Diego</source>
-            <translation type="unfinished"></translation>
+            <translation>미국/샌디에이고</translation>
         </message>
         <message>
             <location line="53" filename="../../Component/FluDeviceManager/FluTimeZone.qml"/>
             <source>Pacific time/Canada/Caracas/la paz</source>
-            <translation type="unfinished"></translation>
+            <translation>태평양 표준시/캐나다/카라카스/라파스</translation>
         </message>
         <message>
             <location line="54" filename="../../Component/FluDeviceManager/FluTimeZone.qml"/>
             <source>Newfoundland/Islands off the east coast of Canada</source>
-            <translation type="unfinished"></translation>
+            <translation>캐나다 동쪽 해안의 뉴펀들랜드/섬</translation>
         </message>
         <message>
             <location line="55" filename="../../Component/FluDeviceManager/FluTimeZone.qml"/>
-            <source>Central Pacific</source>
-            <translation type="unfinished"></translation>
+            <source>Greenland/Buenos Aires/Brasilia</source>
+            <translation>그린란드/부에노스아일리/브라질리아</translation>
         </message>
         <message>
             <location line="56" filename="../../Component/FluDeviceManager/FluTimeZone.qml"/>
-            <source>Cape Verde/Azores</source>
-            <translation type="unfinished"></translation>
+            <source>Central Pacific</source>
+            <translation>중앙 태평양</translation>
         </message>
         <message>
             <location line="57" filename="../../Component/FluDeviceManager/FluTimeZone.qml"/>
-            <source>GMT/London/Edinburgh/Lisbon</source>
-            <translation type="unfinished"></translation>
+            <source>Cape Verde/Azores</source>
+            <translation>카보베르데/아조레스</translation>
         </message>
         <message>
             <location line="58" filename="../../Component/FluDeviceManager/FluTimeZone.qml"/>
-            <source>Casablanca/Monrovia</source>
-            <translation type="unfinished"></translation>
+            <source>GMT/London/Edinburgh/Lisbon</source>
+            <translation>그리니치 시간/ 런던/에든버러/리스본</translation>
         </message>
         <message>
             <location line="59" filename="../../Component/FluDeviceManager/FluTimeZone.qml"/>
-            <source>Amsterdam/Berlin/Rome/Vienna/Paris/Copenhagen/Midwest Africa</source>
-            <translation type="unfinished"></translation>
+            <source>Casablanca/Monrovia</source>
+            <translation>카사블랑카/몬로비아</translation>
         </message>
         <message>
             <location line="60" filename="../../Component/FluDeviceManager/FluTimeZone.qml"/>
-            <source>Athens/Cairo/Jerusalem/Istanbul/Minsk/Bulgaria/harare</source>
-            <translation type="unfinished"></translation>
+            <source>Amsterdam/Berlin/Rome/Vienna/Paris/Copenhagen/Midwest Africa</source>
+            <translation>암스테르담/베를린/로마/비엔나/파리/코펜하겐/아프리카 중서부</translation>
         </message>
         <message>
             <location line="61" filename="../../Component/FluDeviceManager/FluTimeZone.qml"/>
-            <source>Baghdad/Kuwait/Riyadh/Moscow/st. Petersburg/nerohua/volgograd</source>
-            <translation type="unfinished"></translation>
+            <source>Athens/Cairo/Jerusalem/Istanbul/Minsk/Bulgaria/harare</source>
+            <translation>아테네/카이로/예루살렘/이스탄불/민스크/불가리아/하라레</translation>
         </message>
         <message>
             <location line="62" filename="../../Component/FluDeviceManager/FluTimeZone.qml"/>
-            <source>Teheran</source>
-            <translation type="unfinished"></translation>
+            <source>Baghdad/Kuwait/Riyadh/Moscow/st. Petersburg/nerohua/volgograd</source>
+            <translation>바그다드/쿠웨이트/리야드/모스크바/상트페테르부르크/네로후아/볼고그라드</translation>
         </message>
         <message>
             <location line="63" filename="../../Component/FluDeviceManager/FluTimeZone.qml"/>
-            <source>Baku/yerevan tbilisi/ABU dhabi/Muscat</source>
-            <translation type="unfinished"></translation>
+            <source>Teheran</source>
+            <translation>테헤란</translation>
         </message>
         <message>
             <location line="64" filename="../../Component/FluDeviceManager/FluTimeZone.qml"/>
-            <source>Kabul</source>
-            <translation type="unfinished"></translation>
+            <source>Baku/yerevan tbilisi/ABU dhabi/Muscat</source>
+            <translation>바쿠/예레반 트빌리시/아부다비/무스카트</translation>
         </message>
         <message>
             <location line="65" filename="../../Component/FluDeviceManager/FluTimeZone.qml"/>
-            <source>Yekaterinburg/Islamabad/Kara/Tashkent</source>
-            <translation type="unfinished"></translation>
+            <source>Kabul</source>
+            <translation>카불</translation>
         </message>
         <message>
             <location line="66" filename="../../Component/FluDeviceManager/FluTimeZone.qml"/>
-            <source>Chennai/Kolkata/Mumbai/New Delhi</source>
-            <translation type="unfinished"></translation>
+            <source>Yekaterinburg/Islamabad/Kara/Tashkent</source>
+            <translation>예카테린부르크/이슬라마바드/칼라/타슈켄트</translation>
         </message>
         <message>
             <location line="67" filename="../../Component/FluDeviceManager/FluTimeZone.qml"/>
-            <source>Kathmandu</source>
-            <translation type="unfinished"></translation>
+            <source>Chennai/Kolkata/Mumbai/New Delhi</source>
+            <translation>첸나이/콜카타/뭄바이/뉴델리</translation>
         </message>
         <message>
             <location line="68" filename="../../Component/FluDeviceManager/FluTimeZone.qml"/>
-            <source>Almaty/Novosibirsk/Sri Lanka/Astana/Dhaka</source>
-            <translation type="unfinished"></translation>
+            <source>Kathmandu</source>
+            <translation>카트만두</translation>
         </message>
         <message>
             <location line="69" filename="../../Component/FluDeviceManager/FluTimeZone.qml"/>
-            <source>Yangon</source>
-            <translation type="unfinished"></translation>
+            <source>Almaty/Novosibirsk/Sri Lanka/Astana/Dhaka</source>
+            <translation>알마티/노보시비르스크/스리랑카/아스타나/다카</translation>
         </message>
         <message>
             <location line="70" filename="../../Component/FluDeviceManager/FluTimeZone.qml"/>
-            <source>Bangkok/Hanoi/Jakarta/Krasnoyarsk</source>
-            <translation type="unfinished"></translation>
+            <source>Yangon</source>
+            <translation>양곤</translation>
         </message>
         <message>
             <location line="71" filename="../../Component/FluDeviceManager/FluTimeZone.qml"/>
-            <source>Beijing/Hong Kong/Macau/Taipei/Singapore/Kuala Lumpur/Irkutsk/Ulan Bator</source>
-            <translation type="unfinished"></translation>
+            <source>Bangkok/Hanoi/Jakarta/Krasnoyarsk</source>
+            <translation>방콕/ 하노이/ 자카르타/크라스노야르스크</translation>
         </message>
         <message>
             <location line="72" filename="../../Component/FluDeviceManager/FluTimeZone.qml"/>
-            <source>Tokyo/Seoul/Yakutsk/Sapporo/Osaka</source>
-            <translation type="unfinished"></translation>
+            <source>Beijing/Hong Kong/Macau/Taipei/Singapore/Kuala Lumpur/Irkutsk/Ulan Bator</source>
+            <translation>베이징/홍콩/마카오/타이베이/싱가포르/쿠알라룸푸르/이르쿠츠크/울란바토르</translation>
         </message>
         <message>
             <location line="73" filename="../../Component/FluDeviceManager/FluTimeZone.qml"/>
-            <source>Pyongyang</source>
-            <translation type="unfinished"></translation>
+            <source>Tokyo/Seoul/Yakutsk/Sapporo/Osaka</source>
+            <translation>도쿄/서울/야쿠츠크/삿포로/오사카</translation>
         </message>
         <message>
             <location line="74" filename="../../Component/FluDeviceManager/FluTimeZone.qml"/>
-            <source>Vladivostok/Canberra/Sydney/Brisbane/Guam/port moresby/hobart</source>
-            <translation type="unfinished"></translation>
+            <source>Pyongyang</source>
+            <translation>평양</translation>
         </message>
         <message>
             <location line="75" filename="../../Component/FluDeviceManager/FluTimeZone.qml"/>
-            <source>Magadan/Solomon/new caledonia</source>
-            <translation type="unfinished"></translation>
+            <source>Vladivostok/Canberra/Sydney/Brisbane/Guam/port moresby/hobart</source>
+            <translation>블라디보스토크/캔버라/시드니/브리즈번 시티/은/포트 모르즈비/호바트</translation>
         </message>
         <message>
             <location line="76" filename="../../Component/FluDeviceManager/FluTimeZone.qml"/>
-            <source>Auckland/Wellington/Fiji/Marshall/Kamchatka/nukualofa</source>
-            <translation type="unfinished"></translation>
+            <source>Magadan/Solomon/new caledonia</source>
+            <translation>마가단/솔로몬/뉴칼레도니아</translation>
         </message>
         <message>
-            <location line="82" filename="../../Component/FluDeviceManager/FluTimeZone.qml"/>
+            <location line="77" filename="../../Component/FluDeviceManager/FluTimeZone.qml"/>
+            <source>Auckland/Wellington/Fiji/Marshall/Kamchatka/nukualofa</source>
+            <translation>오클랜드/ 웰링턴 / 피지 / 마셜 / 캄차카 반도 / 누쿠알로파</translation>
+        </message>
+        <message>
+            <location line="83" filename="../../Component/FluDeviceManager/FluTimeZone.qml"/>
             <source>正在切换时区...</source>
             <translation type="unfinished"></translation>
         </message>
         <message>
-            <location line="293" filename="../../Component/FluDeviceManager/FluTimeZone.qml"/>
+            <location line="294" filename="../../Component/FluDeviceManager/FluTimeZone.qml"/>
             <source>Cancel</source>
             <translation>취소</translation>
         </message>
         <message>
-            <location line="307" filename="../../Component/FluDeviceManager/FluTimeZone.qml"/>
+            <location line="308" filename="../../Component/FluDeviceManager/FluTimeZone.qml"/>
             <source>Save</source>
             <translation>구하다</translation>
         </message>
         <message>
-            <location line="330" filename="../../Component/FluDeviceManager/FluTimeZone.qml"/>
+            <location line="331" filename="../../Component/FluDeviceManager/FluTimeZone.qml"/>
             <source>Setting timed out. Please try again later</source>
             <translation>설정 시간이 초과되었습니다. 나중에 다시 시도해 주세요.</translation>
         </message>

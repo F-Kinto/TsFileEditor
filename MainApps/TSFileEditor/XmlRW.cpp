@@ -21,8 +21,6 @@ void XmlRW::UpdateTranslateMap(QList<TranslateModel>& list)
     int i = 0;
     foreach (TranslateModel model, list) {
         m_translateMap[model.GetKey()] = model.GetTranslate();
-        // if(model.GetTranslate().isEmpty())
-        //     qDebug() << "0000000" << i << model.GetKey() <<  model.GetSource() << model.GetTranslate();
         i++;
     }
 }
@@ -48,7 +46,6 @@ bool XmlRW::ImportFromTS(QList<TranslateModel>& list, QString strPath)
                 }
                 if (attributes.hasAttribute("language")) {
                     QString strLanguage = attributes.value("language").toString();
-                    //qDebug() << "language : " << strLanguage;
                 }
 
                 ReadXBEL();
@@ -65,8 +62,6 @@ bool XmlRW::ImportFromTS(QList<TranslateModel>& list, QString strPath)
             model.SetKey(i.key());
             model.SetSource(i.key());
             model.SetTranslate(i.value());
-            //  if(i.value().isEmpty())
-            //      qDebug() << "1111111" << list.size() << i.key() << i.value();
             list.append(model);
         }
 
@@ -87,22 +82,32 @@ bool XmlRW::ExportToTS(QList<TranslateModel>& list, QString strPath)
     }
     else {
         if(list.count() <=0) {
-            qDebug() << "translate list is empty";
+            qDebug() << "[ExportToTS] translate list is empty, path:" << strPath;
             return false;
         }
 
+        qDebug() << "[ExportToTS] Start, path:" << strPath << "list count:" << list.count();
+
         UpdateTranslateMap(list);
+
+        qDebug() << "[ExportToTS] TranslateMap size:" << m_translateMap.size();
 
         QDomDocument doc;
         if(!doc.setContent(&file))
         {
-            qDebug() << "xml parsing error";
+            qCritical() << "[ExportToTS] xml parsing error, path:" << strPath;
             return false;
         }
         file.close();
 
         QDomElement root=doc.documentElement();
         QDomNodeList list=root.elementsByTagName("message");
+
+        qDebug() << "[ExportToTS] message nodes in ts file:" << list.count();
+
+        int overwriteCount = 0;
+        int keepOriginalCount = 0;
+        int unfinishedCount = 0;
 
         QDomNode node;
         for(int i=0; i < list.count(); i++) {
@@ -121,10 +126,16 @@ bool XmlRW::ExportToTS(QList<TranslateModel>& list, QString strPath)
             if(strTranslation.isEmpty() && strValue.isEmpty())
             {
                 newElement.setAttribute("type", "unfinished");
-                //qDebug() << i << "key:" << strKey;
+                unfinishedCount++;
             }
-
-            //QDomText text = doc.createTextNode(strTranslation.isEmpty() ? strValue : strTranslation);  // ???????????ts????????
+            else if(!strValue.isEmpty())
+            {
+                overwriteCount++;
+            }
+            else
+            {
+                keepOriginalCount++;
+            }
 
             QDomText text = doc.createTextNode(strValue); // ???????Excel?????
             newElement.appendChild(text);
@@ -132,7 +143,11 @@ bool XmlRW::ExportToTS(QList<TranslateModel>& list, QString strPath)
             //}
         }
 
+        qDebug() << "[ExportToTS] Overwrite:" << overwriteCount
+                 << "KeepOriginal:" << keepOriginalCount << "Unfinished:" << unfinishedCount;
+
         if(!file.open(QFile::WriteOnly|QFile::Truncate)) {
+            qCritical() << "[ExportToTS] Failed to open file for writing:" << strPath;
             return false;
         }
 
@@ -140,6 +155,7 @@ bool XmlRW::ExportToTS(QList<TranslateModel>& list, QString strPath)
         doc.save(outStream, 4);
         file.close();
 
+        qDebug() << "[ExportToTS] Success, path:" << strPath;
         return true;
     }
 }
@@ -218,9 +234,7 @@ void XmlRW::ReadMessage()
 
     if (isVanish) {
         m_vanishCount++;
-        //qDebug() << "Vanish message skipped, key:" << strSource;
     } else {
-        //qDebug() << xml.name().toString() << "key:" << strSource << "\ttranslation:" << strTranslation;
         m_translateMap.insert(strSource, strTranslation);
     }
 }
