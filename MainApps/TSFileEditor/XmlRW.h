@@ -15,6 +15,7 @@ public:
     bool ImportFromTS(QList<TranslateModel>& list, QString strPath);
     bool ExportToTS(QList<TranslateModel>& list, QString strPath);
     QString ErrorString() const;
+    void ClearCache();
 
 private:
     void UpdateTranslateMap(QList<TranslateModel>& list);

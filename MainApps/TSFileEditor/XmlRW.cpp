@@ -160,6 +160,12 @@ bool XmlRW::ExportToTS(QList<TranslateModel>& list, QString strPath)
     }
 }
 
+void XmlRW::ClearCache()
+{
+    m_translateMap.clear();
+    m_vanishCount = 0;
+}
+
 QString XmlRW::ErrorString() const
 {
     return QString("Error:%1  Line:%2  Column:%3")

@@ -131,6 +131,17 @@ bool ExcelRW::ExportToXlsx(QList<TranslateModel>& list, QString strPath)
     if (xlsx.sheetNames().isEmpty())
         xlsx.addSheet("Sheet1");
     xlsx.selectSheet(xlsx.sheetNames().first());
+
+    // Clear old data from row 2 onwards (keep row 1)
+    QXlsx::CellRange oldRange = xlsx.currentWorksheet()->dimension();
+    if (oldRange.lastRow() >= 2) {
+        for (int r = 2; r <= oldRange.lastRow(); ++r) {
+            for (int c = 1; c <= oldRange.lastColumn(); ++c) {
+                xlsx.write(r, c, QVariant());
+            }
+        }
+    }
+
     // Row 1 is preserved as-is, headers start from row 2
     xlsx.write(2, m_KeyColumn, QVariant(strHeaderkey));
     xlsx.write(2, m_SourceColumn, QVariant(strHeaderSource));
@@ -212,6 +223,16 @@ bool ExcelRW::ExportToXlsxMultiColumn(const QMap<QString, QList<TranslateModel>>
         xlsx.addSheet("Sheet1");
     xlsx.selectSheet(xlsx.sheetNames().first());
 
+    // Clear old data from row 2 onwards (keep row 1)
+    QXlsx::CellRange oldRange = xlsx.currentWorksheet()->dimension();
+    if (oldRange.lastRow() >= 2) {
+        for (int r = 2; r <= oldRange.lastRow(); ++r) {
+            for (int c = 1; c <= oldRange.lastColumn(); ++c) {
+                xlsx.write(r, c, QVariant());
+            }
+        }
+    }
+
     // Row 1 is preserved as-is, headers start from row 2
     xlsx.write(2, 1, QVariant(tr("Key")));
     xlsx.write(2, 2, QVariant(tr("Source")));
@@ -226,7 +247,7 @@ bool ExcelRW::ExportToXlsxMultiColumn(const QMap<QString, QList<TranslateModel>>
     for (auto it = columnHeaderMap.constBegin(); it != columnHeaderMap.constEnd(); ++it) {
         QString header = it.value();
         header.remove(".ts", Qt::CaseInsensitive);
-        xlsx.write(2, it.key(), QVariant(header));
+        xlsx.write(2, it.key(), QVariant("Translate"));
     }
 
     // Set column widths to 40 for all columns

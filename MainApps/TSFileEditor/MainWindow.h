@@ -97,6 +97,8 @@ private:
     QPushButton*            m_singleMergeStep34Btn;
     QLabel*                 m_genQmTipLabel1;
     QLabel*                 m_scanTsTipLabel1;
+    QLabel*                 m_scanTsTipLabel;
+    QLabel*                 m_genQmTipLabel;
     bool                    m_quickMode{true};
 
     void readConfig();
@@ -106,5 +108,7 @@ private:
     void showScriptError(const QString& title, const QString& output);
     void showProgress(bool show, const QString& labelText = "", int maximum = 0);
     void applyStyles();
+    QLabel* createFlagLabel(int width = 288, int height = 192);
+    QLabel* createPatriotLabel();
 };
 #endif // MAINWINDOW_H

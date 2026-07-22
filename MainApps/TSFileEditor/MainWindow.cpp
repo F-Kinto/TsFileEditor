@@ -40,6 +40,16 @@ MainWindow::MainWindow(QWidget *parent) :
         dlg->move(this->geometry().center() - dlg->rect().center());
     });
 
+    QPushButton *clearCacheBtn = new QPushButton(tr("清除缓存"));
+    clearCacheBtn->setFixedSize(80, 32);
+    clearCacheBtn->setToolTip(tr("清除Ts和Excel的内存缓存数据"));
+    clearCacheBtn->setObjectName("clearCacheBtn");
+    connect(clearCacheBtn, &QPushButton::clicked, this, [this]() {
+        m_transList.clear();
+        m_pXmlWorker->ClearCache();
+        showToast(tr("缓存已清除"), true);
+    });
+
     QPushButton *minimizeBtn = new QPushButton("—");
     minimizeBtn->setFixedSize(32, 32);
     minimizeBtn->setToolTip(tr("最小化"));
@@ -57,6 +67,7 @@ MainWindow::MainWindow(QWidget *parent) :
     QLabel *titleLabel = new QLabel(tr("自动翻译Tool"));
     titleBarLayout->addWidget(titleLabel, 0, Qt::AlignVCenter);
     titleBarLayout->addStretch();
+    titleBarLayout->addWidget(clearCacheBtn, 0, Qt::AlignVCenter);
     titleBarLayout->addWidget(helpBtn, 0, Qt::AlignVCenter);
     titleBarLayout->addWidget(minimizeBtn, 0, Qt::AlignVCenter);
     titleBarLayout->addWidget(closeBtn, 0, Qt::AlignVCenter);
@@ -176,21 +187,9 @@ MainWindow::MainWindow(QWidget *parent) :
     QVBoxLayout *pageBatchLayout = new QVBoxLayout(pageBatch);
     pageBatchLayout->addWidget(ui->groupBox_3);
 
-    // 底部爱国标语：五颗黄色五角星 + "我爱中国!"
-    QLabel *patriotLabel = new QLabel();
-    patriotLabel->setAlignment(Qt::AlignCenter);
-    patriotLabel->setText(QString(
-        "<span style='font-size:28px; font-weight:bold; color:#FFDE00;'>"
-        "\u2605 \u2605 \u2605 \u2605 \u2605"
-        "</span>"
-        "<span style='font-size:28px; font-weight:bold; color:#DE2910; font-family:\"Microsoft YaHei\";'>"
-        " 我爱中国! "
-        "</span>"
-        "<span style='font-size:28px; font-weight:bold; color:#FFDE00;'>"
-        "\u2605 \u2605 \u2605 \u2605 \u2605"
-        "</span>"
-    ));
-    pageBatchLayout->addWidget(patriotLabel);
+    // 底部五星红旗 + 爱国标语
+    pageBatchLayout->addWidget(createPatriotLabel());
+    pageBatchLayout->addWidget(createFlagLabel());
     pageBatchLayout->addStretch();
 
     m_tabWidget->addTab(pageBatch, tr("翻译多种语言"));
@@ -208,24 +207,18 @@ MainWindow::MainWindow(QWidget *parent) :
         delete oldLayout;
         // 清理残留的layout items（不含widget的子布局）
         for (QLayoutItem *item : items) {
-            if (item->layout()) {
-                // 子布局中的widget已经被重新添加到新布局，只删除空布局
-                // 注意：不删除QWidgetItem，因为widget已被新layout接管
-            }
             delete item; // QWidgetItem的delete不会删除widget本身
         }
     }
 
     // 右侧按钮面板：输入框 + 浏览按钮 + 功能按钮
     // 扫描Ts脚本路径输入框（不可复制粘贴，只能通过浏览导入）
-    QLabel *scanTsTipLabel = new QLabel(tr("* 如果项目有 新增/删除 需要翻译的字段, 必须先执行此步骤"));
-    scanTsTipLabel->setWordWrap(true);
-    scanTsTipLabel->setContentsMargins(8, 0, 8, 0);
-    scanTsTipLabel->setStyleSheet("QLabel { color: #FF4A4A; font-family: 'Microsoft YaHei'; font-size: 12px; }");
+    m_scanTsTipLabel = new QLabel(tr("* 如果项目有 新增/删除 需要翻译的字段, 必须先执行此步骤"));
+    m_scanTsTipLabel->setWordWrap(true);
+    m_scanTsTipLabel->setContentsMargins(8, 0, 8, 0);
     m_scanTsTipLabel1 = new QLabel(tr("请先导入扫描Ts脚本路径，再点击下方按钮扫描项目文件并更新Ts内容"));
     m_scanTsTipLabel1->setWordWrap(true);
     m_scanTsTipLabel1->setContentsMargins(8, 0, 8, 0);
-    m_scanTsTipLabel1->setStyleSheet("QLabel { color: #6D7682; font-family: 'Microsoft YaHei'; font-size: 12px; }");
 
     m_scanTsPathEdit = new QTextEdit();
     m_scanTsPathEdit->setPlaceholderText(tr("请导入更新Ts文件的脚本路径(updateTsFile.bat)"));
@@ -240,7 +233,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     QVBoxLayout *scanTsRowLayout = new QVBoxLayout();
     scanTsRowLayout->setSpacing(8);
-    scanTsRowLayout->addWidget(scanTsTipLabel);
+    scanTsRowLayout->addWidget(m_scanTsTipLabel);
     scanTsRowLayout->addWidget(m_scanTsPathEdit);
     scanTsRowLayout->addWidget(m_scanTsLookBtn, 0, Qt::AlignHCenter);
 
@@ -249,14 +242,12 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(m_scanTsBtn, &QPushButton::clicked, this, &MainWindow::on_scanTsBtn_clicked);
 
     // 生成Qm脚本路径输入框（不可复制粘贴，只能通过浏览导入）
-    QLabel *genQmTipLabel = new QLabel(tr("* 必须执行完左边步骤之后, 必须执行此步骤才可让翻译生效"));
-    genQmTipLabel->setWordWrap(true);
-    genQmTipLabel->setContentsMargins(8, 0, 8, 0);
-    genQmTipLabel->setStyleSheet("QLabel { color: #FF4A4A; font-family: 'Microsoft YaHei'; font-size: 12px; }");
+    m_genQmTipLabel = new QLabel(tr("* 必须执行完左边步骤之后, 必须执行此步骤才可让翻译生效"));
+    m_genQmTipLabel->setWordWrap(true);
+    m_genQmTipLabel->setContentsMargins(8, 0, 8, 0);
     m_genQmTipLabel1 = new QLabel(tr("请先导入生成Qm脚本路径，再点击下方按钮将Ts文件编译为Qm翻译文件"));
     m_genQmTipLabel1->setWordWrap(true);
     m_genQmTipLabel1->setContentsMargins(8, 0, 8, 0);
-    m_genQmTipLabel1->setStyleSheet("QLabel { color: #6D7682; font-family: 'Microsoft YaHei'; font-size: 12px; }");
 
     m_genQmPathEdit = new QTextEdit();
     m_genQmPathEdit->setPlaceholderText(tr("请导入生成Qm文件的脚本路径(updateQmFile.bat)"));
@@ -271,7 +262,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     QVBoxLayout *genQmRowLayout = new QVBoxLayout();
     genQmRowLayout->setSpacing(8);
-    genQmRowLayout->addWidget(genQmTipLabel);
+    genQmRowLayout->addWidget(m_genQmTipLabel);
     genQmRowLayout->addWidget(m_genQmPathEdit);
     genQmRowLayout->addWidget(m_genQmLookBtn, 0, Qt::AlignHCenter);
 
@@ -342,20 +333,10 @@ MainWindow::MainWindow(QWidget *parent) :
     m_progressLabel = new QLabel(this);
     m_progressLabel->setAlignment(Qt::AlignLeft | Qt::AlignVCenter);
     m_progressLabel->setFixedSize(500, 36);
-    m_progressLabel->setStyleSheet(
-        "QLabel {"
-        "  color: #FFFFFF;"
-        "  font-size: 18px;"
-        "  font-weight: bold;"
-        "  font-family: 'Microsoft YaHei';"
-        "  background: transparent;"
-        "}"
-    );
     m_progressLabel->hide();
 
     // 遮罩层：进度条显示时覆盖窗口，半透明灰色，阻止点击
     m_overlayWidget = new QWidget(this);
-    m_overlayWidget->setStyleSheet("background: rgba(0, 0, 0, 120);");
     m_overlayWidget->hide();
 
     // ========== 应用所有样式 ==========
@@ -387,22 +368,10 @@ MainWindow::MainWindow(QWidget *parent) :
 
     // 快捷模式按钮手动连接（非 on_objectName_signal 格式，不会自动关联）
     connect(ui->quickModeBtn, &QPushButton::clicked, this, &MainWindow::slotquickModeChange);
-    // 初始为快捷模式：显示 scanUpdateBtn/writeTsGenQmBtn/合并按钮，隐藏普通模式按钮
-    ui->scanUpdateBtn->setVisible(true);
-    ui->writeTsGenQmBtn->setVisible(true);
-    ui->generateBtn_2->setVisible(false);
-    ui->tsUpdateBtn_2->setVisible(false);
-    ui->tsImportBtn->setVisible(false);
-    ui->generateBtn->setVisible(false);
-    ui->tsUpdateBtn->setVisible(false);
-    m_singleMergeStep12Btn->setVisible(true);
-    m_singleMergeStep34Btn->setVisible(true);
-    m_genQmBtn->setVisible(false);
-    m_scanTsBtn->setVisible(false);
-    m_genQmTipLabel1->setVisible(false);
-    m_scanTsTipLabel1->setVisible(false);
-    ui->quickModeBtn->setText(tr("切换为普通模式"));
-    m_singleQuickModeBtn->setText(tr("切换为普通模式"));
+    // 初始为快捷模式：通过 slotquickModeChange() 统一设置，避免重复代码
+    // m_quickMode 默认为 true，调用前需先置为 false 以便 toggle 到 true
+    m_quickMode = false;
+    slotquickModeChange();
 
     readConfig();
 
@@ -477,9 +446,7 @@ void MainWindow::on_generateBtn_clicked()
 {
     bool re;
 
-    if(m_opeMergeStepOne){
-        m_opeMergeStepOne = false;
-    }
+    m_opeMergeStepOne = false;
 
     m_pExcelWorker->SetTransColumn(ui->transSpinBox->value());
 
@@ -500,7 +467,6 @@ void MainWindow::on_generateBtn_clicked()
     re = m_pExcelWorker->ExportToXlsx(m_transList, ui->excelPathEdit->text());
     if(re) {
         onReceiveMsg("Excel生成成功");
-        ui->youdaoTipLabel->setVisible(false);
     } else {
         onReceiveMsg("Excel生成失败");
     }
@@ -520,7 +486,6 @@ void MainWindow::on_tsUpdateBtn_clicked()
     re = m_pExcelWorker->ImportFromXlsx(m_transList, ui->excelPathEdit->text());
     if(re) {
         onReceiveMsg("Excel文件导入成功");
-        ui->youdaoTipLabel->setVisible(false);
     } else {
         onReceiveMsg("Excel文件导入失败");
     }
@@ -562,8 +527,6 @@ void MainWindow::on_translateBtn_clicked()
     else {
         onReceiveMsg("Excel文件导入失败");
     }
-
-    //    m_pTranslateWorker->YoudaoTranslate("??", "auto", m_toLanguage);
 
     //translate excel file
     m_pTranslateWorker->SetIdKey(ui->youdaoAppIdlineEdit->text(), ui->youdaoKeylineEdit->text());
@@ -705,9 +668,7 @@ void MainWindow::on_excelDirBtn_clicked()
 
 void MainWindow::on_generateBtn_2_clicked()
 {
-    if(m_opeMergeStepOne){
-        m_opeMergeStepOne = false;
-    }
+    m_opeMergeStepOne = false;
     QFileInfo tsDirinfo(ui->tsDirEdit->text());
     if (!tsDirinfo.isDir()){
         onReceiveMsg("Ts目录为空");
@@ -721,7 +682,8 @@ void MainWindow::on_generateBtn_2_clicked()
     }
 
     QStringList filters;
-    filters << QString("*.ts");
+    filters << "*.ts";
+
     QDir tsdir(ui->tsDirEdit->text());
     tsdir.setFilter(QDir::Files | QDir::NoSymLinks);
     tsdir.setNameFilters(filters);
@@ -774,7 +736,8 @@ void MainWindow::on_tsUpdateBtn_2_clicked()
     }
 
     QStringList filters;
-    filters << QString("*.ts");
+    filters << "*.ts";
+
     QDir tsdir(ui->tsDirEdit->text());
     tsdir.setFilter(QDir::Files | QDir::NoSymLinks);
     tsdir.setNameFilters(filters);
@@ -895,7 +858,8 @@ void MainWindow::on_writeTsGenQmBtn_clicked()
     }
 
     QStringList filters;
-    filters << QString("*.ts");
+    filters << "*.ts";
+
     QDir tsdir(ui->tsDirEdit->text());
     tsdir.setFilter(QDir::Files | QDir::NoSymLinks);
     tsdir.setNameFilters(filters);
@@ -916,8 +880,6 @@ void MainWindow::on_writeTsGenQmBtn_clicked()
     }
     m_opeMergeStepTwo = true;
     on_tsUpdateBtn_2_clicked();
-    // Step 2: Generate Qm files
-    //on_genQmBtn_clicked();
 }
 
 void MainWindow::on_scanTsLookBtn_clicked()
@@ -1091,9 +1053,7 @@ void MainWindow::on_scanTsBtn_clicked()
 
 void MainWindow::on_genQmBtn_clicked()
 {
-    if(m_opeMergeStepTwo){
-        m_opeMergeStepTwo = false;
-    }
+    m_opeMergeStepTwo = false;
     QString scriptPath = m_genQmPathEdit->toPlainText();
     if (scriptPath.isEmpty()) {
         onReceiveMsg("请先导入生成Qm脚本路径");
@@ -1205,13 +1165,13 @@ void MainWindow::readConfig()
     }
 
     if(settings.value("excelPath").toString().isEmpty()){
-        ui->excelPathEdit->setText("C:/Work/Kinto/TsFileEditor/tsFile/excel/VMSTools.xlsx");
+        ui->excelPathEdit->setText("C:/QA_Working/Firmware/trunk/VmsTools_v2/VmsTools/translations/VMSTools.xlsx");
     }
     else{
         ui->excelPathEdit->setText(settings.value("excelPath").toString());
     }
     if(settings.value("excelPath2").toString().isEmpty()){
-        ui->excelDirEdit->setText("C:/Work/Kinto/TsFileEditor/tsFile/excel/VMSTools.xlsx");
+        ui->excelDirEdit->setText("C:/QA_Working/Firmware/trunk/VmsTools_v2/VmsTools/translations/VMSTools.xlsx");
     }
     else{
         ui->excelDirEdit->setText(settings.value("excelPath2").toString());
@@ -1240,7 +1200,6 @@ void MainWindow::readConfig()
         dir.setNameFilters(filters);
         dir.setFilter(QDir::Files | QDir::NoSymLinks);
         for (const QFileInfo &info : dir.entryInfoList()) {
-            qDebug() << "222222" << info.fileName() << getColumnIndex(info.fileName());
             m_tsColumnMap[info.fileName()] = getColumnIndex(info.fileName());
         }
     }
@@ -1392,310 +1351,82 @@ void MainWindow::showProgress(bool show, const QString& labelText, int maximum)
 
 void MainWindow::applyStyles()
 {
-    // ---- 标题栏样式 ----
-    // 标题栏背景样式：浅蓝色背景，顶部圆角12px
-    m_titleBarWidget->setStyleSheet(
-        "QWidget {"
-        "  background: #E5F5FF;"
-        "  border: none;"
-        "  border-top-left-radius: 12px;"
-        "  border-top-right-radius: 12px;"
-        "  border-bottom-left-radius: 0px;"
-        "  border-bottom-right-radius: 0px;"
-        "}"
-    );
+    // ================================================================
+    //  样式字符串定义区：所有样式集中定义，统一管理
+    // ================================================================
 
-    // 标题文本样式：16px粗体深灰色
-    QLabel *titleLabel = m_titleBarWidget->findChild<QLabel*>();
-    if (titleLabel) {
-        titleLabel->setStyleSheet("font-size: 16px; font-weight: bold; color: #333333; background: transparent;");
-    }
-    QString titleStyle = QString(
-        "QPushButton {"
-            "  border: none;"
-            "  border-radius: 4px;"
-            "  background: transparent;"
-            "  color: #666666;"
-            "  font-size: 20px;"
-            "  padding: 4px;"
-            "}"
-            "QPushButton:hover {"
-            "  background: #e0e0e0;"
-            "  color: #333333;"
-            "}"
-    );
+    // ---- 1. 标题栏样式 ----
+    QString titleBarBgStyle =
+        "QWidget { background: #E5F5FF; border: none;"
+        "  border-top-left-radius: 12px; border-top-right-radius: 12px;"
+        "  border-bottom-left-radius: 0px; border-bottom-right-radius: 0px; }";
+    QString titleTextStyle = "font-size: 16px; font-weight: bold; color: #333333; background: transparent;";
+    QString titleBtnStyle =
+        "QPushButton { border: none; border-radius: 4px; background: transparent;"
+        "  color: #666666; font-size: 20px; padding: 4px; }"
+        "QPushButton:hover { background: #e0e0e0; color: #333333; }";
 
-    // 标题栏按钮样式
-    QList<QPushButton*> titleBtns = m_titleBarWidget->findChildren<QPushButton*>();
-    for(auto &btn : titleBtns){
-        btn->setStyleSheet(titleStyle);
-    }
-
-    // ---- AI翻译按钮样式 ----
-    // 浅蓝色主题，与生成Excel表格按钮风格类似
-    m_aiTranslateBtn->setStyleSheet(
-            "QPushButton {"
-            "  border: 1px solid #62C0FF;"
-            "  border-radius: 4px;"
-            "  padding: 5px 16px;"
-            "  min-height: 26px;"
-            "  background: #EAF6FF;"
-            "  color: #62C0FF;"
-            "  font-weight: bold;"
-            "}"
-            "QPushButton:hover {"
-            "  background: #62C0FF;"
-            "  color: #ffffff;"
-            "}"
-            "QPushButton:pressed {"
-            "  background: #4AA8E8;"
-            "  color: #ffffff;"
-            "}"
-            "QPushButton:checked {"
-            "  border: 1px solid #DCDCDC;"
-            "  background: #FFFFFF;"
-            "  color: #DCDCDC;"
-            "}"
-            "QPushButton:checked:hover {"
-            "  background: #f5f5f5;"
-            "  color: #999999;"
-            "}"
-        );
-
-    // ---- 功能按钮样式 ----
-    // 导入Ts文件按钮：暖黄色主题
-    ui->tsImportBtn->setStyleSheet(
-        "QPushButton {"
-        "  border: 1px solid #FFEEC2;"
-        "  border-radius: 4px;"
-        "  padding: 5px 16px;"
-        "  min-height: 26px;"
-        "  background: #FFF8E8;"
-        "  color: #B8860B;"
-        "  font-weight: bold;"
-        "}"
-        "QPushButton:hover {"
-        "  background: #FFEEC2;"
-        "  color: #8B6914;"
-        "}"
-        "QPushButton:pressed {"
-        "  background: #FFE0A0;"
-        "  color: #8B6914;"
-        "}"
-    );
-
-    // 生成Excel表格按钮：蓝色主题
-    ui->generateBtn->setStyleSheet(
-        "QPushButton {"
-        "  border: 1px solid #0099FF;"
-        "  border-radius: 4px;"
-        "  padding: 5px 16px;"
-        "  min-height: 26px;"
-        "  background: #E6F4FF;"
-        "  color: #0099FF;"
-        "  font-weight: bold;"
-        "}"
-        "QPushButton:hover {"
-        "  background: #0099FF;"
-        "  color: #ffffff;"
-        "}"
-        "QPushButton:pressed {"
-        "  background: #0077CC;"
-        "  color: #ffffff;"
-        "}"
-    );
-
-    // 译文写入Ts文件按钮：红色主题
-    ui->tsUpdateBtn->setStyleSheet(
-        "QPushButton {"
-        "  border: 1px solid #FF4A4A;"
-        "  border-radius: 4px;"
-        "  padding: 5px 16px;"
-        "  min-height: 26px;"
-        "  background: #FFF0F0;"
-        "  color: #FF4A4A;"
-        "  font-weight: bold;"
-        "}"
-        "QPushButton:hover {"
-        "  background: #FF4A4A;"
-        "  color: #ffffff;"
-        "}"
-        "QPushButton:pressed {"
-        "  background: #CC3333;"
-        "  color: #ffffff;"
-        "}"
-    );
-
-    // ---- 右侧面板按钮样式 ----
-    m_scanTsPathEdit->setReadOnly(true);
-    m_genQmPathEdit->setReadOnly(true);
-
-    // 路径输入框样式：圆角4px，边框#DCDCDC，微软雅黑11px
-    QString pathEditStyle =
-        "QTextEdit {"
-        "  border: 1px solid #DCDCDC;"
-        "  border-radius: 4px;"
-        "  padding: 2px 2px;"
-        "  background: #fafafa;"
-        "  font-family: 'Microsoft YaHei';"
-        "  font-size: 11px;"
-        "  color: #333333;"
-        "}"
-        "QTextEdit:focus {"
-        "  border: 1px solid #4a90d9;"
-        "  background: #ffffff;"
-        "}"
-        ;
-    m_scanTsPathEdit->setStyleSheet(pathEditStyle);
-    m_genQmPathEdit->setStyleSheet(pathEditStyle);
-
-    // 导入路径按钮样式：与生成Excel表格按钮（蓝色主题）一样
-    QString importPathBtnStyle =
-        "QPushButton {"
-        "  border: 1px solid #0099FF;"
-        "  border-radius: 4px;"
-        "  padding: 5px 16px;"
-        "  min-height: 26px;"
-        "  background: #E6F4FF;"
-        "  color: #0099FF;"
-        "  font-weight: bold;"
-        "}"
-        "QPushButton:hover {"
-        "  background: #0099FF;"
-        "  color: #ffffff;"
-        "}"
-        "QPushButton:pressed {"
-        "  background: #0077CC;"
-        "  color: #ffffff;"
-        "}"
-        ;
-    m_scanTsLookBtn->setStyleSheet(importPathBtnStyle);
-    m_genQmLookBtn->setStyleSheet(importPathBtnStyle);
-
-    // 扫描项目文件按钮：与译文写入Ts文件按钮（红色主题）一样
-    QString actionBtnStyle =
-        "QPushButton {"
-        "  border: 1px solid #FF4A4A;"
-        "  border-radius: 4px;"
-        "  padding: 5px 16px;"
-        "  min-height: 26px;"
-        "  background: #FFF0F0;"
-        "  color: #FF4A4A;"
-        "  font-weight: bold;"
-        "}"
-        "QPushButton:hover {"
-        "  background: #FF4A4A;"
-        "  color: #ffffff;"
-        "}"
-        "QPushButton:pressed {"
-        "  background: #CC3333;"
-        "  color: #ffffff;"
-        "}"
-        ;
-    m_scanTsBtn->setStyleSheet(actionBtnStyle);
-    m_genQmBtn->setStyleSheet(actionBtnStyle);
-
-    // ---- 有道翻译按钮样式 ----
-    // 与生成Excel表格按钮相同的蓝色主题
-    ui->translateBtn->setStyleSheet(
-        "QPushButton {"
-        "  border: 1px solid #0099FF;"
-        "  border-radius: 4px;"
-        "  padding: 5px 16px;"
-        "  min-height: 26px;"
-        "  background: #E6F4FF;"
-        "  color: #0099FF;"
-        "  font-weight: bold;"
-        "}"
-        "QPushButton:hover {"
-        "  background: #0099FF;"
-        "  color: #ffffff;"
-        "}"
-        "QPushButton:pressed {"
-        "  background: #0077CC;"
-        "  color: #ffffff;"
-        "}"
-    );
-
-    // ---- 浏览按钮样式 ----
-    // 蓝色背景白色文字，统一样式
+    // ---- 2. 功能按钮样式 ----
+    // 导入Ts按钮：暖黄色主题
+    QString importTsBtnStyle =
+        "QPushButton { border: 1px solid #FFEEC2; border-radius: 4px; padding: 4px 6px;"
+        "  min-height: 26px; background: #FFF8E8; color: #B8860B; font-weight: bold; }"
+        "QPushButton:hover { background: #FFEEC2; color: #8B6914; }"
+        "QPushButton:pressed { background: #FFE0A0; color: #8B6914; }";
+    // 蓝色主题（生成Excel/导入路径/有道翻译/清除缓存/批量导入/scanUpdate 共用）
+    QString blueBtnStyle =
+        "QPushButton { border: 1px solid #0099FF; border-radius: 4px; padding: 4px 6px;"
+        "  min-height: 26px; background: #E6F4FF; color: #0099FF; font-weight: bold; }"
+        "QPushButton:hover { background: #0099FF; color: #ffffff; }"
+        "QPushButton:pressed { background: #0077CC; color: #ffffff; }";
+    // 红色主题（译文写入/扫描项目/生成Qm/批量写入/writeTsGenQm 共用）
+    QString redBtnStyle =
+        "QPushButton { border: 1px solid #FF4A4A; border-radius: 4px; padding: 4px 6px;"
+        "  min-height: 26px; background: #FFF0F0; color: #FF4A4A; font-weight: bold; }"
+        "QPushButton:hover { background: #FF4A4A; color: #ffffff; }"
+        "QPushButton:pressed { background: #CC3333; color: #ffffff; }";
+    // 浏览按钮：蓝色背景白色文字
     QString browseBtnStyle =
-        "QPushButton {"
-        "  border: 1px solid #0099FF;"
-        "  border-radius: 4px;"
-        "  padding: 5px 10px;"
-        "  min-height: 36px;"
-        "  background: #0099FF;"
-        "  color: #ffffff;"
-        "  font-weight: bold;"
-        "}"
-        "QPushButton:hover {"
-        "  background: #0088DD;"
-        "}"
-        "QPushButton:pressed {"
-        "  background: #0077BB;"
-        "}"
-        ;
-    ui->tsLookBtn->setStyleSheet(browseBtnStyle);
-    ui->excelLookBtn->setStyleSheet(browseBtnStyle);
-    ui->tsDirLookBtn->setStyleSheet(browseBtnStyle);
-    ui->excelDirBtn->setStyleSheet(browseBtnStyle);
+        "QPushButton { border: 1px solid #0099FF; border-radius: 4px; padding: 6px 4px;"
+        "  min-height: 36px; background: #0099FF; color: #ffffff; font-weight: bold; }"
+        "QPushButton:hover { background: #0088DD; }"
+        "QPushButton:pressed { background: #0077BB; }";
+    // AI翻译按钮：浅蓝 + checked灰色
+    QString aiTranslateBtnStyle =
+        "QPushButton { border: 1px solid #62C0FF; border-radius: 4px; padding: 4px 6px;"
+        "  min-height: 26px; background: #EAF6FF; color: #62C0FF; font-weight: bold; }"
+        "QPushButton:hover { background: #62C0FF; color: #ffffff; }"
+        "QPushButton:pressed { background: #4AA8E8; color: #ffffff; }"
+        "QPushButton:checked { border: 1px solid #DCDCDC; background: #FFFFFF; color: #DCDCDC; }"
+        "QPushButton:checked:hover { background: #f5f5f5; color: #999999; }";
+    // 快捷模式按钮：深蓝无边框
+    QString quickModeBtnStyle =
+        "QPushButton { background: #3B82F6; color: #FFFFFF; border: none; border-radius: 4px;"
+        "  font-family: 'Microsoft YaHei'; font-size: 14px; font-weight: bold; padding: 4px 6px; }"
+        "QPushButton:hover { background: #2563EB; }"
+        "QPushButton:pressed { background: #1D4ED8; }";
 
-    // ---- 按钮宽度设置 ----
-    // 单文件模块按钮宽度150px，浏览按钮宽度150px
-    ui->tsImportBtn->setFixedWidth(250);
-    ui->generateBtn->setFixedWidth(250);
-    ui->tsUpdateBtn->setFixedWidth(250);
-    ui->tsLookBtn->setFixedWidth(150);
-    ui->excelLookBtn->setFixedWidth(150);
-    ui->tsDirLookBtn->setFixedWidth(150);
-    ui->excelDirBtn->setFixedWidth(150);
+    // ---- 3. 右侧面板样式 ----
+    // 路径输入框：灰色边框，微软雅黑11px
+    QString pathEditStyle =
+        "QTextEdit { border: 1px solid #DCDCDC; border-radius: 4px; padding: 2px 2px;"
+        "  background: #fafafa; font-family: 'Microsoft YaHei'; font-size: 11px; color: #333333; }"
+        "QTextEdit:focus { border: 1px solid #4a90d9; background: #ffffff; }";
+    // 提示标签：红色警告 / 灰色说明
+    QString redTipLabelStyle = "QLabel { color: #FF4A4A; font-family: 'Microsoft YaHei'; font-size: 12px; }";
+    QString grayTipLabelStyle = "QLabel { color: #6D7682; font-family: 'Microsoft YaHei'; font-size: 12px; }";
 
-    // 批量模块按钮：继承单文件按钮样式，宽度225px，高度36px
-    ui->generateBtn_2->setStyleSheet(ui->generateBtn->styleSheet());
-    ui->tsUpdateBtn_2->setStyleSheet(ui->tsUpdateBtn->styleSheet());
-    ui->generateBtn_2->setFixedWidth(250);
-    ui->generateBtn_2->setFixedHeight(36);
-    ui->tsUpdateBtn_2->setFixedWidth(250);
-    ui->tsUpdateBtn_2->setFixedHeight(36);
+    // ---- 4. 进度/遮罩样式 ----
+    QString progressLabelStyle =
+        "QLabel { color: #FFFFFF; font-size: 18px; font-weight: bold;"
+        "  font-family: 'Microsoft YaHei'; background: transparent; }";
+    QString overlayStyle = "background: rgba(0, 0, 0, 120);";
 
-    // 新增批量按钮样式
-    ui->scanUpdateBtn->setStyleSheet(ui->generateBtn->styleSheet());
-    ui->scanUpdateBtn->setFixedWidth(250);
-    ui->scanUpdateBtn->setFixedHeight(36);
-    ui->writeTsGenQmBtn->setStyleSheet(ui->tsUpdateBtn->styleSheet());
-    ui->writeTsGenQmBtn->setFixedWidth(250);
-    ui->writeTsGenQmBtn->setFixedHeight(36);
-
-    // 快捷模式按钮样式
-    ui->quickModeBtn->setStyleSheet(
-        "QPushButton {"
-        "  background: #3B82F6;"
-        "  color: #FFFFFF;"
-        "  border: none;"
-        "  border-radius: 6px;"
-        "  font-family: 'Microsoft YaHei';"
-        "  font-size: 14px;"
-        "  font-weight: bold;"
-        "  padding: 4px 16px;"
-        "}"
-        "QPushButton:hover {"
-        "  background: #2563EB;"
-        "}"
-        "QPushButton:pressed {"
-        "  background: #1D4ED8;"
-        "}"
-    );
-    ui->quickModeBtn->setFixedWidth(250);
-    ui->quickModeBtn->setFixedHeight(36);
-
-    // 单语言快捷模式按钮样式（与多语言一致）
-    m_singleQuickModeBtn->setStyleSheet(ui->quickModeBtn->styleSheet());
-    m_singleMergeStep12Btn->setStyleSheet(ui->generateBtn->styleSheet());
-    m_singleMergeStep34Btn->setStyleSheet(ui->tsUpdateBtn->styleSheet());
+    // ================================================================
+    //  全局样式表：先设置，避免覆盖后续控件特定样式
+    // ================================================================
 
     // ---- 生成图标资源 ----
-    // SpinBox加减号图标和ComboBox下拉箭头图标
     QString tempDir = QDir::tempPath().replace("\\", "/");
 
     QPixmap plusPixmap(16, 16);
@@ -1724,143 +1455,115 @@ void MainWindow::applyStyles()
     arrowPainter.drawLine(8, 4, 13, 10);
     arrowPixmap.save(tempDir + "/combobox_arrow.png", "PNG");
 
-    // ---- 全局样式表 ----
-    // 包含：字体、窗口圆角边框、GroupBox、输入框、按钮、下拉框、Tab、状态栏等
     setStyleSheet(QString(
-        "* {"
-        "  font-family: 'Microsoft YaHei';"
-        "  font-size: 14px;"
-        "}"
-        "QMainWindow {"
-        "  background: #ffffff;"
-        "  border: 1px solid #b0b0b0;"
-        "  border-radius: 12px;"
-        "}"
-        "QGroupBox {"
-        "  font-weight: bold;"
-        "  font-size: 16px;"
-        "  border: 1px solid #d0d0d0;"
-        "  border-radius: 6px;"
-        "  margin-top: 10px;"
-        "  padding-top: 14px;"
-        "}"
-        "QGroupBox::title {"
-        "  subcontrol-origin: margin;"
-        "  subcontrol-position: top left;"
-        "  left: 24px;"
-        "  padding: 0 4px;"
-        "  font-size: 16px;"
-        "}"
-        "QLineEdit {"
-        "  border: 1px solid #c0c0c0;"
-        "  border-radius: 4px;"
-        "  padding: 2px 8px;"
-        "  min-height: 36px;"
-        "  background: #fafafa;"
-        "}"
-        "QLineEdit:focus {"
-        "  border: 1px solid #4a90d9;"
-        "  background: #ffffff;"
-        "}"
-        "QPushButton {"
-        "  border: 1px solid #b0b0b0;"
-        "  border-radius: 4px;"
-        "  padding: 2px 16px;"
-        "  min-height: 26px;"
-        "  background: #f5f5f5;"
-        "}"
-        "QPushButton:hover {"
-        "  background: #e8e8e8;"
-        "  border: 1px solid #909090;"
-        "}"
-        "QPushButton:pressed {"
-        "  background: #d8d8d8;"
-        "}"
-        "QComboBox {"
-        "  border: 1px solid #c0c0c0;"
-        "  border-radius: 4px;"
-        "  padding: 2px 2px;"
-        "  min-height: 26px;"
-        "  min-width: 68;"
-        "  background: #fafafa;"
-        "}"
-        "QComboBox:hover {"
-        "  border: 1px solid #909090;"
-        "}"
-        "QComboBox::drop-down {"
-        "  subcontrol-origin: padding;"
-        "  subcontrol-position: top right;"
-        "  width: 20px;"
-        "  border: none;"
-        "  border-left: 1px solid #d0d0d0;"
-        "}"
-        "QComboBox::down-arrow {"
-        "  image: url(%1/combobox_arrow.png);"
-        "}"
-        "QComboBox QAbstractItemView {"
-        "  border: 1px solid #c0c0c0;"
-        "  border-radius: 4px;"
-        "  background: #ffffff;"
-        "  selection-background-color: #4a90d9;"
-        "  selection-color: #ffffff;"
-        "  outline: none;"
-        "  padding: 2px;"
-        "}"
-        "QComboBox QAbstractItemView::item {"
-        "  min-height: 28px;"
-        "  color: #4a90d9;"
-        "  padding: 0px;"
-        "}"
-        "QComboBox QAbstractItemView::item:hover {"
-        "  background: #e0ecf7;"
-        "  color: #333333;"
-        "}"
-        "QComboBox QAbstractItemView::item:selected {"
-        "  background: #4a90d9;"
-        "  color: #ffffff;"
-        "}"
-        "QLabel {"
-        "  min-height: 30px;"
-        "}"
-        "QTabWidget::pane {"
-        "  border: 1px solid #d0d0d0;"
-        "  border-radius: 4px;"
-        "  background: #ffffff;"
-        "}"
-        "QTabWidget::tab-bar {"
-        "  alignment: center;"
-        "}"
-        "QTabBar::tab {"
-        "  background: #ffffff;"
-        "  border: 1px solid #DCDCDC;"
-        "  border-bottom: none;"
-        "  border-top-left-radius: 4px;"
-        "  border-top-right-radius: 4px;"
-        "  padding: 4px 40px;"
-        "  min-height: 32px;"
-        "  min-width: 120px;"
-        "  margin-right: 0px;"
-        "  color: #6D7682;"
-        "  font-size: 16px;"
-        "}"
-        "QTabBar::tab:selected {"
-        "  background: #0099FF;"
-        "  color: #ffffff;"
-        "  border: 1px solid #0099FF;"
-        "  border-bottom: none;"
-        "  font-weight: bold;"
-        "}"
-        "QTabBar::tab:!selected:hover {"
-        "  background: #E6F4FF;"
-        "  color: #0099FF;"
-        "  border: 1px solid #0099FF;"
-        "  border-bottom: none;"
-        "}"
-        "QStatusBar {"
-        "  color: #FF0000;"
-        "  background: transparent;"
-        "}"
+        "* { font-family: 'Microsoft YaHei'; font-size: 14px; }"
+        "QMainWindow { background: #ffffff; border: 1px solid #b0b0b0; border-radius: 12px; }"
+        "QGroupBox { font-weight: bold; font-size: 16px; border: 1px solid #d0d0d0;"
+        "  border-radius: 6px; margin-top: 10px; padding-top: 14px; }"
+        "QGroupBox::title { subcontrol-origin: margin; subcontrol-position: top left;"
+        "  left: 24px; padding: 0 4px; font-size: 16px; }"
+        "QLineEdit { border: 1px solid #c0c0c0; border-radius: 4px; padding: 2px 8px;"
+        "  min-height: 36px; background: #fafafa; }"
+        "QLineEdit:focus { border: 1px solid #4a90d9; background: #ffffff; }"
+        "QPushButton { border: 1px solid #b0b0b0; border-radius: 4px; padding: 2px 16px;"
+        "  min-height: 26px; background: #f5f5f5; }"
+        "QPushButton:hover { background: #e8e8e8; border: 1px solid #909090; }"
+        "QPushButton:pressed { background: #d8d8d8; }"
+        "QComboBox { border: 1px solid #c0c0c0; border-radius: 4px; padding: 2px 2px;"
+        "  min-height: 26px; min-width: 68; background: #fafafa; }"
+        "QComboBox:hover { border: 1px solid #909090; }"
+        "QComboBox::drop-down { subcontrol-origin: padding; subcontrol-position: top right;"
+        "  width: 20px; border: none; border-left: 1px solid #d0d0d0; }"
+        "QComboBox::down-arrow { image: url(%1/combobox_arrow.png); }"
+        "QComboBox QAbstractItemView { border: 1px solid #c0c0c0; border-radius: 4px;"
+        "  background: #ffffff; selection-background-color: #4a90d9;"
+        "  selection-color: #ffffff; outline: none; padding: 2px; }"
+        "QComboBox QAbstractItemView::item { min-height: 28px; color: #4a90d9; padding: 0px; }"
+        "QComboBox QAbstractItemView::item:hover { background: #e0ecf7; color: #333333; }"
+        "QComboBox QAbstractItemView::item:selected { background: #4a90d9; color: #ffffff; }"
+        "QLabel { min-height: 30px; }"
+        "QTabWidget::pane { border: 1px solid #d0d0d0; border-radius: 4px; background: #ffffff; }"
+        "QTabWidget::tab-bar { alignment: center; }"
+        "QTabBar::tab { background: #ffffff; border: 1px solid #DCDCDC; border-bottom: none;"
+        "  border-top-left-radius: 4px; border-top-right-radius: 4px; padding: 4px 40px;"
+        "  min-height: 32px; min-width: 120px; margin-right: 0px; color: #6D7682; font-size: 16px; }"
+        "QTabBar::tab:selected { background: #0099FF; color: #ffffff; border: 1px solid #0099FF;"
+        "  border-bottom: none; font-weight: bold; }"
+        "QTabBar::tab:!selected:hover { background: #E6F4FF; color: #0099FF;"
+        "  border: 1px solid #0099FF; border-bottom: none; }"
+        "QStatusBar { color: #FF0000; background: transparent; }"
     ).arg(tempDir));
+
+    // ================================================================
+    //  控件特定样式应用区（在全局样式表之后设置，确保覆盖）
+    // ================================================================
+
+    // ---- 标题栏 ----
+    m_titleBarWidget->setStyleSheet(titleBarBgStyle);
+    QLabel *titleLabel = m_titleBarWidget->findChild<QLabel*>();
+    if (titleLabel) titleLabel->setStyleSheet(titleTextStyle);
+    QList<QPushButton*> titleBtns = m_titleBarWidget->findChildren<QPushButton*>();
+    for (auto &btn : titleBtns) btn->setStyleSheet(titleBtnStyle);
+    QPushButton *clearCacheBtnWidget = m_titleBarWidget->findChild<QPushButton*>("clearCacheBtn");
+    if (clearCacheBtnWidget) clearCacheBtnWidget->setStyleSheet(blueBtnStyle);
+
+    // ---- AI翻译按钮 ----
+    m_aiTranslateBtn->setStyleSheet(aiTranslateBtnStyle);
+
+    // ---- 功能按钮 ----
+    ui->tsImportBtn->setStyleSheet(importTsBtnStyle);
+    ui->generateBtn->setStyleSheet(blueBtnStyle);
+    ui->tsUpdateBtn->setStyleSheet(redBtnStyle);
+    ui->translateBtn->setStyleSheet(blueBtnStyle);
+
+    // ---- 浏览按钮 ----
+    ui->tsLookBtn->setStyleSheet(browseBtnStyle);
+    ui->excelLookBtn->setStyleSheet(browseBtnStyle);
+    ui->tsDirLookBtn->setStyleSheet(browseBtnStyle);
+    ui->excelDirBtn->setStyleSheet(browseBtnStyle);
+
+    // ---- 右侧面板 ----
+    m_scanTsPathEdit->setStyleSheet(pathEditStyle);
+    m_genQmPathEdit->setStyleSheet(pathEditStyle);
+    m_scanTsLookBtn->setStyleSheet(blueBtnStyle);
+    m_genQmLookBtn->setStyleSheet(blueBtnStyle);
+    m_scanTsBtn->setStyleSheet(redBtnStyle);
+    m_genQmBtn->setStyleSheet(redBtnStyle);
+    m_scanTsTipLabel->setStyleSheet(redTipLabelStyle);
+    m_scanTsTipLabel1->setStyleSheet(grayTipLabelStyle);
+    m_genQmTipLabel->setStyleSheet(redTipLabelStyle);
+    m_genQmTipLabel1->setStyleSheet(grayTipLabelStyle);
+
+    // ---- 进度/遮罩 ----
+    m_progressLabel->setStyleSheet(progressLabelStyle);
+    m_overlayWidget->setStyleSheet(overlayStyle);
+
+    // ---- 按钮尺寸 ----
+    ui->tsImportBtn->setFixedWidth(250);
+    ui->generateBtn->setFixedWidth(250);
+    ui->tsUpdateBtn->setFixedWidth(250);
+    ui->tsLookBtn->setFixedWidth(150);
+    ui->excelLookBtn->setFixedWidth(150);
+    ui->tsDirLookBtn->setFixedWidth(150);
+    ui->excelDirBtn->setFixedWidth(150);
+    ui->generateBtn_2->setStyleSheet(blueBtnStyle);
+    ui->generateBtn_2->setFixedWidth(250);
+    ui->generateBtn_2->setFixedHeight(36);
+    ui->tsUpdateBtn_2->setStyleSheet(redBtnStyle);
+    ui->tsUpdateBtn_2->setFixedWidth(250);
+    ui->tsUpdateBtn_2->setFixedHeight(36);
+    ui->scanUpdateBtn->setStyleSheet(blueBtnStyle);
+    ui->scanUpdateBtn->setFixedWidth(250);
+    ui->scanUpdateBtn->setFixedHeight(36);
+    ui->writeTsGenQmBtn->setStyleSheet(redBtnStyle);
+    ui->writeTsGenQmBtn->setFixedWidth(250);
+    ui->writeTsGenQmBtn->setFixedHeight(36);
+    ui->quickModeBtn->setStyleSheet(quickModeBtnStyle);
+    ui->quickModeBtn->setFixedWidth(250);
+    ui->quickModeBtn->setFixedHeight(36);
+    m_singleQuickModeBtn->setStyleSheet(quickModeBtnStyle);
+    m_singleMergeStep12Btn->setStyleSheet(blueBtnStyle);
+    m_singleMergeStep34Btn->setStyleSheet(redBtnStyle);
 
     // ---- SpinBox样式 ----
     // 翻译列SpinBox：带加减号图标
@@ -1933,4 +1636,119 @@ void MainWindow::applyStyles()
     ui->comboBox->lineEdit()->setReadOnly(true);
     ui->comboBox->lineEdit()->setAlignment(Qt::AlignCenter);
     ui->comboBox->lineEdit()->setStyleSheet("QLineEdit { border: none; background: transparent; }");
+}
+
+QLabel* MainWindow::createFlagLabel(int width, int height)
+{
+    // 第1步：绘制标准平面国旗
+    int flatW = width;
+    int flatH = (int)(height * 0.85);
+
+    QPixmap flatPixmap(flatW, flatH);
+    flatPixmap.fill(QColor("#DE2910"));
+    QPainter flatPainter(&flatPixmap);
+    flatPainter.setRenderHint(QPainter::Antialiasing);
+    flatPainter.setBrush(QColor("#FFDE00"));
+    flatPainter.setPen(Qt::NoPen);
+
+    auto drawStar = [&flatPainter](double cx, double cy, double r, double startAngleDeg) {
+        const double innerR = r * 0.382;
+        QPolygonF star;
+        for (int i = 0; i < 5; ++i) {
+            double outerAngle = qDegreesToRadians(startAngleDeg + i * 72.0);
+            star << QPointF(cx + r * cos(outerAngle), cy + r * sin(outerAngle));
+            double innerAngle = qDegreesToRadians(startAngleDeg + i * 72.0 + 36.0);
+            star << QPointF(cx + innerR * cos(innerAngle), cy + innerR * sin(innerAngle));
+        }
+        flatPainter.drawPolygon(star);
+    };
+
+    double gx = flatW / 30.0, gy = flatH / 20.0;
+    drawStar(5*gx, 5*gy, 3*gy, -90);
+    auto angleToBig = [&](double sx, double sy) -> double {
+        return qRadiansToDegrees(atan2(5*gy - sy, 5*gx - sx));
+    };
+    drawStar(10*gx, 2*gy, 1*gy, angleToBig(10*gx, 2*gy));
+    drawStar(12*gx, 4*gy, 1*gy, angleToBig(12*gx, 4*gy));
+    drawStar(12*gx, 7*gy, 1*gy, angleToBig(12*gx, 7*gy));
+    drawStar(10*gx, 9*gy, 1*gy, angleToBig(10*gx, 9*gy));
+    flatPainter.end();
+
+    // 第2步：对平面国旗做波浪扭曲，模拟随风飘扬
+    // 效果：左下角固定（旗杆），向右上角飘扬，平滑波浪
+    QImage flatImage = flatPixmap.toImage();
+    QImage waveImage(width, height, QImage::Format_ARGB32);
+    waveImage.fill(Qt::transparent);
+
+    // 旗杆在左下角，旗帜向右上角飘扬
+    // 对角线方向：左下(0,height) -> 右上(width,0)
+    // 对角线单位向量: (width, -height) / diagLen
+    // 垂直于对角线的单位向量（指向飘扬方向）: (height, width) / diagLen
+    double diagLen = sqrt((double)(width * width + height * height));
+    double perpX = height / diagLen;   // 垂直方向x分量
+    double perpY = width / diagLen;    // 垂直方向y分量
+
+    // 波浪参数
+    double amplitude = flatH * 0.18;   // 振幅加大，飘扬效果明显
+    double waveFreq = 1.2;             // 约1.2个波长，平滑
+
+    for (int dstX = 0; dstX < width; ++dstX) {
+        for (int dstY = 0; dstY < height; ++dstY) {
+            // 计算沿对角线方向的距离（从左下角出发）
+            // 左下角(0,height)到当前点的向量在(direction)上的投影
+            double dx = dstX;
+            double dy = height - dstY;  // 从左下角看，y向上为正
+            double alongDiag = (dx * width + dy * height) / diagLen;
+            double t = alongDiag / diagLen;  // 0=左下角固定, 1=右上角最远
+
+            if (t < 0) continue;
+            // 波浪强度沿对角线方向平滑递增
+            double waveFactor = pow(t, 1.2) * 1.0;
+            // 波浪偏移：垂直于对角线方向
+            double waveOffset = amplitude * sin(waveFreq * M_PI * t) * waveFactor;
+            // 波浪斜率用于明暗
+            double waveSlope = amplitude * waveFreq * M_PI * cos(waveFreq * M_PI * t) * waveFactor;
+            int brightness = qBound(-30, (int)(waveSlope * 100), 30);
+
+            // 反向映射：目标像素减去偏移得到源像素
+            int srcX = dstX - (int)(waveOffset * perpX);
+            int srcY = dstY - (int)(waveOffset * perpY);
+            if (srcX < 0 || srcX >= flatW || srcY < 0 || srcY >= flatH) continue;
+            QRgb pixel = flatImage.pixel(srcX, srcY);
+            int r = qBound(0, qRed(pixel) + brightness, 255);
+            int g = qBound(0, qGreen(pixel) + brightness, 255);
+            int b = qBound(0, qBlue(pixel) + brightness, 255);
+            int a = qAlpha(pixel);
+            waveImage.setPixel(dstX, dstY, qRgba(r, g, b, a));
+        }
+    }
+
+    QLabel *flagLabel = new QLabel();
+    flagLabel->setAlignment(Qt::AlignCenter);
+    flagLabel->setPixmap(QPixmap::fromImage(waveImage));
+    flagLabel->setScaledContents(false);
+    flagLabel->setMaximumHeight(height);
+    return flagLabel;
+}
+
+QLabel* MainWindow::createPatriotLabel()
+{
+    QLabel *patriotLabel = new QLabel();
+    patriotLabel->setAlignment(Qt::AlignCenter);
+    patriotLabel->setWordWrap(true);
+    patriotLabel->setMinimumWidth(80);
+    patriotLabel->setMinimumHeight(60);
+    patriotLabel->setStyleSheet("QLabel { min-height: 0px; }");
+    patriotLabel->setText(QString(
+        "<span style='font-size:28px; font-weight:bold; color:#FFDE00;'>"
+        "\u2605 \u2605 \u2605 \u2605 \u2605"
+        "</span>"
+        "<span style='font-size:28px; font-weight:bold; color:#DE2910; font-family:\"Microsoft YaHei\";'>"
+        " 我爱中国! "
+        "</span>"
+        "<span style='font-size:28px; font-weight:bold; color:#FFDE00;'>"
+        "\u2605 \u2605 \u2605 \u2605 \u2605"
+        "</span>"
+    ));
+    return patriotLabel;
 }
