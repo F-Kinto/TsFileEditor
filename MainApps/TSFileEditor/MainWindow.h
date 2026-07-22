@@ -51,10 +51,13 @@ private slots:
     void on_excelDirBtn_clicked();
     void on_generateBtn_2_clicked();
     void on_tsUpdateBtn_2_clicked();
+    void on_scanUpdateBtn_clicked();
+    void on_writeTsGenQmBtn_clicked();
     void on_scanTsBtn_clicked();
     void on_genQmBtn_clicked();
     void on_scanTsLookBtn_clicked();
     void on_genQmLookBtn_clicked();
+    void slotquickModeChange();
 
 private:
     Ui::MainWindow*         ui;
@@ -70,6 +73,8 @@ private:
     QMap<QString, int>      m_tsColumnMap;
 
     bool                    m_dragging;
+    bool                    m_opeMergeStepOne{false};
+    bool                    m_opeMergeStepTwo{false};
     QPoint                  m_dragPosition;
 
     QLabel*                 m_toastLabel;
@@ -86,6 +91,13 @@ private:
     QPushButton*            m_genQmLookBtn;
     QPushButton*            m_scanTsBtn;
     QPushButton*            m_genQmBtn;
+    QPushButton*            m_quickModeBtn;
+    QPushButton*            m_singleQuickModeBtn;
+    QPushButton*            m_singleMergeStep12Btn;
+    QPushButton*            m_singleMergeStep34Btn;
+    QLabel*                 m_genQmTipLabel1;
+    QLabel*                 m_scanTsTipLabel1;
+    bool                    m_quickMode{false};
 
     void readConfig();
     void saveConfig();

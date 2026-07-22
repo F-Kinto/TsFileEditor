@@ -138,21 +138,21 @@
 	 <item>
 	  <widget class="QPushButton" name="tsImportBtn">
 	   <property name="text">
-	    <string>导入Ts文件</string>
+	    <string>Step2-1:导入Ts文件</string>
 	   </property>
 	  </widget>
 	 </item>
 	 <item>
 	  <widget class="QPushButton" name="generateBtn">
 	   <property name="text">
-	    <string>生成Excel表格</string>
+	    <string>Step2-2:生成Excel表格</string>
 	   </property>
 	  </widget>
 	 </item>
 	 <item>
 	  <widget class="QPushButton" name="tsUpdateBtn">
 	   <property name="text">
-	    <string>译文写入Ts文件</string>
+	    <string>Step3:译文写入Ts文件</string>
 	   </property>
 	  </widget>
 	 </item>
@@ -233,18 +233,77 @@
 	  <set>Qt::AlignHCenter</set>
 	 </property>
 	 <item>
-	  <widget class="QPushButton" name="generateBtn_2">
-	   <property name="text">
-	    <string>Ts批量导入至Excel</string>
-	   </property>
-	  </widget>
+	  <layout class="QHBoxLayout" name="horizontalLayout_quickMode">
+	   <item>
+	    <spacer name="horizontalSpacer_quickMode_left">
+	     <property name="orientation">
+	      <enum>Qt::Horizontal</enum>
+	     </property>
+	     <property name="sizeHint" stdset="0">
+	      <size>
+	       <width>40</width>
+	       <height>20</height>
+	      </size>
+	     </property>
+	    </spacer>
+	   </item>
+	   <item>
+	    <widget class="QPushButton" name="quickModeBtn">
+	     <property name="text">
+	      <string>切换为快捷模式</string>
+	     </property>
+	    </widget>
+	   </item>
+	   <item>
+	    <spacer name="horizontalSpacer_quickMode_right">
+	     <property name="orientation">
+	      <enum>Qt::Horizontal</enum>
+	     </property>
+	     <property name="sizeHint" stdset="0">
+	      <size>
+	       <width>40</width>
+	       <height>20</height>
+	      </size>
+	     </property>
+	    </spacer>
+	   </item>
+	  </layout>
 	 </item>
 	 <item>
-	  <widget class="QPushButton" name="tsUpdateBtn_2">
-	   <property name="text">
-	    <string>批量译文写入Ts文件</string>
-	   </property>
-	  </widget>
+	  <layout class="QHBoxLayout" name="horizontalLayout_batch_row1">
+	   <item>
+	    <widget class="QPushButton" name="generateBtn_2">
+	     <property name="text">
+	      <string>Step2:Ts批量导入至Excel</string>
+	     </property>
+	    </widget>
+	   </item>
+	   <item>
+	    <widget class="QPushButton" name="scanUpdateBtn">
+	     <property name="text">
+	      <string>Step1,2:扫描更新Ts Excel</string>
+	     </property>
+	    </widget>
+	   </item>
+	  </layout>
+	 </item>
+	 <item>
+	  <layout class="QHBoxLayout" name="horizontalLayout_batch_row2">
+	   <item>
+	    <widget class="QPushButton" name="tsUpdateBtn_2">
+	     <property name="text">
+	      <string>Step3:批量译文写入Ts文件</string>
+	     </property>
+	    </widget>
+	   </item>
+	   <item>
+	    <widget class="QPushButton" name="writeTsGenQmBtn">
+	     <property name="text">
+	      <string>Step3,4:译文写入Ts&amp;生成Qm</string>
+	     </property>
+	    </widget>
+	   </item>
+	  </layout>
 	 </item>
 	</layout>
        </item>

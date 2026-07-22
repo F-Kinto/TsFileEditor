@@ -89,10 +89,64 @@ MainWindow::MainWindow(QWidget *parent) :
     // 创建AI翻译按钮
     m_aiTranslateBtn = new QPushButton(tr("使用有道AI翻译"));
     m_aiTranslateBtn->setCheckable(true);
-    m_aiTranslateBtn->setFixedWidth(150);
+    m_aiTranslateBtn->setFixedWidth(250);
+
+    // 创建单语言快捷模式按钮
+    m_singleQuickModeBtn = new QPushButton(tr("切换为快捷模式"));
+    m_singleQuickModeBtn->setFixedSize(250, 32);
+    connect(m_singleQuickModeBtn, &QPushButton::clicked, this, &MainWindow::slotquickModeChange);
+
+    // 创建单语言合并按钮（快捷模式下显示）
+    m_singleMergeStep12Btn = new QPushButton(tr("Step2-1,2: 扫描导入Ts 生成Excel"));
+    m_singleMergeStep12Btn->setFixedSize(250, 32);
+    m_singleMergeStep12Btn->setVisible(false);
+    connect(m_singleMergeStep12Btn, &QPushButton::clicked, this, [this]() {
+        QString scriptPath = m_scanTsPathEdit->toPlainText();
+        if (scriptPath.isEmpty()) {
+            onReceiveMsg("请先导入扫描Ts脚本路径");
+            return;
+        }
+        QFileInfo scriptInfo(scriptPath);
+        if (!scriptInfo.exists()) {
+            onReceiveMsg("脚本文件不存在: " + scriptPath);
+            return;
+        }
+        QFileInfo info(ui->tsPathEdit->text());
+        if (ui->tsPathEdit->text().isEmpty() || !info.isFile() || "ts" != info.suffix()){
+            onReceiveMsg("请输入正确的Ts文件路径");
+            return;
+        }
+        m_opeMergeStepOne = true;
+        on_scanTsBtn_clicked();
+    });
+
+    m_singleMergeStep34Btn = new QPushButton(tr("Step3,4: 译文写入Ts 更新Qm"));
+    m_singleMergeStep34Btn->setFixedSize(250, 32);
+    m_singleMergeStep34Btn->setVisible(false);
+    connect(m_singleMergeStep34Btn, &QPushButton::clicked, this, [this]() {
+        if(ui->excelPathEdit->text().isEmpty() || ui->tsPathEdit->text().isEmpty()) {
+            onReceiveMsg("请输入正确的Excel文件路径");
+            return;
+        }
+        QString scriptPath = m_genQmPathEdit->toPlainText();
+        if (scriptPath.isEmpty()) {
+            onReceiveMsg("请先导入生成Qm脚本路径");
+            return;
+        }
+        QFileInfo scriptInfo(scriptPath);
+        if (!scriptInfo.exists()) {
+            onReceiveMsg("脚本文件不存在: " + scriptPath);
+            return;
+        }
+        m_opeMergeStepTwo = true;
+        on_tsUpdateBtn_clicked();
+    });
 
     QVBoxLayout *buttonsLayout = qobject_cast<QVBoxLayout*>(oldButtonsItem ? oldButtonsItem->layout() : nullptr);
     if (buttonsLayout) {
+        buttonsLayout->insertWidget(0, m_singleQuickModeBtn, 0, Qt::AlignHCenter);
+        buttonsLayout->addWidget(m_singleMergeStep12Btn, 0, Qt::AlignHCenter);
+        buttonsLayout->addWidget(m_singleMergeStep34Btn, 0, Qt::AlignHCenter);
         buttonsLayout->addWidget(m_aiTranslateBtn, 0, Qt::AlignHCenter);
     }
 
@@ -110,10 +164,6 @@ MainWindow::MainWindow(QWidget *parent) :
     bottomHLayout->addWidget(ui->groupBox_2, 67);
 
     ui->groupBox_2->setVisible(false);
-
-    // 底部布局包裹在75%居中布局中
-
-
 
     groupBoxLayout->addLayout(bottomHLayout);
     groupBoxLayout->addStretch();
@@ -174,13 +224,13 @@ MainWindow::MainWindow(QWidget *parent) :
     scanTsTipLabel->setWordWrap(true);
     scanTsTipLabel->setContentsMargins(8, 0, 8, 0);
     scanTsTipLabel->setStyleSheet("QLabel { color: #FF4A4A; font-family: 'Microsoft YaHei'; font-size: 12px; }");
-    QLabel *scanTsTipLabel1 = new QLabel(tr("请先导入扫描Ts脚本路径，再点击下方按钮扫描项目文件并更新Ts内容"));
-    scanTsTipLabel1->setWordWrap(true);
-    scanTsTipLabel1->setContentsMargins(8, 0, 8, 0);
-    scanTsTipLabel1->setStyleSheet("QLabel { color: #6D7682; font-family: 'Microsoft YaHei'; font-size: 12px; }");
+    m_scanTsTipLabel1 = new QLabel(tr("请先导入扫描Ts脚本路径，再点击下方按钮扫描项目文件并更新Ts内容"));
+    m_scanTsTipLabel1->setWordWrap(true);
+    m_scanTsTipLabel1->setContentsMargins(8, 0, 8, 0);
+    m_scanTsTipLabel1->setStyleSheet("QLabel { color: #6D7682; font-family: 'Microsoft YaHei'; font-size: 12px; }");
 
     m_scanTsPathEdit = new QTextEdit();
-    m_scanTsPathEdit->setPlaceholderText(tr("请导入更新Ts文件的脚本路径(script.bat)"));
+    m_scanTsPathEdit->setPlaceholderText(tr("请导入更新Ts文件的脚本路径(updateTsFile.bat)"));
     m_scanTsPathEdit->setReadOnly(true);
     m_scanTsPathEdit->setWordWrapMode(QTextOption::WrapAnywhere);
     m_scanTsPathEdit->setMaximumHeight(60);
@@ -205,13 +255,13 @@ MainWindow::MainWindow(QWidget *parent) :
     genQmTipLabel->setWordWrap(true);
     genQmTipLabel->setContentsMargins(8, 0, 8, 0);
     genQmTipLabel->setStyleSheet("QLabel { color: #FF4A4A; font-family: 'Microsoft YaHei'; font-size: 12px; }");
-    QLabel *genQmTipLabel1 = new QLabel(tr("请先导入生成Qm脚本路径，再点击下方按钮将Ts文件编译为Qm翻译文件"));
-    genQmTipLabel1->setWordWrap(true);
-    genQmTipLabel1->setContentsMargins(8, 0, 8, 0);
-    genQmTipLabel1->setStyleSheet("QLabel { color: #6D7682; font-family: 'Microsoft YaHei'; font-size: 12px; }");
+    m_genQmTipLabel1 = new QLabel(tr("请先导入生成Qm脚本路径，再点击下方按钮将Ts文件编译为Qm翻译文件"));
+    m_genQmTipLabel1->setWordWrap(true);
+    m_genQmTipLabel1->setContentsMargins(8, 0, 8, 0);
+    m_genQmTipLabel1->setStyleSheet("QLabel { color: #6D7682; font-family: 'Microsoft YaHei'; font-size: 12px; }");
 
     m_genQmPathEdit = new QTextEdit();
-    m_genQmPathEdit->setPlaceholderText(tr("请导入生成Qm文件的脚本路径(generateQmFile.bat)"));
+    m_genQmPathEdit->setPlaceholderText(tr("请导入生成Qm文件的脚本路径(updateQmFile.bat)"));
     m_genQmPathEdit->setReadOnly(true);
     m_genQmPathEdit->setWordWrapMode(QTextOption::WrapAnywhere);
     m_genQmPathEdit->setMaximumHeight(60);
@@ -232,23 +282,23 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(m_genQmBtn, &QPushButton::clicked, this, &MainWindow::on_genQmBtn_clicked);
 
     // 扫描Ts组：GroupBox封装，垂直布局，间距20px
-    QGroupBox *scanTsGroupBox = new QGroupBox(tr("扫描Ts文件"));
+    QGroupBox *scanTsGroupBox = new QGroupBox(tr("Step1:扫描Ts文件"));
     QVBoxLayout *scanTsGroupLayout = new QVBoxLayout(scanTsGroupBox);
     scanTsGroupLayout->setSpacing(10);
     scanTsGroupLayout->setContentsMargins(10, 8, 10, 8);
     scanTsGroupLayout->addLayout(scanTsRowLayout);
     scanTsGroupLayout->addStretch();
-    scanTsGroupLayout->addWidget(scanTsTipLabel1, 0, Qt::AlignHCenter);
+    scanTsGroupLayout->addWidget(m_scanTsTipLabel1, 0, Qt::AlignHCenter);
     scanTsGroupLayout->addWidget(m_scanTsBtn, 0, Qt::AlignHCenter);
 
     // 生成Qm组：GroupBox封装，垂直布局，间距20px
-    QGroupBox *genQmGroupBox = new QGroupBox(tr("生成Qm文件"));
+    QGroupBox *genQmGroupBox = new QGroupBox(tr("Step4:生成Qm文件"));
     QVBoxLayout *genQmGroupLayout = new QVBoxLayout(genQmGroupBox);
     genQmGroupLayout->setSpacing(10);
     genQmGroupLayout->setContentsMargins(10, 8, 10, 8);
     genQmGroupLayout->addLayout(genQmRowLayout);
     genQmGroupLayout->addStretch();
-    genQmGroupLayout->addWidget(genQmTipLabel1, 0, Qt::AlignHCenter);
+    genQmGroupLayout->addWidget(m_genQmTipLabel1, 0, Qt::AlignHCenter);
     genQmGroupLayout->addWidget(m_genQmBtn, 0, Qt::AlignHCenter);
 
     // 两个GroupBox各占一半高度
@@ -337,6 +387,12 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(m_pExcelWorker, &ExcelRW::error, this, &MainWindow::onReceiveMsg);
     connect(m_pTranslateWorker, &TranslateWorker::error, this, &MainWindow::onReceiveMsg);
 
+    // 快捷模式按钮手动连接（非 on_objectName_signal 格式，不会自动关联）
+    connect(ui->quickModeBtn, &QPushButton::clicked, this, &MainWindow::slotquickModeChange);
+    // 初始为普通模式：显示 generateBtn_2 和 tsUpdateBtn_2，隐藏 scanUpdateBtn 和 writeTsGenQmBtn
+    ui->scanUpdateBtn->setVisible(false);
+    ui->writeTsGenQmBtn->setVisible(false);
+
     readConfig();
 
     // Adaptive size: width = 0.5 * screen, height = enough for all content
@@ -410,6 +466,10 @@ void MainWindow::on_generateBtn_clicked()
 {
     bool re;
 
+    if(m_opeMergeStepOne){
+        m_opeMergeStepOne = false;
+    }
+
     m_pExcelWorker->SetTransColumn(ui->transSpinBox->value());
 
     //generate excel file
@@ -463,8 +523,12 @@ void MainWindow::on_tsUpdateBtn_clicked()
 
     if(re) {
         onReceiveMsg("译文成功写入Ts文件");
+        if(m_opeMergeStepTwo){
+            on_genQmBtn_clicked();
+        }
     } else {
         onReceiveMsg("译文写入失败");
+        m_opeMergeStepTwo = false;
     }
 
 }
@@ -518,14 +582,10 @@ void MainWindow::on_tsImportBtn_clicked()
 {
     bool re;
 
-    //import .ts file
-    if(ui->tsPathEdit->text().isEmpty()) {
-        on_tsLookBtn_clicked();
-    }
-
     QFileInfo info(ui->tsPathEdit->text());
-    if (!info.isFile() || "ts" != info.suffix()){
-        onReceiveMsg("导入失败, 请确认文件是否存在且是Ts文件");
+    if (ui->tsPathEdit->text().isEmpty() || !info.isFile() || "ts" != info.suffix()){
+        onReceiveMsg("请输入正确的Ts文件路径");
+        m_opeMergeStepOne = false;
         return;
     }
 
@@ -534,8 +594,12 @@ void MainWindow::on_tsImportBtn_clicked()
 
     if(re) {
         onReceiveMsg("Ts文件导入成功");
+        if(m_opeMergeStepOne){
+            on_generateBtn_clicked();
+        }
     } else {
         onReceiveMsg("Ts文件导入失败");
+        m_opeMergeStepOne = false;
     }
 }
 
@@ -630,6 +694,9 @@ void MainWindow::on_excelDirBtn_clicked()
 
 void MainWindow::on_generateBtn_2_clicked()
 {
+    if(m_opeMergeStepOne){
+        m_opeMergeStepOne = false;
+    }
     QFileInfo tsDirinfo(ui->tsDirEdit->text());
     if (!tsDirinfo.isDir()){
         onReceiveMsg("Ts目录为空");
@@ -765,6 +832,81 @@ void MainWindow::on_tsUpdateBtn_2_clicked()
     }
 
     showProgress(false, "所有Ts文件已翻译完成");
+    if(m_opeMergeStepTwo){
+        on_genQmBtn_clicked();
+    }
+}
+
+void MainWindow::on_scanUpdateBtn_clicked()
+{
+    // Step 1: Scan project and update Ts files (sync)
+    QString scriptPath = m_scanTsPathEdit->toPlainText();
+    if (scriptPath.isEmpty()) {
+        onReceiveMsg("请先导入扫描Ts脚本路径");
+        return;
+    }
+    QFileInfo scriptInfo(scriptPath);
+    if (!scriptInfo.exists()) {
+        onReceiveMsg("脚本文件不存在: " + scriptPath);
+        return;
+    }
+    QFileInfo tsDirinfo(ui->tsDirEdit->text());
+    if (!tsDirinfo.isDir()){
+        onReceiveMsg("Ts目录为空");
+        return;
+    }
+
+    QFileInfo excelinfo(ui->excelDirEdit->text());
+    if (!excelinfo.exists()){
+        onReceiveMsg("Excel文件路径不存在");
+        return;
+    }
+
+    // 合并扫描项目更新Ts和写入Excel操作
+    m_opeMergeStepOne = true;
+    on_scanTsBtn_clicked();
+}
+
+void MainWindow::on_writeTsGenQmBtn_clicked()
+{
+    // Step 1: Batch write translations to Ts files (sync)
+    // 合并译文写入Ts和生成QM文件
+    QFileInfo tsDirinfo(ui->tsDirEdit->text());
+    if (!tsDirinfo.isDir()){
+        onReceiveMsg("ts目录为空");
+        return;
+    }
+
+    QFileInfo excelDirinfo(ui->excelDirEdit->text());
+    if (!excelDirinfo.exists()){
+        onReceiveMsg("Excel文件路径不存在");
+        return;
+    }
+
+    QStringList filters;
+    filters << QString("*.ts");
+    QDir tsdir(ui->tsDirEdit->text());
+    tsdir.setFilter(QDir::Files | QDir::NoSymLinks);
+    tsdir.setNameFilters(filters);
+
+    if (tsdir.count() <= 0) {
+        onReceiveMsg("Ts目录下未发现Ts文件");
+        return;
+    }
+    QString scriptPath = m_genQmPathEdit->toPlainText();
+    if (scriptPath.isEmpty()) {
+        onReceiveMsg("请先导入生成Qm脚本路径");
+        return;
+    }
+    QFileInfo scriptInfo(scriptPath);
+    if (!scriptInfo.exists()) {
+        onReceiveMsg("脚本文件不存在: " + scriptPath);
+        return;
+    }
+    m_opeMergeStepTwo = true;
+    on_tsUpdateBtn_2_clicked();
+    // Step 2: Generate Qm files
+    //on_genQmBtn_clicked();
 }
 
 void MainWindow::on_scanTsLookBtn_clicked()
@@ -785,6 +927,52 @@ void MainWindow::on_genQmLookBtn_clicked()
         return;
     }
     m_genQmPathEdit->setPlainText(fileName);
+}
+
+void MainWindow::slotquickModeChange()
+{
+    m_quickMode = !m_quickMode;
+    if (m_quickMode) {
+        // 翻译多种语言 tab
+        ui->quickModeBtn->setText(tr("切换为普通模式"));
+        ui->scanUpdateBtn->setVisible(true);
+        ui->writeTsGenQmBtn->setVisible(true);
+        m_genQmBtn->setVisible(false);
+        m_scanTsBtn->setVisible(false);
+        m_genQmTipLabel1->setVisible(false);
+        m_scanTsTipLabel1->setVisible(false);
+        ui->generateBtn_2->setVisible(false);
+        ui->tsUpdateBtn_2->setVisible(false);
+
+        // 翻译一种语言 tab
+        m_singleQuickModeBtn->setText(tr("切换为普通模式"));
+        m_singleMergeStep12Btn->setVisible(true);
+        m_singleMergeStep34Btn->setVisible(true);
+        ui->tsImportBtn->setVisible(false);
+        ui->generateBtn->setVisible(false);
+        ui->tsUpdateBtn->setVisible(false);
+        m_aiTranslateBtn->setVisible(false);
+    } else {
+        // 翻译多种语言 tab
+        ui->quickModeBtn->setText(tr("切换为快捷模式"));
+        ui->scanUpdateBtn->setVisible(false);
+        ui->writeTsGenQmBtn->setVisible(false);
+        ui->generateBtn_2->setVisible(true);
+        ui->tsUpdateBtn_2->setVisible(true);
+        m_genQmTipLabel1->setVisible(true);
+        m_scanTsTipLabel1->setVisible(true);
+        m_genQmBtn->setVisible(true);
+        m_scanTsBtn->setVisible(true);
+
+        // 翻译一种语言 tab
+        m_singleQuickModeBtn->setText(tr("切换为快捷模式"));
+        m_singleMergeStep12Btn->setVisible(false);
+        m_singleMergeStep34Btn->setVisible(false);
+        ui->tsImportBtn->setVisible(true);
+        ui->generateBtn->setVisible(true);
+        ui->tsUpdateBtn->setVisible(true);
+        m_aiTranslateBtn->setVisible(true);
+    }
 }
 
 void MainWindow::on_scanTsBtn_clicked()
@@ -840,6 +1028,7 @@ void MainWindow::on_scanTsBtn_clicked()
                 m_genQmBtn->setEnabled(true);
                 // 弹出错误详情对话框，方便查错
                 showScriptError(tr("脚本执行失败"), *allOutput);
+                m_opeMergeStepOne = false;
                 process->kill();
                 process->deleteLater();
                 return;
@@ -850,6 +1039,14 @@ void MainWindow::on_scanTsBtn_clicked()
                 m_genQmBtn->setEnabled(true);
                 process->kill();
                 process->deleteLater();
+                if(m_opeMergeStepOne){
+                    if(m_tabWidget->currentIndex() == 0){
+                        on_generateBtn_2_clicked();
+                    }
+                    else{
+                        on_tsImportBtn_clicked();
+                    }
+                }
                 return;
             }
         }
@@ -883,6 +1080,9 @@ void MainWindow::on_scanTsBtn_clicked()
 
 void MainWindow::on_genQmBtn_clicked()
 {
+    if(m_opeMergeStepTwo){
+        m_opeMergeStepTwo = false;
+    }
     QString scriptPath = m_genQmPathEdit->toPlainText();
     if (scriptPath.isEmpty()) {
         onReceiveMsg("请先导入生成Qm脚本路径");
@@ -978,16 +1178,46 @@ void MainWindow::on_genQmBtn_clicked()
 void MainWindow::readConfig()
 {
     QString configPath = QApplication::applicationDirPath();
-#if __DEBUG
-    configPath.append("/../Config");
-#endif
     QSettings settings(configPath + "/config.ini", QSettings::IniFormat);
     settings.beginGroup("path");
-    ui->tsPathEdit->setText(settings.value("tsPath").toString());
-    ui->tsDirEdit->setText(settings.value("tsDir").toString());
+    if(settings.value("tsPath").toString().isEmpty()){
+        ui->tsPathEdit->setText("C:/QA_Working/Firmware/trunk/VmsTools_v2/VmsTools/translations/VmsTsFile/VmsTranslator_zh_CN.ts");
+    }
+    else{
+        ui->tsPathEdit->setText(settings.value("tsPath").toString());
+    }
+    if(settings.value("tsDir").toString().isEmpty()){
+        ui->tsDirEdit->setText("C:/QA_Working/Firmware/trunk/VmsTools_v2/VmsTools/translations/VmsTsFile");
+    }
+    else{
+        ui->tsDirEdit->setText(settings.value("tsDir").toString());
+    }
 
-    ui->excelPathEdit->setText(settings.value("excelPath").toString());
-    ui->excelDirEdit->setText(settings.value("excelPath2").toString());
+    if(settings.value("excelPath").toString().isEmpty()){
+        ui->excelPathEdit->setText("C:/Work/Kinto/TsFileEditor/tsFile/excel/VMSTools.xlsx");
+    }
+    else{
+        ui->excelPathEdit->setText(settings.value("excelPath").toString());
+    }
+    if(settings.value("excelPath2").toString().isEmpty()){
+        ui->excelDirEdit->setText("C:/Work/Kinto/TsFileEditor/tsFile/excel/VMSTools.xlsx");
+    }
+    else{
+        ui->excelDirEdit->setText(settings.value("excelPath2").toString());
+    }
+
+    if(settings.value("qmBatPath").toString().isEmpty()){
+        m_genQmPathEdit->setPlainText("C:/QA_Working/Firmware/trunk/VmsTools_v2/VmsTools/translations/updateQmFile.bat");
+    }
+    else{
+        m_genQmPathEdit->setPlainText(settings.value("qmBatPath").toString());
+    }
+    if(settings.value("tsBatPath").toString().isEmpty()){
+        m_scanTsPathEdit->setPlainText("C:/QA_Working/Firmware/trunk/VmsTools_v2/VmsTools/translations/updateTsFile.bat");
+    }
+    else{
+        m_scanTsPathEdit->setPlainText(settings.value("tsBatPath").toString());
+    }
     settings.endGroup();
 
     m_tsColumnMap.clear();
@@ -1069,15 +1299,14 @@ int MainWindow::getColumnIndex(const QString &fileName)
 void MainWindow::saveConfig()
 {
     QString configPath = QApplication::applicationDirPath();
-#if __DEBUG
-    configPath.append("/../Config");
-#endif
     QSettings settings(configPath + "/config.ini", QSettings::IniFormat);
     settings.beginGroup("path");
     settings.setValue("tsPath", ui->tsPathEdit->text());
     settings.setValue("tsDir", ui->tsDirEdit->text());
     settings.setValue("excelPath", ui->excelPathEdit->text());
     settings.setValue("excelPath2", ui->excelDirEdit->text());
+    settings.setValue("qmBatPath", m_genQmPathEdit->toPlainText());
+    settings.setValue("tsBatPath", m_scanTsPathEdit->toPlainText());
     settings.endGroup();
 
 }
@@ -1403,9 +1632,9 @@ void MainWindow::applyStyles()
 
     // ---- 按钮宽度设置 ----
     // 单文件模块按钮宽度150px，浏览按钮宽度150px
-    ui->tsImportBtn->setFixedWidth(150);
-    ui->generateBtn->setFixedWidth(150);
-    ui->tsUpdateBtn->setFixedWidth(150);
+    ui->tsImportBtn->setFixedWidth(250);
+    ui->generateBtn->setFixedWidth(250);
+    ui->tsUpdateBtn->setFixedWidth(250);
     ui->tsLookBtn->setFixedWidth(150);
     ui->excelLookBtn->setFixedWidth(150);
     ui->tsDirLookBtn->setFixedWidth(150);
@@ -1414,10 +1643,45 @@ void MainWindow::applyStyles()
     // 批量模块按钮：继承单文件按钮样式，宽度225px，高度36px
     ui->generateBtn_2->setStyleSheet(ui->generateBtn->styleSheet());
     ui->tsUpdateBtn_2->setStyleSheet(ui->tsUpdateBtn->styleSheet());
-    ui->generateBtn_2->setFixedWidth(225);
+    ui->generateBtn_2->setFixedWidth(250);
     ui->generateBtn_2->setFixedHeight(36);
-    ui->tsUpdateBtn_2->setFixedWidth(225);
+    ui->tsUpdateBtn_2->setFixedWidth(250);
     ui->tsUpdateBtn_2->setFixedHeight(36);
+
+    // 新增批量按钮样式
+    ui->scanUpdateBtn->setStyleSheet(ui->generateBtn->styleSheet());
+    ui->scanUpdateBtn->setFixedWidth(250);
+    ui->scanUpdateBtn->setFixedHeight(36);
+    ui->writeTsGenQmBtn->setStyleSheet(ui->tsUpdateBtn->styleSheet());
+    ui->writeTsGenQmBtn->setFixedWidth(250);
+    ui->writeTsGenQmBtn->setFixedHeight(36);
+
+    // 快捷模式按钮样式
+    ui->quickModeBtn->setStyleSheet(
+        "QPushButton {"
+        "  background: #3B82F6;"
+        "  color: #FFFFFF;"
+        "  border: none;"
+        "  border-radius: 6px;"
+        "  font-family: 'Microsoft YaHei';"
+        "  font-size: 14px;"
+        "  font-weight: bold;"
+        "  padding: 4px 16px;"
+        "}"
+        "QPushButton:hover {"
+        "  background: #2563EB;"
+        "}"
+        "QPushButton:pressed {"
+        "  background: #1D4ED8;"
+        "}"
+    );
+    ui->quickModeBtn->setFixedWidth(250);
+    ui->quickModeBtn->setFixedHeight(36);
+
+    // 单语言快捷模式按钮样式（与多语言一致）
+    m_singleQuickModeBtn->setStyleSheet(ui->quickModeBtn->styleSheet());
+    m_singleMergeStep12Btn->setStyleSheet(ui->generateBtn->styleSheet());
+    m_singleMergeStep34Btn->setStyleSheet(ui->tsUpdateBtn->styleSheet());
 
     // ---- 生成图标资源 ----
     // SpinBox加减号图标和ComboBox下拉箭头图标
