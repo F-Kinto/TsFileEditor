@@ -250,7 +250,7 @@
 	   <item>
 	    <widget class="QPushButton" name="quickModeBtn">
 	     <property name="text">
-	      <string>切换为快捷模式</string>
+	      <string>切换为普通模式</string>
 	     </property>
 	    </widget>
 	   </item>

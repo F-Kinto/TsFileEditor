@@ -97,7 +97,7 @@ private:
     QPushButton*            m_singleMergeStep34Btn;
     QLabel*                 m_genQmTipLabel1;
     QLabel*                 m_scanTsTipLabel1;
-    bool                    m_quickMode{false};
+    bool                    m_quickMode{true};
 
     void readConfig();
     void saveConfig();

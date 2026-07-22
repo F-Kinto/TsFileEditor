@@ -92,14 +92,13 @@ MainWindow::MainWindow(QWidget *parent) :
     m_aiTranslateBtn->setFixedWidth(250);
 
     // 创建单语言快捷模式按钮
-    m_singleQuickModeBtn = new QPushButton(tr("切换为快捷模式"));
+    m_singleQuickModeBtn = new QPushButton(tr("切换为普通模式"));
     m_singleQuickModeBtn->setFixedSize(250, 32);
     connect(m_singleQuickModeBtn, &QPushButton::clicked, this, &MainWindow::slotquickModeChange);
 
     // 创建单语言合并按钮（快捷模式下显示）
     m_singleMergeStep12Btn = new QPushButton(tr("Step2-1,2: 扫描导入Ts 生成Excel"));
     m_singleMergeStep12Btn->setFixedSize(250, 32);
-    m_singleMergeStep12Btn->setVisible(false);
     connect(m_singleMergeStep12Btn, &QPushButton::clicked, this, [this]() {
         QString scriptPath = m_scanTsPathEdit->toPlainText();
         if (scriptPath.isEmpty()) {
@@ -122,7 +121,6 @@ MainWindow::MainWindow(QWidget *parent) :
 
     m_singleMergeStep34Btn = new QPushButton(tr("Step3,4: 译文写入Ts 更新Qm"));
     m_singleMergeStep34Btn->setFixedSize(250, 32);
-    m_singleMergeStep34Btn->setVisible(false);
     connect(m_singleMergeStep34Btn, &QPushButton::clicked, this, [this]() {
         if(ui->excelPathEdit->text().isEmpty() || ui->tsPathEdit->text().isEmpty()) {
             onReceiveMsg("请输入正确的Excel文件路径");
@@ -389,9 +387,22 @@ MainWindow::MainWindow(QWidget *parent) :
 
     // 快捷模式按钮手动连接（非 on_objectName_signal 格式，不会自动关联）
     connect(ui->quickModeBtn, &QPushButton::clicked, this, &MainWindow::slotquickModeChange);
-    // 初始为普通模式：显示 generateBtn_2 和 tsUpdateBtn_2，隐藏 scanUpdateBtn 和 writeTsGenQmBtn
-    ui->scanUpdateBtn->setVisible(false);
-    ui->writeTsGenQmBtn->setVisible(false);
+    // 初始为快捷模式：显示 scanUpdateBtn/writeTsGenQmBtn/合并按钮，隐藏普通模式按钮
+    ui->scanUpdateBtn->setVisible(true);
+    ui->writeTsGenQmBtn->setVisible(true);
+    ui->generateBtn_2->setVisible(false);
+    ui->tsUpdateBtn_2->setVisible(false);
+    ui->tsImportBtn->setVisible(false);
+    ui->generateBtn->setVisible(false);
+    ui->tsUpdateBtn->setVisible(false);
+    m_singleMergeStep12Btn->setVisible(true);
+    m_singleMergeStep34Btn->setVisible(true);
+    m_genQmBtn->setVisible(false);
+    m_scanTsBtn->setVisible(false);
+    m_genQmTipLabel1->setVisible(false);
+    m_scanTsTipLabel1->setVisible(false);
+    ui->quickModeBtn->setText(tr("切换为普通模式"));
+    m_singleQuickModeBtn->setText(tr("切换为普通模式"));
 
     readConfig();
 
